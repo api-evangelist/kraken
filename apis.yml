@@ -1,0 +1,32 @@
+aid: kraken
+name: Kraken
+description: "Cryptocurrencies Exchange"
+url: https://docs.kraken.com/rest/
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Cryptocurrency"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Cryptocurrency
+  - Public APIs
+apis:
+  - name: Kraken
+    description: "Cryptocurrencies Exchange"
+    humanURL: https://docs.kraken.com/rest/
+    baseURL: https://docs.kraken.com/rest/
+    tags:
+      - Cryptocurrency
+    properties:
+      - type: Documentation
+        url: https://docs.kraken.com/rest/
+common:
+  - type: Website
+    url: https://docs.kraken.com/rest/
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
