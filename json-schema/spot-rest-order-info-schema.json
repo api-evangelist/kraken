@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-order-info-schema.json",
+  "title": "OrderInfo",
+  "description": "OrderInfo schema from Kraken Spot REST API",
+  "type": "object",
+  "properties": {
+    "refid": {
+      "type": "string",
+      "nullable": true,
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "userref": {
+      "type": "integer",
+      "nullable": true,
+      "example": 1
+    },
+    "cl_ord_id": {
+      "type": "string",
+      "nullable": true,
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "open",
+        "closed",
+        "canceled",
+        "expired"
+      ],
+      "example": "pending"
+    },
+    "opentm": {
+      "type": "number",
+      "example": 0.01
+    },
+    "starttm": {
+      "type": "number",
+      "example": 0.01
+    },
+    "expiretm": {
+      "type": "number",
+      "example": 0.01
+    },
+    "descr": {
+      "type": "object",
+      "properties": {
+        "pair": {
+          "type": "string",
+          "example": "XBTUSD"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "buy",
+            "sell"
+          ],
+          "example": "buy"
+        },
+        "ordertype": {
+          "type": "string",
+          "example": "limit"
+        },
+        "price": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "price2": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "leverage": {
+          "type": "string",
+          "example": "none"
+        },
+        "order": {
+          "type": "string",
+          "example": "string"
+        },
+        "close": {
+          "type": "string",
+          "example": "string"
+        }
+      },
+      "example": {}
+    },
+    "vol": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "vol_exec": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "cost": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "fee": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "price": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "stopprice": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "limitprice": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "misc": {
+      "type": "string",
+      "example": "string"
+    },
+    "oflags": {
+      "type": "string",
+      "example": "string"
+    },
+    "trades": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    }
+  }
+}

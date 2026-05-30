@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/futures-rest-send-order-request-structure.json",
+  "name": "SendOrderRequest",
+  "type": "object",
+  "description": "SendOrderRequest schema from Kraken Futures REST API",
+  "properties": {
+    "orderType": {
+      "type": "string",
+      "enum": [
+        "lmt",
+        "post",
+        "mkt",
+        "stp",
+        "take_profit",
+        "ioc"
+      ],
+      "examples": [
+        "lmt"
+      ]
+    },
+    "symbol": {
+      "type": "string",
+      "examples": [
+        "PI_XBTUSD"
+      ]
+    },
+    "side": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ],
+      "examples": [
+        "buy"
+      ]
+    },
+    "size": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "limitPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "stopPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "triggerSignal": {
+      "type": "string",
+      "enum": [
+        "mark",
+        "index",
+        "last"
+      ],
+      "examples": [
+        "mark"
+      ]
+    },
+    "reduceOnly": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    },
+    "cliOrdId": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "trailingStopMaxDeviation": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "trailingStopDeviationUnit": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-pong-response-schema.json",
+  "title": "PongResponse",
+  "description": "PongResponse schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "pong"
+      ],
+      "example": "pong"
+    },
+    "req_id": {
+      "type": "integer",
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "success": {
+      "type": "boolean",
+      "example": true
+    },
+    "time_in": {
+      "type": "string",
+      "format": "date-time",
+      "example": "string"
+    },
+    "time_out": {
+      "type": "string",
+      "format": "date-time",
+      "example": "string"
+    },
+    "result": {
+      "type": "object",
+      "example": {}
+    },
+    "error": {
+      "type": "string",
+      "example": "string"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    }
+  },
+  "required": [
+    "method"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-withdraw-info-response-schema.json",
+  "title": "WithdrawInfoResponse",
+  "description": "WithdrawInfoResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "method": {
+              "type": "string",
+              "example": "string"
+            },
+            "limit": {
+              "type": "string",
+              "example": "string"
+            },
+            "amount": {
+              "type": "string",
+              "example": "0.01"
+            },
+            "fee": {
+              "type": "string",
+              "example": "0.01"
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

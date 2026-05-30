@@ -1,0 +1,108 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Futures REST API — Charts
+  description: 'Kraken Futures REST API — Charts. 1 operations. Lead operation: Kraken Get Chart Candles. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Charts
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_FUTURES_API_KEY: KRAKEN_FUTURES_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: futures-rest-charts
+      baseUri: https://futures.kraken.com/derivatives/api/v3
+      description: Kraken Futures REST API — Charts business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_FUTURES_API_KEY}}'
+        placement: header
+      resources:
+        - name: charts-ticksize-symbol-interval
+          path: /charts/{tickSize}/{symbol}/{interval}
+          operations:
+            - name: getChartCandles
+              method: GET
+              description: Kraken Get Chart Candles
+              inputParameters:
+                - name: tickSize
+                  in: path
+                  type: string
+                  required: true
+                  description: tickSize
+                - name: symbol
+                  in: path
+                  type: string
+                  required: true
+                  description: symbol
+                - name: interval
+                  in: path
+                  type: string
+                  required: true
+                  description: interval
+                - name: from
+                  in: query
+                  type: integer
+                  required: false
+                  description: from
+                - name: to
+                  in: query
+                  type: integer
+                  required: false
+                  description: to
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: futures-rest-charts-rest
+      port: 8080
+      description: REST adapter for Kraken Futures REST API — Charts. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/charts/{ticksize}/{symbol}/{interval}
+          name: charts-ticksize-symbol-interval
+          description: REST surface for /charts/{tickSize}/{symbol}/{interval}.
+          operations:
+            - method: GET
+              name: getChartCandles
+              description: Kraken Get Chart Candles
+              call: futures-rest-charts.getChartCandles
+              with:
+                tickSize: rest.tickSize
+                symbol: rest.symbol
+                interval: rest.interval
+                from: rest.from
+                to: rest.to
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: futures-rest-charts-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Futures REST API — Charts. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-get-chart-candles
+          description: Kraken Get Chart Candles
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: futures-rest-charts.getChartCandles
+          with:
+            tickSize: tools.tickSize
+            symbol: tools.symbol
+            interval: tools.interval
+            from: tools.from
+            to: tools.to
+          outputParameters:
+            - type: object
+              mapping: $.

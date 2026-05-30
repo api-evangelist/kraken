@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-funding-txn-structure.json",
+  "name": "FundingTxn",
+  "type": "object",
+  "description": "FundingTxn schema from Kraken Spot REST API",
+  "properties": {
+    "method": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "aclass": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "asset": {
+      "type": "string",
+      "examples": [
+        "XBT"
+      ]
+    },
+    "refid": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "txid": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "info": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "amount": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "fee": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "time": {
+      "type": "double",
+      "examples": [
+        "2026-05-30T00:00:00Z"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "status-prop": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

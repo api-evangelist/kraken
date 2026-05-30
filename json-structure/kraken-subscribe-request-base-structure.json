@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-subscribe-request-base-structure.json",
+  "name": "SubscribeRequestBase",
+  "type": "object",
+  "description": "SubscribeRequestBase schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "subscribe"
+      ],
+      "examples": [
+        "subscribe"
+      ]
+    },
+    "req_id": {
+      "type": "int64",
+      "description": "Optional client-originated request identifier echoed in the response.",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    }
+  }
+}

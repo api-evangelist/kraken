@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-ping-request-schema.json",
+  "title": "PingRequest",
+  "description": "PingRequest schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "ping"
+      ],
+      "example": "ping"
+    },
+    "req_id": {
+      "type": "integer",
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    }
+  },
+  "required": [
+    "method"
+  ]
+}

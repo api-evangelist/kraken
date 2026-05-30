@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/futures-rest-edit-order-futures-request-structure.json",
+  "name": "EditOrderFuturesRequest",
+  "type": "object",
+  "description": "EditOrderFuturesRequest schema from Kraken Futures REST API",
+  "properties": {
+    "orderId": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "cliOrdId": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "size": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "limitPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "stopPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "trailingStopMaxDeviation": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "trailingStopDeviationUnit": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

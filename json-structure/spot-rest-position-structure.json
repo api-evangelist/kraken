@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-position-structure.json",
+  "name": "Position",
+  "type": "object",
+  "description": "Position schema from Kraken Spot REST API",
+  "properties": {
+    "ordertxid": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "posstatus": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "pair": {
+      "type": "string",
+      "examples": [
+        "XBTUSD"
+      ]
+    },
+    "time": {
+      "type": "double",
+      "examples": [
+        "2026-05-30T00:00:00Z"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ],
+      "examples": [
+        "buy"
+      ]
+    },
+    "ordertype": {
+      "type": "string",
+      "examples": [
+        "limit"
+      ]
+    },
+    "cost": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "fee": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "vol": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "vol_closed": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "margin": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "value": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "net": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "terms": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "rollovertm": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "misc": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "oflags": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

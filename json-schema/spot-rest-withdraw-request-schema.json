@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-withdraw-request-schema.json",
+  "title": "WithdrawRequest",
+  "description": "WithdrawRequest schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "description": "All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.",
+      "required": [
+        "nonce"
+      ],
+      "properties": {
+        "nonce": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1717000000000
+        },
+        "otp": {
+          "type": "string",
+          "description": "Two-factor password / OTP if the key is OTP-protected.",
+          "example": "123456"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "asset",
+        "key",
+        "amount"
+      ],
+      "properties": {
+        "asset": {
+          "type": "string",
+          "example": "XBT"
+        },
+        "key": {
+          "type": "string",
+          "example": "Cold storage 1"
+        },
+        "address": {
+          "type": "string",
+          "example": "bc1qexampledeadbeefaddress0000000000000000"
+        },
+        "amount": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "max_fee": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    }
+  ]
+}

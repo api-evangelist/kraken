@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-asset-schema.json",
+  "title": "Asset",
+  "description": "Asset schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "status": {
+      "type": "string",
+      "example": "string"
+    },
+    "precision": {
+      "type": "integer",
+      "example": 1
+    },
+    "precision_display": {
+      "type": "integer",
+      "example": 1
+    },
+    "borrowable": {
+      "type": "boolean",
+      "example": true
+    },
+    "collateral_value": {
+      "type": "number",
+      "format": "double",
+      "example": 0.01
+    },
+    "margin_rate": {
+      "type": "number",
+      "format": "double",
+      "example": "0.01"
+    },
+    "multiplier": {
+      "type": "number",
+      "format": "double",
+      "example": 0.01
+    }
+  }
+}

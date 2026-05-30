@@ -1,0 +1,182 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-order-info-structure.json",
+  "name": "OrderInfo",
+  "type": "object",
+  "description": "OrderInfo schema from Kraken Spot REST API",
+  "properties": {
+    "refid": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "userref": {
+      "type": "int64",
+      "examples": [
+        1
+      ]
+    },
+    "cl_ord_id": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "open",
+        "closed",
+        "canceled",
+        "expired"
+      ],
+      "examples": [
+        "pending"
+      ]
+    },
+    "opentm": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "starttm": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "expiretm": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "descr": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "pair": {
+          "type": "string",
+          "examples": [
+            "XBTUSD"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "buy",
+            "sell"
+          ],
+          "examples": [
+            "buy"
+          ]
+        },
+        "ordertype": {
+          "type": "string",
+          "examples": [
+            "limit"
+          ]
+        },
+        "price": {
+          "type": "string",
+          "examples": [
+            "0.01"
+          ]
+        },
+        "price2": {
+          "type": "string",
+          "examples": [
+            "0.01"
+          ]
+        },
+        "leverage": {
+          "type": "string",
+          "examples": [
+            "none"
+          ]
+        },
+        "order": {
+          "type": "string",
+          "examples": [
+            "string"
+          ]
+        },
+        "close": {
+          "type": "string",
+          "examples": [
+            "string"
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "vol": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "vol_exec": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "cost": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "fee": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "price": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "stopprice": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "limitprice": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "misc": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "oflags": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "trades": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

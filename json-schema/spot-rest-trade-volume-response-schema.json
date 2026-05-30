@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-trade-volume-response-schema.json",
+  "title": "TradeVolumeResponse",
+  "description": "TradeVolumeResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "currency": {
+              "type": "string",
+              "example": "string"
+            },
+            "volume": {
+              "type": "string",
+              "example": "0.01"
+            },
+            "fees": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "fee": {
+                    "type": "string"
+                  },
+                  "minfee": {
+                    "type": "string"
+                  },
+                  "maxfee": {
+                    "type": "string"
+                  },
+                  "nextfee": {
+                    "type": "string"
+                  },
+                  "nextvolume": {
+                    "type": "string"
+                  },
+                  "tiervolume": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {}
+            },
+            "fees_maker": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object"
+              },
+              "example": {}
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

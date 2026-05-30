@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-ledger-entry-structure.json",
+  "name": "LedgerEntry",
+  "type": "object",
+  "description": "LedgerEntry schema from Kraken Spot REST API",
+  "properties": {
+    "refid": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "time": {
+      "type": "double",
+      "examples": [
+        "2026-05-30T00:00:00Z"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "examples": [
+        "buy"
+      ]
+    },
+    "subtype": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "aclass": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "asset": {
+      "type": "string",
+      "examples": [
+        "XBT"
+      ]
+    },
+    "amount": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "fee": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "balance": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    }
+  }
+}

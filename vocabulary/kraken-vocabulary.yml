@@ -1,0 +1,108 @@
+name: Kraken Vocabulary
+description: Domain vocabulary for Kraken Spot, Futures, NFT, and Earn APIs. Maps
+  Kraken's operational primitives to schema.org and FIBO equivalents where applicable.
+url: https://docs.kraken.com/api/
+version: 1.0.0
+concepts:
+- term: Spot Exchange
+  definition: The cash-settled cryptocurrency trading venue operated by Kraken under
+    api.kraken.com.
+  see_also: https://docs.kraken.com/api/docs/rest-api/get-server-time
+- term: Futures Exchange
+  definition: The derivatives venue operated by Kraken Futures (formerly Crypto Facilities)
+    under futures.kraken.com.
+  see_also: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+- term: Asset
+  definition: A tradable currency (fiat or crypto) recognized by Kraken. Identified
+    by altname (e.g. XBT, ETH, USD).
+  schema_org: schema:DefinedTerm
+- term: Asset Pair
+  definition: A market pair combining a base asset and a quote asset (e.g. XBTUSD).
+  schema_org: schema:ExchangeRateSpecification
+- term: Ticker
+  definition: A snapshot of the latest bid/ask, last trade, 24h volume/VWAP/high/low,
+    and price change for an asset pair.
+  schema_org: schema:QuantitativeValue
+- term: Order Book
+  definition: The aggregated bid and ask depth for an asset pair at a given moment.
+  fibo: fibo:FBC/ProductsAndServices/FinancialProductsAndServices/OrderBook
+- term: OHLC Candle
+  definition: Open/High/Low/Close/Volume/Count aggregate for a fixed interval (1m,
+    5m, 15m, 1h, 1d, etc.).
+- term: Order
+  definition: A standing or filled instruction to buy or sell a quantity of an asset
+    pair at a specified type and price.
+  fibo: fibo:FBC/ProductsAndServices/FinancialProductsAndServices/Order
+- term: Order Type
+  definition: 'The execution style of an order. Supported types: market, limit, iceberg,
+    stop-loss, take-profit, stop-loss-limit, take-profit-limit, trailing-stop, trailing-stop-limit,
+    settle-position.'
+- term: Order Side
+  definition: buy or sell.
+- term: Time In Force (TIF)
+  definition: 'Order lifetime constraint: GTC (good till cancelled), IOC (immediate
+    or cancel), GTD (good till date).'
+- term: Cancel On Disconnect
+  definition: Connection-level setting that auto-cancels all open orders when the
+    trading session terminates.
+- term: Dead Man's Switch
+  definition: Server-side timer (CancelAllOrdersAfter) that cancels every order after
+    a timeout unless re-armed.
+- term: Self-Trade Prevention
+  definition: 'stp_type setting that prevents an account''s resting and incoming orders
+    from crossing each other. Modes: cancel-newest, cancel-oldest, cancel-both.'
+- term: Trade
+  definition: A completed fill resulting from one or more orders crossing the book.
+- term: Position
+  definition: An open margin or futures exposure not yet settled or closed.
+  fibo: fibo:FBC/ProductsAndServices/FinancialProductsAndServices/Position
+- term: Trade Balance
+  definition: Aggregate margin balance, equity, margin used, margin level, and unrealized
+    P&L for a margin or futures account.
+- term: Ledger Entry
+  definition: A single immutable accounting record (deposit, withdrawal, trade, fee,
+    transfer, allocation, deallocation, staking).
+- term: Funding Method
+  definition: The rail used to deposit or withdraw an asset (e.g. Bitcoin, FedWire,
+    SEPA, ACH).
+- term: Withdrawal Key
+  definition: A user-configured, named destination address that withdrawals must target.
+- term: Subaccount
+  definition: A logically separate account beneath a master account, usable for risk
+    segregation and team structuring.
+- term: Earn Strategy
+  definition: A staking/yield product (flex, bonded, timed, instant) that accepts
+    allocations of a specific asset and pays a documented APR range.
+- term: Earn Allocation
+  definition: Funds committed to a specific Earn strategy. Tracked as bonding, allocated,
+    unbonding, rewards.
+- term: WebSocket v2 Channel
+  definition: A named real-time data feed (ticker, book, ohlc, trade, instrument,
+    executions, balances) consumed via subscribe/unsubscribe.
+- term: WebSockets Token
+  definition: Short-lived (15m) authentication token returned by REST /private/GetWebSocketsToken,
+    required to authenticate private WS subscriptions.
+- term: API Counter
+  definition: Server-side per-key rate-limit counter that increments per call and
+    decays at a tier-dependent rate.
+- term: Maker / Taker Fee
+  definition: Per-trade fee assessed differently based on whether the order added
+    liquidity (maker) or removed it (taker).
+- term: 30-Day Volume Tier
+  definition: Trailing 30-day USD-equivalent traded volume used to determine which
+    maker/taker fee rate applies.
+- term: Colocation Endpoint
+  definition: Low-latency host (colo-london.*) available to VIP/institutional clients
+    for Spot, Futures, FIX, and WebSocket access.
+- term: FIX Session
+  definition: Persistent TCP session using the FIX 4.4/5.0 SP2 protocol for institutional
+    order routing and market data.
+- term: Embed Surface
+  definition: B2B integration API exposed via embed.kraken.com that lets partners
+    offer Kraken trading, custody, and Earn primitives to their users.
+- term: OAuth Application
+  definition: Third-party app registered with Kraken's OAuth 2.0 server, capable of
+    receiving scoped delegated access tokens.
+- term: MCP Tool
+  definition: Model Context Protocol tool exposed by the Kraken CLI (or community
+    krakenfx-mcp) that lets LLM agents call Kraken endpoints.

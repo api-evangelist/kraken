@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-ohlc-envelope-schema.json",
+  "title": "OHLCEnvelope",
+  "description": "OHLCEnvelope schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "ohlc"
+      ],
+      "example": "ohlc"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "example": "snapshot"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "example": "PI_XBTUSD"
+          },
+          "open": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "close": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "vwap": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "trades": {
+            "type": "integer",
+            "description": "Number of trades in the interval.",
+            "example": 1
+          },
+          "volume": {
+            "type": "number",
+            "format": "double",
+            "description": "Total traded volume in the base currency.",
+            "example": "0.01"
+          },
+          "interval_begin": {
+            "type": "string",
+            "format": "date-time",
+            "description": "RFC3339 timestamp of interval start.",
+            "example": "string"
+          },
+          "interval": {
+            "type": "integer",
+            "description": "Interval length in minutes.",
+            "example": 1
+          }
+        }
+      },
+      "example": []
+    }
+  },
+  "required": [
+    "channel",
+    "type",
+    "data"
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-balance-ex-response-schema.json",
+  "title": "BalanceExResponse",
+  "description": "BalanceExResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "balance": {
+                "type": "string"
+              },
+              "hold_trade": {
+                "type": "string"
+              },
+              "credit": {
+                "type": "string"
+              },
+              "credit_used": {
+                "type": "string"
+              }
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

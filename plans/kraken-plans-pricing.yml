@@ -1,0 +1,327 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Kraken
+providerId: kraken
+created: '2026-05-30'
+modified: '2026-05-30'
+reconciled: true
+tags:
+  - Cryptocurrency
+  - Exchange
+  - Spot Trading
+  - Futures
+  - Volume-Tiered
+  - Pay-As-You-Go
+description: >-
+  Kraken does not gate API access behind a subscription. API keys are issued
+  free to every verified account. Trading economics are pay-as-you-go and
+  driven by two surfaces: (1) the simplified Kraken consumer app charges a
+  fixed 1.0% spread on instant and recurring trades and 1.5% on custom orders,
+  with an optional Kraken+ subscription that zeroes fees on up to $10,000
+  USD-equivalent of major pairs per month; (2) Kraken Pro charges volume-tiered
+  maker/taker fees by trailing 30-day USD volume, stepping from 0.25% maker /
+  0.40% taker at the entry tier down to 0.00% maker / 0.10% taker at
+  $10M+ 30-day volume on the standard Spot fee schedule, with separate (lower)
+  schedules for stablecoin/FX pairs and for Futures. Institutional clients
+  negotiate custom maker/taker schedules, colocation, and FIX connectivity.
+sources:
+  - https://www.kraken.com/features/fee-schedule
+  - https://www.kraken.com/features/fee-schedule#spot
+  - https://www.kraken.com/features/fee-schedule#stablecoin
+  - https://www.kraken.com/features/fee-schedule#futures
+  - https://blog.kraken.com/product/introducing-kraken-plus
+  - https://docs.kraken.com/api/
+
+plans:
+  - id: kraken-consumer-instant
+    name: Kraken (Instant Buy / Recurring)
+    type: pay-as-you-go
+    description: >-
+      Default consumer experience. Instant and recurring purchases settle at a
+      fixed 1.0% trading fee plus a quoted spread.
+    entries:
+      - label: Instant buy / sell / recurring trade
+        name: instant_trade_fee
+        type: metered
+        metric: transaction
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '1.0% trading fee + market-dependent spread'
+        userMultiplied: false
+      - label: Custom order (consumer app)
+        name: custom_order_fee
+        type: metered
+        metric: transaction
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: '1.5% trading fee + market-dependent spread'
+        userMultiplied: false
+      - label: Deposits and withdrawals
+        name: funding_fee
+        type: metered
+        metric: transaction
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'see vendor schedule (varies by method and currency)'
+        userMultiplied: false
+    elements:
+      - name: Buy / sell 200+ cryptocurrencies
+      - name: Recurring buys
+      - name: Mobile wallet
+      - name: 24/7 support
+      - name: Two-factor authentication
+
+  - id: kraken-plus-subscription
+    name: Kraken+
+    type: subscription
+    description: >-
+      Opt-in monthly subscription that waives trading fees on up to $10,000
+      USD-equivalent monthly volume on major pairs.
+    entries:
+      - label: Kraken+ monthly subscription
+        name: kraken_plus_subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: 'see vendor pricing'
+        userMultiplied: false
+      - label: Trading fees within plan cap
+        name: included_volume
+        type: quota
+        metric: usd_volume
+        limit: 10000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0% on first $10,000 USD monthly volume in major pairs'
+        userMultiplied: false
+      - label: Trading fees beyond plan cap
+        name: overage_fees
+        type: metered
+        metric: usd_volume
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'standard Kraken consumer fees apply'
+        userMultiplied: false
+    elements:
+      - name: Zero fees on first $10K USD monthly volume
+      - name: Major pairs only (BTC, ETH, USDC, USDT, etc.)
+      - name: Cancellable monthly
+
+  - id: kraken-pro-spot
+    name: Kraken Pro — Spot (Standard Fee Schedule)
+    type: tiered
+    description: >-
+      Volume-tiered maker/taker fees on the Kraken Pro Spot exchange. Tier is
+      determined by trailing 30-day USD-equivalent traded volume across all
+      assets (excluding stablecoin/FX pairs which have their own schedule).
+    entries:
+      - label: '$0 – $10K 30-day volume'
+        name: spot_tier_0
+        type: tiered
+        metric: usd_volume
+        limit: 10000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.25% maker / 0.40% taker'
+        userMultiplied: false
+      - label: '$10K – $50K 30-day volume'
+        name: spot_tier_10k
+        type: tiered
+        metric: usd_volume
+        limit: 50000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.20% maker / 0.35% taker'
+        userMultiplied: false
+      - label: '$50K – $100K 30-day volume'
+        name: spot_tier_50k
+        type: tiered
+        metric: usd_volume
+        limit: 100000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.14% maker / 0.24% taker'
+        userMultiplied: false
+      - label: '$100K – $500K 30-day volume'
+        name: spot_tier_100k
+        type: tiered
+        metric: usd_volume
+        limit: 500000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.12% maker / 0.22% taker'
+        userMultiplied: false
+      - label: '$500K – $10M 30-day volume'
+        name: spot_tier_500k
+        type: tiered
+        metric: usd_volume
+        limit: 10000000
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.08% maker / 0.18% taker'
+        userMultiplied: false
+      - label: '$10M+ 30-day volume'
+        name: spot_tier_10m
+        type: tiered
+        metric: usd_volume
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00% maker / 0.10% taker'
+        userMultiplied: false
+    elements:
+      - name: Full Kraken Spot REST API access
+      - name: Full WebSocket v1 + v2 access
+      - name: 200+ trading pairs
+      - name: Margin trading on eligible pairs (up to 5x)
+      - name: Cancel-on-Disconnect
+      - name: Iceberg orders
+      - name: Self-trade prevention
+      - name: Subaccounts
+
+  - id: kraken-pro-stablecoin
+    name: Kraken Pro — Stablecoin / FX
+    type: tiered
+    description: >-
+      Lower volume-tiered schedule applied to stablecoin and fiat-fiat pairs
+      (e.g. USDC/USD, EURT/USD).
+    entries:
+      - label: '$0+ 30-day volume'
+        name: stable_tier_0
+        type: tiered
+        metric: usd_volume
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.20% maker / 0.20% taker (descending to 0.00% maker / 0.001% taker at $100M+)'
+        userMultiplied: false
+    elements:
+      - name: Stablecoin / FX pair routing
+      - name: Volume-tiered down to 0.00% / 0.001%
+
+  - id: kraken-futures
+    name: Kraken Futures
+    type: tiered
+    description: >-
+      Volume-tiered maker/taker schedule for perpetual and fixed-maturity
+      futures contracts on Kraken Futures (formerly Crypto Facilities).
+    entries:
+      - label: 'Entry tier'
+        name: futures_tier_0
+        type: tiered
+        metric: usd_volume
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.02% maker / 0.05% taker (descending to -0.006% maker at $1B+)'
+        userMultiplied: false
+    elements:
+      - name: Full Kraken Futures REST + WebSocket access
+      - name: Perpetual and fixed-maturity contracts
+      - name: Up to 50x leverage on supported instruments
+      - name: Multi-collateral margin
+      - name: Cancel-all-orders-after (dead-man's switch)
+
+  - id: kraken-earn
+    name: Kraken Earn
+    type: pay-as-you-go
+    description: >-
+      Staking and yield product. APR is paid by the underlying protocol /
+      strategy; Kraken takes a documented allocation/deallocation fee where
+      applicable and surfaces APR ranges per strategy via the Earn API.
+    entries:
+      - label: Allocation / deallocation
+        name: earn_op_fee
+        type: metered
+        metric: transaction
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'per-strategy allocation_fee / deallocation_fee field (0.00 – x.xx%)'
+        userMultiplied: false
+      - label: Reward yield
+        name: earn_reward
+        type: quota
+        metric: apr
+        limit: -1
+        timeFrame: year
+        geo: global
+        unit: 1
+        price: 'see strategy apr_estimate.low / apr_estimate.high'
+        userMultiplied: false
+    elements:
+      - name: Flex, bonded, timed, and instant strategies
+      - name: Auto-compound support
+      - name: Programmatic allocation/deallocation via REST API
+
+  - id: kraken-institutional
+    name: Kraken Institutional
+    type: enterprise
+    description: >-
+      Custom-negotiated arrangement bundling Custody, OTC, Prime brokerage,
+      colocation endpoints, FIX 4.4 / 5.0 SP2 connectivity, and dedicated
+      relationship management.
+    entries:
+      - label: Custody, OTC, Prime, FIX, Colocation
+        name: institutional_bundle
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+    elements:
+      - name: Cold storage custody (Kraken Custody)
+      - name: OTC RFQ + block execution
+      - name: Prime brokerage (REST, WebSocket, FIX)
+      - name: London colocation (colo-london.*)
+      - name: Dedicated white-glove support
+
+  - id: kraken-embed
+    name: Kraken Embed (B2B Partner Platform)
+    type: enterprise
+    description: >-
+      B2B integration platform letting partners offer Kraken trading,
+      conversion, custody, and Earn primitives inside their own products.
+      Pricing is custom per partnership.
+    entries:
+      - label: Embed integration
+        name: embed_partnership
+        type: flat
+        metric: varies
+        limit: -1
+        timeFrame: usage
+        geo: global
+        unit: 1
+        price: 'contact sales'
+        userMultiplied: false
+    elements:
+      - name: White-label trading
+      - name: Embedded custody
+      - name: Embedded Earn
+      - name: Webhooks for real-time events
+      - name: OAuth integration

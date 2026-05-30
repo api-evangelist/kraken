@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Spot REST API — WebSocket
+  description: 'Kraken Spot REST API — WebSocket. 1 operations. Lead operation: Kraken Get WebSockets Token. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - WebSocket
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_API_KEY: KRAKEN_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: spot-rest-websocket
+      baseUri: https://api.kraken.com
+      description: Kraken Spot REST API — WebSocket business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_API_KEY}}'
+        placement: header
+      resources:
+        - name: 0-private-getwebsocketstoken
+          path: /0/private/GetWebSocketsToken
+          operations:
+            - name: getWebSocketsToken
+              method: POST
+              description: Kraken Get WebSockets Token
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: spot-rest-websocket-rest
+      port: 8080
+      description: REST adapter for Kraken Spot REST API — WebSocket. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/0/private/getwebsocketstoken
+          name: 0-private-getwebsocketstoken
+          description: REST surface for /0/private/GetWebSocketsToken.
+          operations:
+            - method: POST
+              name: getWebSocketsToken
+              description: Kraken Get WebSockets Token
+              call: spot-rest-websocket.getWebSocketsToken
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: spot-rest-websocket-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Spot REST API — WebSocket. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-get-websockets-token
+          description: Kraken Get WebSockets Token
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-websocket.getWebSocketsToken
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

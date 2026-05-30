@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/futures-rest-send-order-request-schema.json",
+  "title": "SendOrderRequest",
+  "description": "SendOrderRequest schema from Kraken Futures REST API",
+  "type": "object",
+  "properties": {
+    "orderType": {
+      "type": "string",
+      "enum": [
+        "lmt",
+        "post",
+        "mkt",
+        "stp",
+        "take_profit",
+        "ioc"
+      ],
+      "example": "lmt"
+    },
+    "symbol": {
+      "type": "string",
+      "example": "PI_XBTUSD"
+    },
+    "side": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ],
+      "example": "buy"
+    },
+    "size": {
+      "type": "number",
+      "example": 0.01
+    },
+    "limitPrice": {
+      "type": "number",
+      "example": "0.01"
+    },
+    "stopPrice": {
+      "type": "number",
+      "example": "0.01"
+    },
+    "triggerSignal": {
+      "type": "string",
+      "enum": [
+        "mark",
+        "index",
+        "last"
+      ],
+      "example": "mark"
+    },
+    "reduceOnly": {
+      "type": "boolean",
+      "example": true
+    },
+    "cliOrdId": {
+      "type": "string",
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "trailingStopMaxDeviation": {
+      "type": "number",
+      "example": 0.01
+    },
+    "trailingStopDeviationUnit": {
+      "type": "string",
+      "example": "string"
+    }
+  },
+  "required": [
+    "orderType",
+    "symbol",
+    "side",
+    "size"
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-edit-order-response-schema.json",
+  "title": "EditOrderResponse",
+  "description": "EditOrderResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "example": "string"
+            },
+            "txid": {
+              "type": "string",
+              "example": "OQCLML-BW3P3-BUCMWZ"
+            },
+            "originaltxid": {
+              "type": "string",
+              "example": "OQCLML-BW3P3-BUCMWZ"
+            },
+            "volume": {
+              "type": "string",
+              "example": "0.01"
+            },
+            "price": {
+              "type": "string",
+              "example": "0.01"
+            },
+            "orders_cancelled": {
+              "type": "integer",
+              "example": 1
+            },
+            "descr": {
+              "type": "object",
+              "example": {}
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

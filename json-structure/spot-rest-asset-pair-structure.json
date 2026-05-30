@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-asset-pair-structure.json",
+  "name": "AssetPair",
+  "type": "object",
+  "description": "AssetPair schema from Kraken Spot REST API",
+  "properties": {
+    "altname": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "wsname": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "aclass_base": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "base": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "aclass_quote": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "quote": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "pair_decimals": {
+      "type": "int64",
+      "examples": [
+        "XBTUSD"
+      ]
+    },
+    "lot_decimals": {
+      "type": "int64",
+      "examples": [
+        1
+      ]
+    },
+    "lot_multiplier": {
+      "type": "int64",
+      "examples": [
+        1
+      ]
+    },
+    "leverage_buy": {
+      "type": "array",
+      "items": {
+        "type": "int64"
+      },
+      "examples": [
+        []
+      ]
+    },
+    "leverage_sell": {
+      "type": "array",
+      "items": {
+        "type": "int64"
+      },
+      "examples": [
+        []
+      ]
+    },
+    "fees": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "double"
+        }
+      },
+      "examples": [
+        []
+      ]
+    },
+    "fees_maker": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "double"
+        }
+      },
+      "examples": [
+        []
+      ]
+    },
+    "fee_volume_currency": {
+      "type": "string",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "margin_call": {
+      "type": "int64",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "margin_stop": {
+      "type": "int64",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "ordermin": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "costmin": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "tick_size": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

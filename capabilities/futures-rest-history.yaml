@@ -1,0 +1,178 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Futures REST API — History
+  description: 'Kraken Futures REST API — History. 4 operations. Lead operation: Kraken Get Historical Orders. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - History
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_FUTURES_API_KEY: KRAKEN_FUTURES_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: futures-rest-history
+      baseUri: https://futures.kraken.com/derivatives/api/v3
+      description: Kraken Futures REST API — History business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_FUTURES_API_KEY}}'
+        placement: header
+      resources:
+        - name: historicalorders
+          path: /historicalorders
+          operations:
+            - name: getHistoricalOrders
+              method: GET
+              description: Kraken Get Historical Orders
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: historicalexecutions
+          path: /historicalexecutions
+          operations:
+            - name: getHistoricalExecutions
+              method: GET
+              description: Kraken Get Historical Executions
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: historicaltriggers
+          path: /historicaltriggers
+          operations:
+            - name: getHistoricalTriggers
+              method: GET
+              description: Kraken Get Historical Triggers
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: accountlog
+          path: /accountlog
+          operations:
+            - name: getAccountLog
+              method: GET
+              description: Kraken Get Account Log
+              inputParameters: []
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: futures-rest-history-rest
+      port: 8080
+      description: REST adapter for Kraken Futures REST API — History. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/historicalorders
+          name: historicalorders
+          description: REST surface for /historicalorders.
+          operations:
+            - method: GET
+              name: getHistoricalOrders
+              description: Kraken Get Historical Orders
+              call: futures-rest-history.getHistoricalOrders
+              with: {}
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/historicalexecutions
+          name: historicalexecutions
+          description: REST surface for /historicalexecutions.
+          operations:
+            - method: GET
+              name: getHistoricalExecutions
+              description: Kraken Get Historical Executions
+              call: futures-rest-history.getHistoricalExecutions
+              with: {}
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/historicaltriggers
+          name: historicaltriggers
+          description: REST surface for /historicaltriggers.
+          operations:
+            - method: GET
+              name: getHistoricalTriggers
+              description: Kraken Get Historical Triggers
+              call: futures-rest-history.getHistoricalTriggers
+              with: {}
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/accountlog
+          name: accountlog
+          description: REST surface for /accountlog.
+          operations:
+            - method: GET
+              name: getAccountLog
+              description: Kraken Get Account Log
+              call: futures-rest-history.getAccountLog
+              with: {}
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: futures-rest-history-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Futures REST API — History. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-get-historical-orders
+          description: Kraken Get Historical Orders
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: futures-rest-history.getHistoricalOrders
+          with: {}
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-historical-executions
+          description: Kraken Get Historical Executions
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: futures-rest-history.getHistoricalExecutions
+          with: {}
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-historical-triggers
+          description: Kraken Get Historical Triggers
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: futures-rest-history.getHistoricalTriggers
+          with: {}
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-account-log
+          description: Kraken Get Account Log
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: futures-rest-history.getAccountLog
+          with: {}
+          outputParameters:
+            - type: object
+              mapping: $.

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-subscribe-instrument-request-schema.json",
+  "title": "SubscribeInstrumentRequest",
+  "description": "SubscribeInstrumentRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "subscribe"
+          ],
+          "example": "subscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "description": "Optional client-originated request identifier echoed in the response.",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "instrument"
+              ],
+              "example": "instrument"
+            },
+            "execution_venue": {
+              "type": "string",
+              "enum": [
+                "international",
+                "bitnomial-exchange"
+              ],
+              "default": "international",
+              "example": "international"
+            },
+            "include_tokenized_assets": {
+              "type": "boolean",
+              "default": false,
+              "example": true
+            },
+            "snapshot": {
+              "type": "boolean",
+              "default": true,
+              "example": true
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

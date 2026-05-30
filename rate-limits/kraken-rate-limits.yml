@@ -1,0 +1,170 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Kraken
+providerId: kraken
+created: '2026-05-30'
+modified: '2026-05-30'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Cryptocurrency
+  - Exchange
+  - API Counter
+  - WebSocket
+description: >-
+  Kraken enforces request-rate policies separately per surface. The Spot REST
+  private API uses a per-key "API counter" that increments on every call and
+  decays over time at a tier-dependent rate; the counter's maximum value
+  determines burst capacity, and the per-second decay determines steady-state
+  throughput. The Spot REST public API is throttled per IP. Spot WebSocket
+  subscriptions are rate-limited per connection (token-bucket on subscribe /
+  unsubscribe / trading calls). Kraken Futures uses a separate per-key counter
+  with its own ceiling and decay. Institutional / colocation clients can
+  negotiate raised limits. All over-limit responses use HTTP 429 (REST) or a
+  WebSocket `EAPI:Rate limit exceeded` error frame.
+sources:
+  - https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - https://docs.kraken.com/api/docs/guides/spot-rest-ratelimits
+  - https://docs.kraken.com/api/docs/guides/spot-ws-ratelimits
+  - https://docs.kraken.com/api/docs/guides/futures-api-ratelimits
+
+headers:
+  retryAfter: Retry-After
+
+responseCodes:
+  throttled: 429
+  unauthorized: 401
+  serverBusy: 503
+  websocketRateLimit: EAPI:Rate limit exceeded
+
+limits:
+  - name: Spot REST — Public endpoints (Time, Ticker, OHLC, Depth, Trades, Spread, Assets, AssetPairs, SystemStatus)
+    scope: IP
+    metric: requests_per_minute
+    limit: 'approx. 60 requests / 10 seconds per IP; bursts above this return 429'
+    notes: Kraken does not publish a hard per-IP limit; observed behavior is roughly 1 RPS sustained per IP with short bursts to ~5 RPS before throttling.
+  - name: Spot REST — Private (Verified Tier, Starter)
+    scope: key
+    metric: api_counter
+    limit: 15 max counter, decay 0.33 per second
+    notes: >-
+      Each call adds 1 (most endpoints) or 2 (Add/Cancel single order) or 4
+      (Ledgers, TradesHistory, ClosedOrders) to the counter. Counter resets
+      via decay only.
+  - name: Spot REST — Private (Verified Tier, Intermediate)
+    scope: key
+    metric: api_counter
+    limit: 20 max counter, decay 0.50 per second
+  - name: Spot REST — Private (Verified Tier, Pro)
+    scope: key
+    metric: api_counter
+    limit: 20 max counter, decay 1.0 per second
+  - name: Spot REST — Trading endpoints rapid-fire (AddOrder, EditOrder, CancelOrder)
+    scope: key
+    metric: trade_counter
+    limit: per-pair rapid-cancel counter; over-limit returns EAPI:Rate limit exceeded
+    notes: >-
+      A separate "rapid-cancel" counter discourages thrashing the order
+      book. Penalty values scale with order lifetime — orders cancelled within
+      5 seconds carry higher counter cost.
+  - name: Spot WebSocket v2 — public subscriptions
+    scope: connection
+    metric: requests_per_second
+    limit: 50
+    timeFrame: second
+    notes: Per-connection burst limit on subscribe/unsubscribe frames.
+  - name: Spot WebSocket v2 — authenticated trading methods (add_order, amend_order, cancel_order, batch_*)
+    scope: token
+    metric: api_counter
+    limit: same per-tier API counter as Spot REST private trading
+  - name: Spot WebSocket v2 — connections per IP
+    scope: IP
+    metric: concurrent_requests
+    limit: 150
+    notes: Reconnect with exponential backoff when EAPI:Connection limit exceeded is returned.
+  - name: Spot WebSockets Token endpoint
+    scope: key
+    metric: api_counter
+    limit: 1 per call (counts against private REST counter); tokens are valid for 15 minutes
+  - name: Kraken Futures REST — public endpoints
+    scope: IP
+    metric: requests_per_second
+    limit: 100
+    timeFrame: second
+  - name: Kraken Futures REST — private endpoints (Standard)
+    scope: key
+    metric: cost_per_minute
+    limit: 500 cost units per minute (per-endpoint cost 1–25)
+    timeFrame: minute
+  - name: Kraken Futures REST — private endpoints (VIP / Colocation)
+    scope: key
+    metric: cost_per_minute
+    limit: 'raised via institutional support; typically 2x – 10x Standard'
+  - name: Kraken Futures WebSocket
+    scope: connection
+    metric: requests_per_second
+    limit: 200
+    timeFrame: second
+  - name: NFT REST endpoints
+    scope: key
+    metric: api_counter
+    limit: shares the Spot private API counter (same per-tier ceiling and decay)
+  - name: Earn REST endpoints
+    scope: key
+    metric: api_counter
+    limit: shares the Spot private API counter; Allocate/Deallocate add 1 to the counter
+  - name: FIX session — orders per second
+    scope: session
+    metric: requests_per_second
+    limit: negotiated per institutional onboarding (typically 100+ orders/sec)
+
+policies:
+  - name: API counter decay
+    description: >-
+      Each private REST call increments a per-key counter; the counter decays
+      at the per-tier rate (Starter 0.33/s, Intermediate 0.50/s, Pro 1.0/s).
+      When the counter exceeds its ceiling the next call returns
+      `EAPI:Rate limit exceeded` (HTTP 429 with a JSON error envelope).
+  - name: Endpoint weighting
+    description: >-
+      Not all endpoints cost the same. Heavy history endpoints
+      (Ledgers, TradesHistory, ClosedOrders) add 2-4 to the counter while
+      trading endpoints (AddOrder, CancelOrder) add 0-1. Plan request mixes
+      accordingly.
+  - name: Rapid-cancel penalty
+    description: >-
+      Orders cancelled within 5 seconds of placement carry an elevated
+      cost on a separate per-pair counter to discourage book-thrashing
+      strategies. Hold orders longer or use AmendOrder/EditOrder for fewer
+      adjustments.
+  - name: Exponential backoff on 429 / WS rate-limit frames
+    description: >-
+      On HTTP 429 or a WebSocket `EAPI:Rate limit exceeded` frame, back off
+      with exponential delay (start 1s, double up to 60s) before retrying. Do
+      not parse `Retry-After` as authoritative; it is advisory.
+  - name: Tier upgrade
+    description: >-
+      Move from Starter → Intermediate by completing identity verification
+      and from Intermediate → Pro by completing extended verification (proof
+      of residence + source of funds). The tier upgrade automatically raises
+      the per-key API counter ceiling and decay rate.
+  - name: Institutional uplift
+    description: >-
+      VIP and institutional clients can request raised limits through their
+      account manager. Co-located clients on colo-london.* get materially
+      higher throughput and lower latency.
+  - name: WebSocket reconnect strategy
+    description: >-
+      Reconnect with exponential backoff on disconnect. Reauthenticate with a
+      fresh WebSockets token (REST /private/GetWebSocketsToken) if the prior
+      token has expired. Resubscribe to channels after reconnect.
+  - name: Cancel-on-Disconnect
+    description: >-
+      For algorithmic clients, enable cancel-on-disconnect (Spot WS) and/or
+      arm the CancelAllOrdersAfter dead-man's switch so a disconnect or rate
+      penalty cannot leave runaway orders in the book.
+  - name: Per-IP connection cap
+    description: >-
+      Open at most ~150 WebSocket connections per IP. Co-located VIP
+      connections share that ceiling per source IP unless raised by support.

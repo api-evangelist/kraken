@@ -1,0 +1,122 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Spot REST API — Subaccounts
+  description: 'Kraken Spot REST API — Subaccounts. 2 operations. Lead operation: Kraken Create Subaccount. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Subaccounts
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_API_KEY: KRAKEN_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: spot-rest-subaccounts
+      baseUri: https://api.kraken.com
+      description: Kraken Spot REST API — Subaccounts business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_API_KEY}}'
+        placement: header
+      resources:
+        - name: 0-private-createsubaccount
+          path: /0/private/CreateSubaccount
+          operations:
+            - name: createSubaccount
+              method: POST
+              description: Kraken Create Subaccount
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-accounttransfer
+          path: /0/private/AccountTransfer
+          operations:
+            - name: accountTransfer
+              method: POST
+              description: Kraken Account Transfer
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: spot-rest-subaccounts-rest
+      port: 8080
+      description: REST adapter for Kraken Spot REST API — Subaccounts. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/0/private/createsubaccount
+          name: 0-private-createsubaccount
+          description: REST surface for /0/private/CreateSubaccount.
+          operations:
+            - method: POST
+              name: createSubaccount
+              description: Kraken Create Subaccount
+              call: spot-rest-subaccounts.createSubaccount
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/accounttransfer
+          name: 0-private-accounttransfer
+          description: REST surface for /0/private/AccountTransfer.
+          operations:
+            - method: POST
+              name: accountTransfer
+              description: Kraken Account Transfer
+              call: spot-rest-subaccounts.accountTransfer
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: spot-rest-subaccounts-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Spot REST API — Subaccounts. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-create-subaccount
+          description: Kraken Create Subaccount
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-subaccounts.createSubaccount
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-account-transfer
+          description: Kraken Account Transfer
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-subaccounts.accountTransfer
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

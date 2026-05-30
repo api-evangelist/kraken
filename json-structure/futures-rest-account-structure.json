@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/futures-rest-account-structure.json",
+  "name": "Account",
+  "type": "object",
+  "description": "Account schema from Kraken Futures REST API",
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": [
+        "cashAccount",
+        "marginAccount",
+        "multiCollateralMarginAccount"
+      ],
+      "examples": [
+        "cashAccount"
+      ]
+    },
+    "currency": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "balances": {
+      "type": "object",
+      "name": "Inline",
+      "examples": [
+        {}
+      ]
+    },
+    "auxiliary": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "af": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "pnl": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "pv": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "marginRequirements": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "im": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "mm": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "lt": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "tt": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        }
+      },
+      "examples": [
+        "0.01"
+      ]
+    },
+    "triggerEstimates": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "im": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "mm": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "lt": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        },
+        "tt": {
+          "type": "double",
+          "examples": [
+            0.01
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    }
+  }
+}

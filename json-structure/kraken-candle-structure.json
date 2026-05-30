@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-candle-structure.json",
+  "name": "Candle",
+  "type": "object",
+  "description": "Candle schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "examples": [
+        "PI_XBTUSD"
+      ]
+    },
+    "open": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "high": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "low": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "close": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "vwap": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "trades": {
+      "type": "int64",
+      "description": "Number of trades in the interval.",
+      "examples": [
+        1
+      ]
+    },
+    "volume": {
+      "type": "double",
+      "description": "Total traded volume in the base currency.",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "interval_begin": {
+      "type": "string",
+      "description": "RFC3339 timestamp of interval start.",
+      "examples": [
+        "string"
+      ]
+    },
+    "interval": {
+      "type": "int64",
+      "description": "Interval length in minutes.",
+      "examples": [
+        1
+      ]
+    }
+  }
+}

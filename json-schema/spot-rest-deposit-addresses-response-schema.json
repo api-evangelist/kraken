@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-deposit-addresses-response-schema.json",
+  "title": "DepositAddressesResponse",
+  "description": "DepositAddressesResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "type": "string",
+                "example": "bc1qexampledeadbeefaddress0000000000000000"
+              },
+              "expiretm": {
+                "type": "string",
+                "example": "string"
+              },
+              "new": {
+                "type": "boolean",
+                "example": true
+              },
+              "memo": {
+                "type": "string",
+                "example": "string"
+              },
+              "tag": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "example": []
+        }
+      }
+    }
+  ]
+}

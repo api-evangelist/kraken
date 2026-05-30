@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-book-data-structure.json",
+  "name": "BookData",
+  "type": "object",
+  "description": "BookData schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "examples": [
+        "PI_XBTUSD"
+      ]
+    },
+    "bids": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "name": "Inline",
+        "properties": {
+          "price": {
+            "type": "double",
+            "examples": [
+              "0.01"
+            ]
+          },
+          "qty": {
+            "type": "double",
+            "examples": [
+              0.01
+            ]
+          }
+        }
+      },
+      "examples": [
+        []
+      ]
+    },
+    "asks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "name": "Inline",
+        "properties": {
+          "price": {
+            "type": "double",
+            "examples": [
+              "0.01"
+            ]
+          },
+          "qty": {
+            "type": "double",
+            "examples": [
+              0.01
+            ]
+          }
+        }
+      },
+      "examples": [
+        []
+      ]
+    },
+    "checksum": {
+      "type": "int64",
+      "description": "CRC32 checksum of the top 10 bids and asks.",
+      "examples": [
+        1
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "examples": [
+        "2026-05-30T00:00:00Z"
+      ]
+    }
+  }
+}

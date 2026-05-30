@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-order-book-structure.json",
+  "name": "OrderBook",
+  "type": "object",
+  "description": "OrderBook schema from Kraken Spot REST API",
+  "properties": {
+    "asks": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "[price, volume, timestamp]"
+      },
+      "examples": [
+        []
+      ]
+    },
+    "bids": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

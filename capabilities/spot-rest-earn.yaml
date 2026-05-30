@@ -1,0 +1,290 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Spot REST API — Earn
+  description: 'Kraken Spot REST API — Earn. 6 operations. Lead operation: Kraken Allocate Earn Funds. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Earn
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_API_KEY: KRAKEN_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: spot-rest-earn
+      baseUri: https://api.kraken.com
+      description: Kraken Spot REST API — Earn business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_API_KEY}}'
+        placement: header
+      resources:
+        - name: 0-private-earn-allocate
+          path: /0/private/Earn/Allocate
+          operations:
+            - name: allocateEarnFunds
+              method: POST
+              description: Kraken Allocate Earn Funds
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-earn-deallocate
+          path: /0/private/Earn/Deallocate
+          operations:
+            - name: deallocateEarnFunds
+              method: POST
+              description: Kraken Deallocate Earn Funds
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-earn-allocatestatus
+          path: /0/private/Earn/AllocateStatus
+          operations:
+            - name: getEarnAllocateStatus
+              method: POST
+              description: Kraken Get Earn Allocate Status
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-earn-deallocatestatus
+          path: /0/private/Earn/DeallocateStatus
+          operations:
+            - name: getEarnDeallocateStatus
+              method: POST
+              description: Kraken Get Earn Deallocate Status
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-earn-strategies
+          path: /0/private/Earn/Strategies
+          operations:
+            - name: listEarnStrategies
+              method: POST
+              description: Kraken List Earn Strategies
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-earn-allocations
+          path: /0/private/Earn/Allocations
+          operations:
+            - name: listEarnAllocations
+              method: POST
+              description: Kraken List Earn Allocations
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: spot-rest-earn-rest
+      port: 8080
+      description: REST adapter for Kraken Spot REST API — Earn. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/0/private/earn/allocate
+          name: 0-private-earn-allocate
+          description: REST surface for /0/private/Earn/Allocate.
+          operations:
+            - method: POST
+              name: allocateEarnFunds
+              description: Kraken Allocate Earn Funds
+              call: spot-rest-earn.allocateEarnFunds
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/earn/deallocate
+          name: 0-private-earn-deallocate
+          description: REST surface for /0/private/Earn/Deallocate.
+          operations:
+            - method: POST
+              name: deallocateEarnFunds
+              description: Kraken Deallocate Earn Funds
+              call: spot-rest-earn.deallocateEarnFunds
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/earn/allocatestatus
+          name: 0-private-earn-allocatestatus
+          description: REST surface for /0/private/Earn/AllocateStatus.
+          operations:
+            - method: POST
+              name: getEarnAllocateStatus
+              description: Kraken Get Earn Allocate Status
+              call: spot-rest-earn.getEarnAllocateStatus
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/earn/deallocatestatus
+          name: 0-private-earn-deallocatestatus
+          description: REST surface for /0/private/Earn/DeallocateStatus.
+          operations:
+            - method: POST
+              name: getEarnDeallocateStatus
+              description: Kraken Get Earn Deallocate Status
+              call: spot-rest-earn.getEarnDeallocateStatus
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/earn/strategies
+          name: 0-private-earn-strategies
+          description: REST surface for /0/private/Earn/Strategies.
+          operations:
+            - method: POST
+              name: listEarnStrategies
+              description: Kraken List Earn Strategies
+              call: spot-rest-earn.listEarnStrategies
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/earn/allocations
+          name: 0-private-earn-allocations
+          description: REST surface for /0/private/Earn/Allocations.
+          operations:
+            - method: POST
+              name: listEarnAllocations
+              description: Kraken List Earn Allocations
+              call: spot-rest-earn.listEarnAllocations
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: spot-rest-earn-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Spot REST API — Earn. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-allocate-earn-funds
+          description: Kraken Allocate Earn Funds
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.allocateEarnFunds
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-deallocate-earn-funds
+          description: Kraken Deallocate Earn Funds
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.deallocateEarnFunds
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-earn-allocate-status
+          description: Kraken Get Earn Allocate Status
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.getEarnAllocateStatus
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-earn-deallocate-status
+          description: Kraken Get Earn Deallocate Status
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.getEarnDeallocateStatus
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-list-earn-strategies
+          description: Kraken List Earn Strategies
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.listEarnStrategies
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-list-earn-allocations
+          description: Kraken List Earn Allocations
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-earn.listEarnAllocations
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

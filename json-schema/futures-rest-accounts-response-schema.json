@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/futures-rest-accounts-response-schema.json",
+  "title": "AccountsResponse",
+  "description": "AccountsResponse schema from Kraken Futures REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "success",
+            "error"
+          ],
+          "example": "success"
+        },
+        "serverTime": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-05-30T00:00:00Z"
+        },
+        "error": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "cashAccount",
+                  "marginAccount",
+                  "multiCollateralMarginAccount"
+                ],
+                "example": "cashAccount"
+              },
+              "currency": {
+                "type": "string",
+                "example": "string"
+              },
+              "balances": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "example": {}
+              },
+              "auxiliary": {
+                "type": "object",
+                "properties": {
+                  "af": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "pnl": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "pv": {
+                    "type": "number",
+                    "example": 0.01
+                  }
+                },
+                "example": {}
+              },
+              "marginRequirements": {
+                "type": "object",
+                "properties": {
+                  "im": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "mm": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "lt": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "tt": {
+                    "type": "number",
+                    "example": 0.01
+                  }
+                },
+                "example": "0.01"
+              },
+              "triggerEstimates": {
+                "type": "object",
+                "properties": {
+                  "im": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "mm": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "lt": {
+                    "type": "number",
+                    "example": 0.01
+                  },
+                  "tt": {
+                    "type": "number",
+                    "example": 0.01
+                  }
+                },
+                "example": {}
+              }
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

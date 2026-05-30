@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-unsubscribe-instrument-request-schema.json",
+  "title": "UnsubscribeInstrumentRequest",
+  "description": "UnsubscribeInstrumentRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "unsubscribe"
+          ],
+          "example": "unsubscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "instrument"
+              ],
+              "example": "instrument"
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

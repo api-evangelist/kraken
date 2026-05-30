@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-wallet-transfer-request-schema.json",
+  "title": "WalletTransferRequest",
+  "description": "WalletTransferRequest schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "description": "All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.",
+      "required": [
+        "nonce"
+      ],
+      "properties": {
+        "nonce": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1717000000000
+        },
+        "otp": {
+          "type": "string",
+          "description": "Two-factor password / OTP if the key is OTP-protected.",
+          "example": "123456"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "asset",
+        "from",
+        "to",
+        "amount"
+      ],
+      "properties": {
+        "asset": {
+          "type": "string",
+          "example": "XBT"
+        },
+        "from": {
+          "type": "string",
+          "enum": [
+            "Spot Wallet"
+          ],
+          "default": "Spot Wallet",
+          "example": "Spot Wallet"
+        },
+        "to": {
+          "type": "string",
+          "enum": [
+            "Futures Wallet"
+          ],
+          "example": "Futures Wallet"
+        },
+        "amount": {
+          "type": "string",
+          "example": "0.01"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/futures-rest-ticker-structure.json",
+  "name": "Ticker",
+  "type": "object",
+  "description": "Ticker schema from Kraken Futures REST API",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "examples": [
+        "PI_XBTUSD"
+      ]
+    },
+    "last": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "lastTime": {
+      "type": "string",
+      "examples": [
+        "2026-05-30T00:00:00Z"
+      ]
+    },
+    "lastSize": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "markPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "bid": {
+      "type": "double",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "bidSize": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "ask": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "askSize": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "vol24h": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "openInterest": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "open24h": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "indexPrice": {
+      "type": "double",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "fundingRate": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "fundingRatePrediction": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "suspended": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    },
+    "tag": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "pair": {
+      "type": "string",
+      "examples": [
+        "XBTUSD"
+      ]
+    }
+  }
+}

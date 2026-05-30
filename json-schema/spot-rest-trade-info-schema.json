@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-trade-info-schema.json",
+  "title": "TradeInfo",
+  "description": "TradeInfo schema from Kraken Spot REST API",
+  "type": "object",
+  "properties": {
+    "ordertxid": {
+      "type": "string",
+      "example": "OQCLML-BW3P3-BUCMWZ"
+    },
+    "pair": {
+      "type": "string",
+      "example": "XBTUSD"
+    },
+    "time": {
+      "type": "number",
+      "example": "2026-05-30T00:00:00Z"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "buy",
+        "sell"
+      ],
+      "example": "buy"
+    },
+    "ordertype": {
+      "type": "string",
+      "example": "limit"
+    },
+    "price": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "cost": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "fee": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "vol": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "margin": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "misc": {
+      "type": "string",
+      "example": "string"
+    },
+    "ledgers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "example": []
+    },
+    "posstatus": {
+      "type": "string",
+      "example": "string"
+    }
+  }
+}

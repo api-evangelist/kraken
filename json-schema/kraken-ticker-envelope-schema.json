@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-ticker-envelope-schema.json",
+  "title": "TickerEnvelope",
+  "description": "TickerEnvelope schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "ticker"
+      ],
+      "example": "ticker"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "example": "snapshot"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "example": "PI_XBTUSD"
+          },
+          "bid": {
+            "type": "number",
+            "format": "double",
+            "description": "Best bid price.",
+            "example": "OQCLML-BW3P3-BUCMWZ"
+          },
+          "bid_qty": {
+            "type": "number",
+            "format": "double",
+            "description": "Quantity at best bid.",
+            "example": 0.01
+          },
+          "ask": {
+            "type": "number",
+            "format": "double",
+            "description": "Best ask price.",
+            "example": 0.01
+          },
+          "ask_qty": {
+            "type": "number",
+            "format": "double",
+            "description": "Quantity at best ask.",
+            "example": 0.01
+          },
+          "last": {
+            "type": "number",
+            "format": "double",
+            "description": "Last traded price.",
+            "example": 0.01
+          },
+          "volume": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour volume in the base currency.",
+            "example": "0.01"
+          },
+          "vwap": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour volume weighted average price.",
+            "example": 0.01
+          },
+          "low": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour low price.",
+            "example": 0.01
+          },
+          "high": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour high price.",
+            "example": 0.01
+          },
+          "change": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour absolute price change.",
+            "example": 0.01
+          },
+          "change_pct": {
+            "type": "number",
+            "format": "double",
+            "description": "24-hour percentage price change.",
+            "example": 0.01
+          }
+        }
+      },
+      "example": []
+    }
+  },
+  "required": [
+    "channel",
+    "type",
+    "data"
+  ]
+}

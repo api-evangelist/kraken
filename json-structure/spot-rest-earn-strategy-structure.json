@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-earn-strategy-structure.json",
+  "name": "EarnStrategy",
+  "type": "object",
+  "description": "EarnStrategy schema from Kraken Spot REST API",
+  "properties": {
+    "id": {
+      "type": "string",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "asset": {
+      "type": "string",
+      "examples": [
+        "XBT"
+      ]
+    },
+    "lock_type": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "type": {
+          "type": "string",
+          "examples": [
+            "buy"
+          ]
+        },
+        "bonding_period": {
+          "type": "int64",
+          "examples": [
+            1
+          ]
+        },
+        "unbonding_period": {
+          "type": "int64",
+          "examples": [
+            1
+          ]
+        },
+        "payout_frequency": {
+          "type": "int64",
+          "examples": [
+            1
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "apr_estimate": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "low": {
+          "type": "string",
+          "examples": [
+            "string"
+          ]
+        },
+        "high": {
+          "type": "string",
+          "examples": [
+            "string"
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "user_min_allocation": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "user_cap": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "allocation_fee": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "deallocation_fee": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "auto_compound": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "type": {
+          "type": "string",
+          "examples": [
+            "buy"
+          ]
+        },
+        "default": {
+          "type": "boolean",
+          "examples": [
+            true
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "yield_source": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "type": {
+          "type": "string",
+          "examples": [
+            "buy"
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    },
+    "can_allocate": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    },
+    "can_deallocate": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    }
+  }
+}

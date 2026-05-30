@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-ticker-structure.json",
+  "name": "Ticker",
+  "type": "object",
+  "description": "Ticker schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "examples": [
+        "PI_XBTUSD"
+      ]
+    },
+    "bid": {
+      "type": "double",
+      "description": "Best bid price.",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "bid_qty": {
+      "type": "double",
+      "description": "Quantity at best bid.",
+      "examples": [
+        0.01
+      ]
+    },
+    "ask": {
+      "type": "double",
+      "description": "Best ask price.",
+      "examples": [
+        0.01
+      ]
+    },
+    "ask_qty": {
+      "type": "double",
+      "description": "Quantity at best ask.",
+      "examples": [
+        0.01
+      ]
+    },
+    "last": {
+      "type": "double",
+      "description": "Last traded price.",
+      "examples": [
+        0.01
+      ]
+    },
+    "volume": {
+      "type": "double",
+      "description": "24-hour volume in the base currency.",
+      "examples": [
+        "0.01"
+      ]
+    },
+    "vwap": {
+      "type": "double",
+      "description": "24-hour volume weighted average price.",
+      "examples": [
+        0.01
+      ]
+    },
+    "low": {
+      "type": "double",
+      "description": "24-hour low price.",
+      "examples": [
+        0.01
+      ]
+    },
+    "high": {
+      "type": "double",
+      "description": "24-hour high price.",
+      "examples": [
+        0.01
+      ]
+    },
+    "change": {
+      "type": "double",
+      "description": "24-hour absolute price change.",
+      "examples": [
+        0.01
+      ]
+    },
+    "change_pct": {
+      "type": "double",
+      "description": "24-hour percentage price change.",
+      "examples": [
+        0.01
+      ]
+    }
+  }
+}

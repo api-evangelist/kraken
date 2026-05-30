@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-asset-pairs-response-schema.json",
+  "title": "AssetPairsResponse",
+  "description": "AssetPairsResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "altname": {
+                "type": "string",
+                "example": "string"
+              },
+              "wsname": {
+                "type": "string",
+                "example": "string"
+              },
+              "aclass_base": {
+                "type": "string",
+                "example": "string"
+              },
+              "base": {
+                "type": "string",
+                "example": "string"
+              },
+              "aclass_quote": {
+                "type": "string",
+                "example": "string"
+              },
+              "quote": {
+                "type": "string",
+                "example": "string"
+              },
+              "pair_decimals": {
+                "type": "integer",
+                "example": "XBTUSD"
+              },
+              "lot_decimals": {
+                "type": "integer",
+                "example": 1
+              },
+              "lot_multiplier": {
+                "type": "integer",
+                "example": 1
+              },
+              "leverage_buy": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "example": []
+              },
+              "leverage_sell": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "example": []
+              },
+              "fees": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "example": []
+              },
+              "fees_maker": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "number"
+                  }
+                },
+                "example": []
+              },
+              "fee_volume_currency": {
+                "type": "string",
+                "example": "0.01"
+              },
+              "margin_call": {
+                "type": "integer",
+                "example": "0.01"
+              },
+              "margin_stop": {
+                "type": "integer",
+                "example": "0.01"
+              },
+              "ordermin": {
+                "type": "string",
+                "example": "string"
+              },
+              "costmin": {
+                "type": "string",
+                "example": "string"
+              },
+              "tick_size": {
+                "type": "string",
+                "example": "string"
+              },
+              "status": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

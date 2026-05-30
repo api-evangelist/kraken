@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-unsubscribe-book-request-schema.json",
+  "title": "UnsubscribeBookRequest",
+  "description": "UnsubscribeBookRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "unsubscribe"
+          ],
+          "example": "unsubscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel",
+            "symbol"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "book"
+              ],
+              "example": "book"
+            },
+            "symbol": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": "PI_XBTUSD"
+            },
+            "depth": {
+              "type": "integer",
+              "enum": [
+                10,
+                25,
+                100,
+                500,
+                1000
+              ],
+              "example": 10
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

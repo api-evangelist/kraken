@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-subscribe-ticker-request-schema.json",
+  "title": "SubscribeTickerRequest",
+  "description": "SubscribeTickerRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "subscribe"
+          ],
+          "example": "subscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "description": "Optional client-originated request identifier echoed in the response.",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel",
+            "symbol"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "ticker"
+              ],
+              "example": "ticker"
+            },
+            "symbol": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": [
+                "BTC/USD",
+                "MATIC/GBP"
+              ]
+            },
+            "event_trigger": {
+              "type": "string",
+              "enum": [
+                "bbo",
+                "trades"
+              ],
+              "default": "trades",
+              "description": "bbo emits on best-bid/offer change; trades emits on trade events.",
+              "example": "bbo"
+            },
+            "snapshot": {
+              "type": "boolean",
+              "default": true,
+              "example": true
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

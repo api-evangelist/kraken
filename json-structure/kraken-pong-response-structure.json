@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-pong-response-structure.json",
+  "name": "PongResponse",
+  "type": "object",
+  "description": "PongResponse schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "pong"
+      ],
+      "examples": [
+        "pong"
+      ]
+    },
+    "req_id": {
+      "type": "int64",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "success": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    },
+    "time_in": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "time_out": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "name": "Inline",
+      "examples": [
+        {}
+      ]
+    },
+    "error": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

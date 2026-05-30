@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-add-order-request-structure.json",
+  "name": "AddOrderRequest",
+  "type": "object",
+  "description": "AddOrderRequest schema from Kraken Spot REST API",
+  "properties": {}
+}

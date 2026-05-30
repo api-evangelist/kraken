@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/futures-rest-tickers-response-schema.json",
+  "title": "TickersResponse",
+  "description": "TickersResponse schema from Kraken Futures REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "success",
+            "error"
+          ],
+          "example": "success"
+        },
+        "serverTime": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-05-30T00:00:00Z"
+        },
+        "error": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "tickers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "example": "PI_XBTUSD"
+              },
+              "last": {
+                "type": "number",
+                "example": 0.01
+              },
+              "lastTime": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-05-30T00:00:00Z"
+              },
+              "lastSize": {
+                "type": "number",
+                "example": 0.01
+              },
+              "markPrice": {
+                "type": "number",
+                "example": "0.01"
+              },
+              "bid": {
+                "type": "number",
+                "example": "OQCLML-BW3P3-BUCMWZ"
+              },
+              "bidSize": {
+                "type": "number",
+                "example": 0.01
+              },
+              "ask": {
+                "type": "number",
+                "example": 0.01
+              },
+              "askSize": {
+                "type": "number",
+                "example": 0.01
+              },
+              "vol24h": {
+                "type": "number",
+                "example": "0.01"
+              },
+              "openInterest": {
+                "type": "number",
+                "example": 0.01
+              },
+              "open24h": {
+                "type": "number",
+                "example": 0.01
+              },
+              "indexPrice": {
+                "type": "number",
+                "example": "0.01"
+              },
+              "fundingRate": {
+                "type": "number",
+                "example": 0.01
+              },
+              "fundingRatePrediction": {
+                "type": "number",
+                "example": 0.01
+              },
+              "suspended": {
+                "type": "boolean",
+                "example": true
+              },
+              "tag": {
+                "type": "string",
+                "example": "string"
+              },
+              "pair": {
+                "type": "string",
+                "example": "XBTUSD"
+              }
+            }
+          },
+          "example": []
+        }
+      }
+    }
+  ]
+}

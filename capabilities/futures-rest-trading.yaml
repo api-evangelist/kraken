@@ -1,0 +1,290 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Futures REST API — Trading
+  description: 'Kraken Futures REST API — Trading. 6 operations. Lead operation: Kraken Send Order. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Trading
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_FUTURES_API_KEY: KRAKEN_FUTURES_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: futures-rest-trading
+      baseUri: https://futures.kraken.com/derivatives/api/v3
+      description: Kraken Futures REST API — Trading business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_FUTURES_API_KEY}}'
+        placement: header
+      resources:
+        - name: sendorder
+          path: /sendorder
+          operations:
+            - name: sendOrder
+              method: POST
+              description: Kraken Send Order
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: editorder
+          path: /editorder
+          operations:
+            - name: editOrderFutures
+              method: POST
+              description: Kraken Edit Order (Futures)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: cancelorder
+          path: /cancelorder
+          operations:
+            - name: cancelOrderFutures
+              method: POST
+              description: Kraken Cancel Order (Futures)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: cancelallorders
+          path: /cancelallorders
+          operations:
+            - name: cancelAllOrdersFutures
+              method: POST
+              description: Kraken Cancel All Orders (Futures)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: false
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: cancelallordersafter
+          path: /cancelallordersafter
+          operations:
+            - name: cancelAllOrdersAfterFutures
+              method: POST
+              description: Kraken Cancel All Orders After (Futures)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: batchorder
+          path: /batchorder
+          operations:
+            - name: batchOrderFutures
+              method: POST
+              description: Kraken Batch Order (Futures)
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: futures-rest-trading-rest
+      port: 8080
+      description: REST adapter for Kraken Futures REST API — Trading. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/sendorder
+          name: sendorder
+          description: REST surface for /sendorder.
+          operations:
+            - method: POST
+              name: sendOrder
+              description: Kraken Send Order
+              call: futures-rest-trading.sendOrder
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/editorder
+          name: editorder
+          description: REST surface for /editorder.
+          operations:
+            - method: POST
+              name: editOrderFutures
+              description: Kraken Edit Order (Futures)
+              call: futures-rest-trading.editOrderFutures
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/cancelorder
+          name: cancelorder
+          description: REST surface for /cancelorder.
+          operations:
+            - method: POST
+              name: cancelOrderFutures
+              description: Kraken Cancel Order (Futures)
+              call: futures-rest-trading.cancelOrderFutures
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/cancelallorders
+          name: cancelallorders
+          description: REST surface for /cancelallorders.
+          operations:
+            - method: POST
+              name: cancelAllOrdersFutures
+              description: Kraken Cancel All Orders (Futures)
+              call: futures-rest-trading.cancelAllOrdersFutures
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/cancelallordersafter
+          name: cancelallordersafter
+          description: REST surface for /cancelallordersafter.
+          operations:
+            - method: POST
+              name: cancelAllOrdersAfterFutures
+              description: Kraken Cancel All Orders After (Futures)
+              call: futures-rest-trading.cancelAllOrdersAfterFutures
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/batchorder
+          name: batchorder
+          description: REST surface for /batchorder.
+          operations:
+            - method: POST
+              name: batchOrderFutures
+              description: Kraken Batch Order (Futures)
+              call: futures-rest-trading.batchOrderFutures
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: futures-rest-trading-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Futures REST API — Trading. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-send-order
+          description: Kraken Send Order
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.sendOrder
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-edit-order
+          description: Kraken Edit Order (Futures)
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.editOrderFutures
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-cancel-order
+          description: Kraken Cancel Order (Futures)
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.cancelOrderFutures
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-cancel-all-orders
+          description: Kraken Cancel All Orders (Futures)
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.cancelAllOrdersFutures
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-cancel-all-orders-after
+          description: Kraken Cancel All Orders After (Futures)
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.cancelAllOrdersAfterFutures
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-batch-order
+          description: Kraken Batch Order (Futures)
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: futures-rest-trading.batchOrderFutures
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

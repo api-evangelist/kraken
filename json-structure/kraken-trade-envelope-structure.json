@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-trade-envelope-structure.json",
+  "name": "TradeEnvelope",
+  "type": "object",
+  "description": "TradeEnvelope schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "trade"
+      ],
+      "examples": [
+        "trade"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "examples": [
+        "snapshot"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "name": "Inline",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "examples": [
+              "PI_XBTUSD"
+            ]
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "buy",
+              "sell"
+            ],
+            "description": "Taker order direction.",
+            "examples": [
+              "buy"
+            ]
+          },
+          "qty": {
+            "type": "double",
+            "examples": [
+              0.01
+            ]
+          },
+          "price": {
+            "type": "double",
+            "examples": [
+              "0.01"
+            ]
+          },
+          "ord_type": {
+            "type": "string",
+            "enum": [
+              "limit",
+              "market"
+            ],
+            "description": "Taker order type.",
+            "examples": [
+              "limit"
+            ]
+          },
+          "trade_id": {
+            "type": "int64",
+            "description": "Sequence number unique per trading book.",
+            "examples": [
+              "OQCLML-BW3P3-BUCMWZ"
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "examples": [
+              "2026-05-30T00:00:00Z"
+            ]
+          }
+        }
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

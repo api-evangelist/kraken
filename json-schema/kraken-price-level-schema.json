@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-price-level-schema.json",
+  "title": "PriceLevel",
+  "description": "PriceLevel schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "price": {
+      "type": "number",
+      "format": "double",
+      "example": "0.01"
+    },
+    "qty": {
+      "type": "number",
+      "format": "double",
+      "example": 0.01
+    }
+  }
+}

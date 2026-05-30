@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-book-envelope-structure.json",
+  "name": "BookEnvelope",
+  "type": "object",
+  "description": "BookEnvelope schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "book"
+      ],
+      "examples": [
+        "book"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "examples": [
+        "snapshot"
+      ]
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "name": "Inline",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "examples": [
+              "PI_XBTUSD"
+            ]
+          },
+          "bids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Reference: #/components/schemas/PriceLevel"
+            },
+            "examples": [
+              []
+            ]
+          },
+          "asks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Reference: #/components/schemas/PriceLevel"
+            },
+            "examples": [
+              []
+            ]
+          },
+          "checksum": {
+            "type": "int64",
+            "description": "CRC32 checksum of the top 10 bids and asks.",
+            "examples": [
+              1
+            ]
+          },
+          "timestamp": {
+            "type": "string",
+            "examples": [
+              "2026-05-30T00:00:00Z"
+            ]
+          }
+        }
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

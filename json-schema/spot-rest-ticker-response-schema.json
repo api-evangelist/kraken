@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-ticker-response-schema.json",
+  "title": "TickerResponse",
+  "description": "TickerResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "a": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[price, whole-lot volume, lot volume] ask",
+                "example": []
+              },
+              "b": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[price, whole-lot volume, lot volume] bid",
+                "example": []
+              },
+              "c": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[price, lot volume] last trade closed",
+                "example": []
+              },
+              "v": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[today, last 24h] volume",
+                "example": []
+              },
+              "p": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[today, last 24h] vwap",
+                "example": []
+              },
+              "t": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                },
+                "description": "[today, last 24h] number of trades",
+                "example": []
+              },
+              "l": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[today, last 24h] low",
+                "example": []
+              },
+              "h": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "[today, last 24h] high",
+                "example": []
+              },
+              "o": {
+                "type": "string",
+                "description": "Today's opening price",
+                "example": "string"
+              }
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

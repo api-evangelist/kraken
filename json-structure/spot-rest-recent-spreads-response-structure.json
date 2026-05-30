@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-recent-spreads-response-structure.json",
+  "name": "RecentSpreadsResponse",
+  "type": "object",
+  "description": "RecentSpreadsResponse schema from Kraken Spot REST API",
+  "properties": {}
+}

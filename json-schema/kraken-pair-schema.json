@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-pair-schema.json",
+  "title": "Pair",
+  "description": "Pair schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "symbol": {
+      "type": "string",
+      "example": "PI_XBTUSD"
+    },
+    "base": {
+      "type": "string",
+      "example": "string"
+    },
+    "quote": {
+      "type": "string",
+      "example": "string"
+    },
+    "status": {
+      "type": "string",
+      "example": "string"
+    },
+    "marginable": {
+      "type": "boolean",
+      "example": "0.01"
+    },
+    "has_index": {
+      "type": "boolean",
+      "example": true
+    },
+    "qty_min": {
+      "type": "string",
+      "example": "string"
+    },
+    "qty_increment": {
+      "type": "string",
+      "example": "string"
+    },
+    "qty_precision": {
+      "type": "integer",
+      "example": 1
+    },
+    "price_increment": {
+      "type": "string",
+      "example": "0.01"
+    },
+    "price_precision": {
+      "type": "integer",
+      "example": "0.01"
+    },
+    "cost_precision": {
+      "type": "integer",
+      "example": 1
+    },
+    "cost_min": {
+      "type": "string",
+      "example": "string"
+    },
+    "margin_initial": {
+      "type": "number",
+      "format": "double",
+      "example": "0.01"
+    },
+    "position_limit_long": {
+      "type": "integer",
+      "example": 1
+    },
+    "position_limit_short": {
+      "type": "integer",
+      "example": 1
+    }
+  }
+}

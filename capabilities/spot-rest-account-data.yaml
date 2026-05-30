@@ -1,0 +1,542 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Spot REST API — Account Data
+  description: 'Kraken Spot REST API — Account Data. 12 operations. Lead operation: Kraken Get Account Balance. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Account Data
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_API_KEY: KRAKEN_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: spot-rest-account-data
+      baseUri: https://api.kraken.com
+      description: Kraken Spot REST API — Account Data business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_API_KEY}}'
+        placement: header
+      resources:
+        - name: 0-private-balance
+          path: /0/private/Balance
+          operations:
+            - name: getAccountBalance
+              method: POST
+              description: Kraken Get Account Balance
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-balanceex
+          path: /0/private/BalanceEx
+          operations:
+            - name: getExtendedBalance
+              method: POST
+              description: Kraken Get Extended Balance
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-tradebalance
+          path: /0/private/TradeBalance
+          operations:
+            - name: getTradeBalance
+              method: POST
+              description: Kraken Get Trade Balance
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-openorders
+          path: /0/private/OpenOrders
+          operations:
+            - name: getOpenOrders
+              method: POST
+              description: Kraken Get Open Orders
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-closedorders
+          path: /0/private/ClosedOrders
+          operations:
+            - name: getClosedOrders
+              method: POST
+              description: Kraken Get Closed Orders
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-queryorders
+          path: /0/private/QueryOrders
+          operations:
+            - name: queryOrdersInfo
+              method: POST
+              description: Kraken Query Orders Info
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-tradeshistory
+          path: /0/private/TradesHistory
+          operations:
+            - name: getTradesHistory
+              method: POST
+              description: Kraken Get Trades History
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-querytrades
+          path: /0/private/QueryTrades
+          operations:
+            - name: queryTradesInfo
+              method: POST
+              description: Kraken Query Trades Info
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-openpositions
+          path: /0/private/OpenPositions
+          operations:
+            - name: getOpenPositions
+              method: POST
+              description: Kraken Get Open Positions
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-ledgers
+          path: /0/private/Ledgers
+          operations:
+            - name: getLedgersInfo
+              method: POST
+              description: Kraken Get Ledgers Info
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-queryledgers
+          path: /0/private/QueryLedgers
+          operations:
+            - name: queryLedgers
+              method: POST
+              description: Kraken Query Ledgers
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-tradevolume
+          path: /0/private/TradeVolume
+          operations:
+            - name: getTradeVolume
+              method: POST
+              description: Kraken Get Trade Volume
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: spot-rest-account-data-rest
+      port: 8080
+      description: REST adapter for Kraken Spot REST API — Account Data. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/0/private/balance
+          name: 0-private-balance
+          description: REST surface for /0/private/Balance.
+          operations:
+            - method: POST
+              name: getAccountBalance
+              description: Kraken Get Account Balance
+              call: spot-rest-account-data.getAccountBalance
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/balanceex
+          name: 0-private-balanceex
+          description: REST surface for /0/private/BalanceEx.
+          operations:
+            - method: POST
+              name: getExtendedBalance
+              description: Kraken Get Extended Balance
+              call: spot-rest-account-data.getExtendedBalance
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/tradebalance
+          name: 0-private-tradebalance
+          description: REST surface for /0/private/TradeBalance.
+          operations:
+            - method: POST
+              name: getTradeBalance
+              description: Kraken Get Trade Balance
+              call: spot-rest-account-data.getTradeBalance
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/openorders
+          name: 0-private-openorders
+          description: REST surface for /0/private/OpenOrders.
+          operations:
+            - method: POST
+              name: getOpenOrders
+              description: Kraken Get Open Orders
+              call: spot-rest-account-data.getOpenOrders
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/closedorders
+          name: 0-private-closedorders
+          description: REST surface for /0/private/ClosedOrders.
+          operations:
+            - method: POST
+              name: getClosedOrders
+              description: Kraken Get Closed Orders
+              call: spot-rest-account-data.getClosedOrders
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/queryorders
+          name: 0-private-queryorders
+          description: REST surface for /0/private/QueryOrders.
+          operations:
+            - method: POST
+              name: queryOrdersInfo
+              description: Kraken Query Orders Info
+              call: spot-rest-account-data.queryOrdersInfo
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/tradeshistory
+          name: 0-private-tradeshistory
+          description: REST surface for /0/private/TradesHistory.
+          operations:
+            - method: POST
+              name: getTradesHistory
+              description: Kraken Get Trades History
+              call: spot-rest-account-data.getTradesHistory
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/querytrades
+          name: 0-private-querytrades
+          description: REST surface for /0/private/QueryTrades.
+          operations:
+            - method: POST
+              name: queryTradesInfo
+              description: Kraken Query Trades Info
+              call: spot-rest-account-data.queryTradesInfo
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/openpositions
+          name: 0-private-openpositions
+          description: REST surface for /0/private/OpenPositions.
+          operations:
+            - method: POST
+              name: getOpenPositions
+              description: Kraken Get Open Positions
+              call: spot-rest-account-data.getOpenPositions
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/ledgers
+          name: 0-private-ledgers
+          description: REST surface for /0/private/Ledgers.
+          operations:
+            - method: POST
+              name: getLedgersInfo
+              description: Kraken Get Ledgers Info
+              call: spot-rest-account-data.getLedgersInfo
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/queryledgers
+          name: 0-private-queryledgers
+          description: REST surface for /0/private/QueryLedgers.
+          operations:
+            - method: POST
+              name: queryLedgers
+              description: Kraken Query Ledgers
+              call: spot-rest-account-data.queryLedgers
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/tradevolume
+          name: 0-private-tradevolume
+          description: REST surface for /0/private/TradeVolume.
+          operations:
+            - method: POST
+              name: getTradeVolume
+              description: Kraken Get Trade Volume
+              call: spot-rest-account-data.getTradeVolume
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: spot-rest-account-data-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Spot REST API — Account Data. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-get-account-balance
+          description: Kraken Get Account Balance
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getAccountBalance
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-extended-balance
+          description: Kraken Get Extended Balance
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getExtendedBalance
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-trade-balance
+          description: Kraken Get Trade Balance
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getTradeBalance
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-open-orders
+          description: Kraken Get Open Orders
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getOpenOrders
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-closed-orders
+          description: Kraken Get Closed Orders
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getClosedOrders
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-query-orders-info
+          description: Kraken Query Orders Info
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.queryOrdersInfo
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-trades-history
+          description: Kraken Get Trades History
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getTradesHistory
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-query-trades-info
+          description: Kraken Query Trades Info
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.queryTradesInfo
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-open-positions
+          description: Kraken Get Open Positions
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getOpenPositions
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-ledgers-info
+          description: Kraken Get Ledgers Info
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getLedgersInfo
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-query-ledgers
+          description: Kraken Query Ledgers
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.queryLedgers
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-trade-volume
+          description: Kraken Get Trade Volume
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-account-data.getTradeVolume
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

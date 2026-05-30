@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-asset-info-response-schema.json",
+  "title": "AssetInfoResponse",
+  "description": "AssetInfoResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "aclass": {
+                "type": "string",
+                "example": "string"
+              },
+              "altname": {
+                "type": "string",
+                "example": "string"
+              },
+              "decimals": {
+                "type": "integer",
+                "example": 1
+              },
+              "display_decimals": {
+                "type": "integer",
+                "example": 1
+              },
+              "collateral_value": {
+                "type": "number",
+                "example": 0.01
+              },
+              "status": {
+                "type": "string",
+                "example": "string"
+              }
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

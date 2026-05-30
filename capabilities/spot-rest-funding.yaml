@@ -1,0 +1,374 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Kraken Spot REST API — Funding
+  description: 'Kraken Spot REST API — Funding. 8 operations. Lead operation: Kraken Get Deposit Methods. Self-contained Naftiko capability covering one Kraken business surface.'
+  tags:
+    - Kraken
+    - Cryptocurrency
+    - Funding
+  created: '2026-05-30'
+  modified: '2026-05-30'
+binds:
+  - namespace: env
+    keys:
+      KRAKEN_API_KEY: KRAKEN_API_KEY
+capability:
+  consumes:
+    - type: http
+      namespace: spot-rest-funding
+      baseUri: https://api.kraken.com
+      description: Kraken Spot REST API — Funding business capability. Self-contained, no shared references.
+      authentication:
+        type: apikey
+        key: API-Key
+        value: '{{env.KRAKEN_API_KEY}}'
+        placement: header
+      resources:
+        - name: 0-private-depositmethods
+          path: /0/private/DepositMethods
+          operations:
+            - name: getDepositMethods
+              method: POST
+              description: Kraken Get Deposit Methods
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-depositaddresses
+          path: /0/private/DepositAddresses
+          operations:
+            - name: getDepositAddresses
+              method: POST
+              description: Kraken Get Deposit Addresses
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-depositstatus
+          path: /0/private/DepositStatus
+          operations:
+            - name: getDepositStatus
+              method: POST
+              description: Kraken Get Status of Recent Deposits
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-withdrawinfo
+          path: /0/private/WithdrawInfo
+          operations:
+            - name: getWithdrawalInfo
+              method: POST
+              description: Kraken Get Withdrawal Information
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-withdraw
+          path: /0/private/Withdraw
+          operations:
+            - name: withdrawFunds
+              method: POST
+              description: Kraken Withdraw Funds
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-withdrawstatus
+          path: /0/private/WithdrawStatus
+          operations:
+            - name: getWithdrawalStatus
+              method: POST
+              description: Kraken Get Status of Recent Withdrawals
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-withdrawcancel
+          path: /0/private/WithdrawCancel
+          operations:
+            - name: cancelWithdrawal
+              method: POST
+              description: Kraken Request Withdrawal Cancellation
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+        - name: 0-private-wallettransfer
+          path: /0/private/WalletTransfer
+          operations:
+            - name: walletTransfer
+              method: POST
+              description: Kraken Wallet Transfer
+              inputParameters:
+                - name: body
+                  in: body
+                  type: object
+                  required: true
+                  description: Request body payload.
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: $.
+  exposes:
+    - type: rest
+      namespace: spot-rest-funding-rest
+      port: 8080
+      description: REST adapter for Kraken Spot REST API — Funding. One Spectral-compliant resource per consumed operation, prefixed with /v1.
+      resources:
+        - path: /v1/0/private/depositmethods
+          name: 0-private-depositmethods
+          description: REST surface for /0/private/DepositMethods.
+          operations:
+            - method: POST
+              name: getDepositMethods
+              description: Kraken Get Deposit Methods
+              call: spot-rest-funding.getDepositMethods
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/depositaddresses
+          name: 0-private-depositaddresses
+          description: REST surface for /0/private/DepositAddresses.
+          operations:
+            - method: POST
+              name: getDepositAddresses
+              description: Kraken Get Deposit Addresses
+              call: spot-rest-funding.getDepositAddresses
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/depositstatus
+          name: 0-private-depositstatus
+          description: REST surface for /0/private/DepositStatus.
+          operations:
+            - method: POST
+              name: getDepositStatus
+              description: Kraken Get Status of Recent Deposits
+              call: spot-rest-funding.getDepositStatus
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/withdrawinfo
+          name: 0-private-withdrawinfo
+          description: REST surface for /0/private/WithdrawInfo.
+          operations:
+            - method: POST
+              name: getWithdrawalInfo
+              description: Kraken Get Withdrawal Information
+              call: spot-rest-funding.getWithdrawalInfo
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/withdraw
+          name: 0-private-withdraw
+          description: REST surface for /0/private/Withdraw.
+          operations:
+            - method: POST
+              name: withdrawFunds
+              description: Kraken Withdraw Funds
+              call: spot-rest-funding.withdrawFunds
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/withdrawstatus
+          name: 0-private-withdrawstatus
+          description: REST surface for /0/private/WithdrawStatus.
+          operations:
+            - method: POST
+              name: getWithdrawalStatus
+              description: Kraken Get Status of Recent Withdrawals
+              call: spot-rest-funding.getWithdrawalStatus
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/withdrawcancel
+          name: 0-private-withdrawcancel
+          description: REST surface for /0/private/WithdrawCancel.
+          operations:
+            - method: POST
+              name: cancelWithdrawal
+              description: Kraken Request Withdrawal Cancellation
+              call: spot-rest-funding.cancelWithdrawal
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+        - path: /v1/0/private/wallettransfer
+          name: 0-private-wallettransfer
+          description: REST surface for /0/private/WalletTransfer.
+          operations:
+            - method: POST
+              name: walletTransfer
+              description: Kraken Wallet Transfer
+              call: spot-rest-funding.walletTransfer
+              with:
+                body: rest.body
+              outputParameters:
+                - type: object
+                  mapping: $.
+    - type: mcp
+      namespace: spot-rest-funding-mcp
+      port: 9090
+      transport: http
+      description: MCP adapter for Kraken Spot REST API — Funding. One tool per consumed operation, routed inline through this capability's consumes block.
+      tools:
+        - name: kraken-get-deposit-methods
+          description: Kraken Get Deposit Methods
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.getDepositMethods
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-deposit-addresses
+          description: Kraken Get Deposit Addresses
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.getDepositAddresses
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-status-recent-deposits
+          description: Kraken Get Status of Recent Deposits
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.getDepositStatus
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-withdrawal-information
+          description: Kraken Get Withdrawal Information
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.getWithdrawalInfo
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-withdraw-funds
+          description: Kraken Withdraw Funds
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.withdrawFunds
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-get-status-recent-withdrawals
+          description: Kraken Get Status of Recent Withdrawals
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.getWithdrawalStatus
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-request-withdrawal-cancellation
+          description: Kraken Request Withdrawal Cancellation
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.cancelWithdrawal
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.
+        - name: kraken-wallet-transfer
+          description: Kraken Wallet Transfer
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: spot-rest-funding.walletTransfer
+          with:
+            body: tools.body
+          outputParameters:
+            - type: object
+              mapping: $.

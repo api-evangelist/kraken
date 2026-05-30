@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/futures-rest-instruments-response-schema.json",
+  "title": "InstrumentsResponse",
+  "description": "InstrumentsResponse schema from Kraken Futures REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "string",
+          "enum": [
+            "success",
+            "error"
+          ],
+          "example": "success"
+        },
+        "serverTime": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2026-05-30T00:00:00Z"
+        },
+        "error": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "instruments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "example": "PI_XBTUSD"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "futures_inverse",
+                  "futures_vanilla",
+                  "flexible_futures",
+                  "perpetual_inverse",
+                  "perpetual_vanilla"
+                ],
+                "example": "futures_inverse"
+              },
+              "tradeable": {
+                "type": "boolean",
+                "example": true
+              },
+              "underlying": {
+                "type": "string",
+                "example": "string"
+              },
+              "lastTradingTime": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2026-05-30T00:00:00Z"
+              },
+              "tickSize": {
+                "type": "number",
+                "example": 0.01
+              },
+              "contractSize": {
+                "type": "number",
+                "example": 0.01
+              },
+              "marginLevels": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                },
+                "example": "0.01"
+              },
+              "fundingRateCoefficient": {
+                "type": "number",
+                "example": 0.01
+              },
+              "maxRelativeFundingRate": {
+                "type": "number",
+                "example": 0.01
+              }
+            }
+          },
+          "example": []
+        }
+      }
+    }
+  ]
+}

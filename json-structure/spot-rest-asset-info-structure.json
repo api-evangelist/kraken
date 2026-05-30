@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-asset-info-structure.json",
+  "name": "AssetInfo",
+  "type": "object",
+  "description": "AssetInfo schema from Kraken Spot REST API",
+  "properties": {
+    "aclass": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "altname": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    },
+    "decimals": {
+      "type": "int64",
+      "examples": [
+        1
+      ]
+    },
+    "display_decimals": {
+      "type": "int64",
+      "examples": [
+        1
+      ]
+    },
+    "collateral_value": {
+      "type": "double",
+      "examples": [
+        0.01
+      ]
+    },
+    "status": {
+      "type": "string",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

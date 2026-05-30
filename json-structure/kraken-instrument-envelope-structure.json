@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-instrument-envelope-structure.json",
+  "name": "InstrumentEnvelope",
+  "type": "object",
+  "description": "InstrumentEnvelope schema from Kraken Spot WebSocket API v2",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "instrument"
+      ],
+      "examples": [
+        "instrument"
+      ]
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "examples": [
+        "snapshot"
+      ]
+    },
+    "data": {
+      "type": "object",
+      "name": "Inline",
+      "properties": {
+        "assets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "name": "Inline",
+            "properties": {
+              "id": {
+                "type": "string",
+                "examples": [
+                  "OQCLML-BW3P3-BUCMWZ"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "precision": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              },
+              "precision_display": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              },
+              "borrowable": {
+                "type": "boolean",
+                "examples": [
+                  true
+                ]
+              },
+              "collateral_value": {
+                "type": "double",
+                "examples": [
+                  0.01
+                ]
+              },
+              "margin_rate": {
+                "type": "double",
+                "examples": [
+                  "0.01"
+                ]
+              },
+              "multiplier": {
+                "type": "double",
+                "examples": [
+                  0.01
+                ]
+              }
+            }
+          },
+          "examples": [
+            []
+          ]
+        },
+        "pairs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "name": "Inline",
+            "properties": {
+              "symbol": {
+                "type": "string",
+                "examples": [
+                  "PI_XBTUSD"
+                ]
+              },
+              "base": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "quote": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "status": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "marginable": {
+                "type": "boolean",
+                "examples": [
+                  "0.01"
+                ]
+              },
+              "has_index": {
+                "type": "boolean",
+                "examples": [
+                  true
+                ]
+              },
+              "qty_min": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "qty_increment": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "qty_precision": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              },
+              "price_increment": {
+                "type": "string",
+                "examples": [
+                  "0.01"
+                ]
+              },
+              "price_precision": {
+                "type": "int64",
+                "examples": [
+                  "0.01"
+                ]
+              },
+              "cost_precision": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              },
+              "cost_min": {
+                "type": "string",
+                "examples": [
+                  "string"
+                ]
+              },
+              "margin_initial": {
+                "type": "double",
+                "examples": [
+                  "0.01"
+                ]
+              },
+              "position_limit_long": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              },
+              "position_limit_short": {
+                "type": "int64",
+                "examples": [
+                  1
+                ]
+              }
+            }
+          },
+          "examples": [
+            "XBTUSD"
+          ]
+        }
+      },
+      "examples": [
+        {}
+      ]
+    }
+  }
+}

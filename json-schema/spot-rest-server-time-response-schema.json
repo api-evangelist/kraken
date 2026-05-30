@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-server-time-response-schema.json",
+  "title": "ServerTimeResponse",
+  "description": "ServerTimeResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "unixtime": {
+              "type": "integer",
+              "example": 1717000000
+            },
+            "rfc1123": {
+              "type": "string",
+              "example": "Mon, 27 May 26 00:00:00 +0000"
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

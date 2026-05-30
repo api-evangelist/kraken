@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/kraken-subscription-status-response-structure.json",
+  "name": "SubscriptionStatusResponse",
+  "type": "object",
+  "description": "Standard server acknowledgement for subscribe/unsubscribe requests.",
+  "properties": {
+    "method": {
+      "type": "string",
+      "enum": [
+        "subscribe",
+        "unsubscribe"
+      ],
+      "examples": [
+        "subscribe"
+      ]
+    },
+    "req_id": {
+      "type": "int64",
+      "examples": [
+        "OQCLML-BW3P3-BUCMWZ"
+      ]
+    },
+    "success": {
+      "type": "boolean",
+      "examples": [
+        true
+      ]
+    },
+    "result": {
+      "type": "object",
+      "name": "Inline",
+      "description": "Echo of the parameters of a successful subscription.",
+      "examples": [
+        {}
+      ]
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message when success is false.",
+      "examples": [
+        "string"
+      ]
+    },
+    "time_in": {
+      "type": "string",
+      "description": "RFC3339 timestamp the request was received on the wire.",
+      "examples": [
+        "string"
+      ]
+    },
+    "time_out": {
+      "type": "string",
+      "description": "RFC3339 timestamp the response was sent on the wire.",
+      "examples": [
+        "string"
+      ]
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "examples": [
+        []
+      ]
+    }
+  }
+}

@@ -1,0 +1,1132 @@
+asyncapi: 2.6.0
+info:
+  title: Kraken Spot WebSocket API v2
+  version: '2.0.0'
+  description: >
+    Public WebSocket API for the Kraken cryptocurrency exchange (Spot v2).
+    Provides real-time market data through subscribe/unsubscribe semantics over JSON.
+    Channels documented here are restricted to the public surface confirmed by
+    https://docs.kraken.com/api/docs/websocket-v2/ (ticker, book, ohlc, trade,
+    instrument) plus the connection-level methods (ping/pong, subscribe,
+    unsubscribe). Authenticated channels are intentionally out of scope.
+  contact:
+    name: Kraken API Support
+    url: https://support.kraken.com/
+  license:
+    name: Kraken Terms of Service
+    url: https://www.kraken.com/legal
+defaultContentType: application/json
+
+servers:
+  public:
+    url: ws.kraken.com/v2
+    protocol: wss
+    description: >
+      Public market data WebSocket endpoint. No authentication required. Carries
+      ticker, book, ohlc, trade, and instrument channels.
+  authenticated:
+    url: ws-auth.kraken.com/v2
+    protocol: wss
+    description: >
+      Authenticated WebSocket endpoint used for private channels and trading
+      methods (out of scope for this document; included here only because it is
+      a documented separate host). Connecting requires a token obtained from the
+      REST GetWebSocketsToken endpoint.
+
+channels:
+  ticker:
+    description: >
+      Level 1 market data: best bid/ask, last trade, 24h volume/VWAP/high/low,
+      and price change metrics for one or more currency pairs.
+    subscribe:
+      summary: Receive ticker snapshot and updates from the server.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TickerMessage'
+          - $ref: '#/components/messages/SubscriptionStatus'
+    publish:
+      summary: Subscribe or unsubscribe from the ticker channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SubscribeTicker'
+          - $ref: '#/components/messages/UnsubscribeTicker'
+
+  book:
+    description: >
+      Level 2 order book channel. Emits an initial snapshot of bids/asks
+      followed by incremental updates. Includes a CRC32 checksum for the top
+      10 levels.
+    subscribe:
+      summary: Receive book snapshot and update messages.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/BookMessage'
+          - $ref: '#/components/messages/SubscriptionStatus'
+    publish:
+      summary: Subscribe or unsubscribe from the book channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SubscribeBook'
+          - $ref: '#/components/messages/UnsubscribeBook'
+
+  ohlc:
+    description: >
+      Open/High/Low/Close candle data for a configured interval (1, 5, 15, 30,
+      60, 240, 1440, 10080, or 21600 minutes). Updates are trade-triggered.
+    subscribe:
+      summary: Receive OHLC snapshot and update messages.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/OHLCMessage'
+          - $ref: '#/components/messages/SubscriptionStatus'
+    publish:
+      summary: Subscribe or unsubscribe from the ohlc channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SubscribeOHLC'
+          - $ref: '#/components/messages/UnsubscribeOHLC'
+
+  trade:
+    description: >
+      Stream of individual trade executions. Optional initial snapshot returns
+      the most recent 50 trades for each subscribed symbol.
+    subscribe:
+      summary: Receive trade snapshot and update messages.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TradeMessage'
+          - $ref: '#/components/messages/SubscriptionStatus'
+    publish:
+      summary: Subscribe or unsubscribe from the trade channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SubscribeTrade'
+          - $ref: '#/components/messages/UnsubscribeTrade'
+
+  instrument:
+    description: >
+      Reference data feed for all active assets and tradeable pairs, including
+      precisions, trading limits, and margin parameters.
+    subscribe:
+      summary: Receive instrument snapshot and update messages.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/InstrumentMessage'
+          - $ref: '#/components/messages/SubscriptionStatus'
+    publish:
+      summary: Subscribe or unsubscribe from the instrument channel.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/SubscribeInstrument'
+          - $ref: '#/components/messages/UnsubscribeInstrument'
+
+  ping:
+    description: >
+      Application-level keepalive. Distinct from the WebSocket protocol-level
+      ping frames. Server replies with a pong message echoing req_id and
+      including time_in/time_out timestamps.
+    subscribe:
+      summary: Receive pong response from the server.
+      message:
+        $ref: '#/components/messages/Pong'
+    publish:
+      summary: Send a ping to the server.
+      message:
+        $ref: '#/components/messages/Ping'
+
+components:
+  messages:
+    SubscribeTicker:
+      name: subscribeTicker
+      title: Subscribe to ticker
+      payload:
+        $ref: '#/components/schemas/SubscribeTickerRequest'
+
+      examples:
+        - name: SubscribeTickerDefaultExample
+          summary: Default SubscribeTicker example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    UnsubscribeTicker:
+      name: unsubscribeTicker
+      title: Unsubscribe from ticker
+      payload:
+        $ref: '#/components/schemas/UnsubscribeTickerRequest'
+
+      examples:
+        - name: UnsubscribeTickerDefaultExample
+          summary: Default UnsubscribeTicker example payload
+          x-microcks-default: true
+          payload:
+            method: unsubscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    TickerMessage:
+      name: tickerMessage
+      title: Ticker snapshot or update
+      payload:
+        $ref: '#/components/schemas/TickerEnvelope'
+
+      examples:
+        - name: TickerMessageDefaultExample
+          summary: Default TickerMessage example payload
+          x-microcks-default: true
+          payload:
+            channel: ticker
+            type: snapshot
+            data: []
+    SubscribeBook:
+      name: subscribeBook
+      title: Subscribe to book
+      payload:
+        $ref: '#/components/schemas/SubscribeBookRequest'
+
+      examples:
+        - name: SubscribeBookDefaultExample
+          summary: Default SubscribeBook example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    UnsubscribeBook:
+      name: unsubscribeBook
+      title: Unsubscribe from book
+      payload:
+        $ref: '#/components/schemas/UnsubscribeBookRequest'
+
+      examples:
+        - name: UnsubscribeBookDefaultExample
+          summary: Default UnsubscribeBook example payload
+          x-microcks-default: true
+          payload:
+            method: unsubscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    BookMessage:
+      name: bookMessage
+      title: Book snapshot or update
+      payload:
+        $ref: '#/components/schemas/BookEnvelope'
+
+      examples:
+        - name: BookMessageDefaultExample
+          summary: Default BookMessage example payload
+          x-microcks-default: true
+          payload:
+            channel: book
+            type: snapshot
+            data: []
+    SubscribeOHLC:
+      name: subscribeOHLC
+      title: Subscribe to OHLC
+      payload:
+        $ref: '#/components/schemas/SubscribeOHLCRequest'
+
+      examples:
+        - name: SubscribeOHLCDefaultExample
+          summary: Default SubscribeOHLC example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    UnsubscribeOHLC:
+      name: unsubscribeOHLC
+      title: Unsubscribe from OHLC
+      payload:
+        $ref: '#/components/schemas/UnsubscribeOHLCRequest'
+
+      examples:
+        - name: UnsubscribeOHLCDefaultExample
+          summary: Default UnsubscribeOHLC example payload
+          x-microcks-default: true
+          payload:
+            method: unsubscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    OHLCMessage:
+      name: ohlcMessage
+      title: OHLC snapshot or update
+      payload:
+        $ref: '#/components/schemas/OHLCEnvelope'
+
+      examples:
+        - name: OHLCMessageDefaultExample
+          summary: Default OHLCMessage example payload
+          x-microcks-default: true
+          payload:
+            channel: ohlc
+            type: snapshot
+            data: []
+    SubscribeTrade:
+      name: subscribeTrade
+      title: Subscribe to trade
+      payload:
+        $ref: '#/components/schemas/SubscribeTradeRequest'
+
+      examples:
+        - name: SubscribeTradeDefaultExample
+          summary: Default SubscribeTrade example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    UnsubscribeTrade:
+      name: unsubscribeTrade
+      title: Unsubscribe from trade
+      payload:
+        $ref: '#/components/schemas/UnsubscribeTradeRequest'
+
+      examples:
+        - name: UnsubscribeTradeDefaultExample
+          summary: Default UnsubscribeTrade example payload
+          x-microcks-default: true
+          payload:
+            method: unsubscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    TradeMessage:
+      name: tradeMessage
+      title: Trade snapshot or update
+      payload:
+        $ref: '#/components/schemas/TradeEnvelope'
+
+      examples:
+        - name: TradeMessageDefaultExample
+          summary: Default TradeMessage example payload
+          x-microcks-default: true
+          payload:
+            channel: trade
+            type: snapshot
+            data: []
+    SubscribeInstrument:
+      name: subscribeInstrument
+      title: Subscribe to instrument
+      payload:
+        $ref: '#/components/schemas/SubscribeInstrumentRequest'
+
+      examples:
+        - name: SubscribeInstrumentDefaultExample
+          summary: Default SubscribeInstrument example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    UnsubscribeInstrument:
+      name: unsubscribeInstrument
+      title: Unsubscribe from instrument
+      payload:
+        $ref: '#/components/schemas/UnsubscribeInstrumentRequest'
+
+      examples:
+        - name: UnsubscribeInstrumentDefaultExample
+          summary: Default UnsubscribeInstrument example payload
+          x-microcks-default: true
+          payload:
+            method: unsubscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            params: {}
+    InstrumentMessage:
+      name: instrumentMessage
+      title: Instrument snapshot or update
+      payload:
+        $ref: '#/components/schemas/InstrumentEnvelope'
+
+      examples:
+        - name: InstrumentMessageDefaultExample
+          summary: Default InstrumentMessage example payload
+          x-microcks-default: true
+          payload:
+            channel: instrument
+            type: snapshot
+            data: {}
+    SubscriptionStatus:
+      name: subscriptionStatus
+      title: Subscribe/Unsubscribe acknowledgement
+      payload:
+        $ref: '#/components/schemas/SubscriptionStatusResponse'
+
+      examples:
+        - name: SubscriptionStatusDefaultExample
+          summary: Default SubscriptionStatus example payload
+          x-microcks-default: true
+          payload:
+            method: subscribe
+            req_id: OQCLML-BW3P3-BUCMWZ
+            success: true
+            result: {}
+            error: string
+            time_in: string
+            time_out: string
+            warnings: []
+    Ping:
+      name: ping
+      title: Ping request
+      payload:
+        $ref: '#/components/schemas/PingRequest'
+
+      examples:
+        - name: PingDefaultExample
+          summary: Default Ping example payload
+          x-microcks-default: true
+          payload:
+            method: ping
+            req_id: OQCLML-BW3P3-BUCMWZ
+    Pong:
+      name: pong
+      title: Pong response
+      payload:
+        $ref: '#/components/schemas/PongResponse'
+
+      examples:
+        - name: PongDefaultExample
+          summary: Default Pong example payload
+          x-microcks-default: true
+          payload:
+            method: pong
+            req_id: OQCLML-BW3P3-BUCMWZ
+            success: true
+            time_in: string
+            time_out: string
+            result: {}
+            error: string
+            warnings: []
+  schemas:
+
+    # ---------- Common envelopes ----------
+
+    SubscribeRequestBase:
+      type: object
+      required:
+        - method
+        - params
+      properties:
+        method:
+          type: string
+          enum: [subscribe]
+          example: subscribe
+        req_id:
+          type: integer
+          description: Optional client-originated request identifier echoed in the response.
+
+          example: OQCLML-BW3P3-BUCMWZ
+    UnsubscribeRequestBase:
+      type: object
+      required:
+        - method
+        - params
+      properties:
+        method:
+          type: string
+          enum: [unsubscribe]
+          example: unsubscribe
+        req_id:
+          type: integer
+
+          example: OQCLML-BW3P3-BUCMWZ
+    SubscriptionStatusResponse:
+      type: object
+      description: Standard server acknowledgement for subscribe/unsubscribe requests.
+      properties:
+        method:
+          type: string
+          enum: [subscribe, unsubscribe]
+          example: subscribe
+        req_id:
+          type: integer
+          example: OQCLML-BW3P3-BUCMWZ
+        success:
+          type: boolean
+          example: true
+        result:
+          type: object
+          description: Echo of the parameters of a successful subscription.
+          example: {}
+        error:
+          type: string
+          description: Error message when success is false.
+          example: string
+        time_in:
+          type: string
+          format: date-time
+          description: RFC3339 timestamp the request was received on the wire.
+          example: string
+        time_out:
+          type: string
+          format: date-time
+          description: RFC3339 timestamp the response was sent on the wire.
+          example: string
+        warnings:
+          type: array
+          items:
+            type: string
+
+    # ---------- Ticker ----------
+
+          example: []
+    SubscribeTickerRequest:
+      allOf:
+        - $ref: '#/components/schemas/SubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [ticker]
+                  example: ticker
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: ["BTC/USD", "MATIC/GBP"]
+                event_trigger:
+                  type: string
+                  enum: [bbo, trades]
+                  default: trades
+                  description: bbo emits on best-bid/offer change; trades emits on trade events.
+                  example: bbo
+                snapshot:
+                  type: boolean
+                  default: true
+
+                  example: true
+              example: {}
+    UnsubscribeTickerRequest:
+      allOf:
+        - $ref: '#/components/schemas/UnsubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [ticker]
+                  example: ticker
+                symbol:
+                  type: array
+                  items:
+                    type: string
+
+                  example: PI_XBTUSD
+              example: {}
+    TickerEnvelope:
+      type: object
+      required: [channel, type, data]
+      properties:
+        channel:
+          type: string
+          enum: [ticker]
+          example: ticker
+        type:
+          type: string
+          enum: [snapshot, update]
+          example: snapshot
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ticker'
+
+          example: []
+    Ticker:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        bid:
+          type: number
+          format: double
+          description: Best bid price.
+          example: OQCLML-BW3P3-BUCMWZ
+        bid_qty:
+          type: number
+          format: double
+          description: Quantity at best bid.
+          example: 0.01
+        ask:
+          type: number
+          format: double
+          description: Best ask price.
+          example: 0.01
+        ask_qty:
+          type: number
+          format: double
+          description: Quantity at best ask.
+          example: 0.01
+        last:
+          type: number
+          format: double
+          description: Last traded price.
+          example: 0.01
+        volume:
+          type: number
+          format: double
+          description: 24-hour volume in the base currency.
+          example: '0.01'
+        vwap:
+          type: number
+          format: double
+          description: 24-hour volume weighted average price.
+          example: 0.01
+        low:
+          type: number
+          format: double
+          description: 24-hour low price.
+          example: 0.01
+        high:
+          type: number
+          format: double
+          description: 24-hour high price.
+          example: 0.01
+        change:
+          type: number
+          format: double
+          description: 24-hour absolute price change.
+          example: 0.01
+        change_pct:
+          type: number
+          format: double
+          description: 24-hour percentage price change.
+
+    # ---------- Book ----------
+
+          example: 0.01
+    SubscribeBookRequest:
+      allOf:
+        - $ref: '#/components/schemas/SubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [book]
+                  example: book
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: PI_XBTUSD
+                depth:
+                  type: integer
+                  enum: [10, 25, 100, 500, 1000]
+                  default: 10
+                  example: 10
+                snapshot:
+                  type: boolean
+                  default: true
+
+                  example: true
+              example: {}
+    UnsubscribeBookRequest:
+      allOf:
+        - $ref: '#/components/schemas/UnsubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [book]
+                  example: book
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: PI_XBTUSD
+                depth:
+                  type: integer
+                  enum: [10, 25, 100, 500, 1000]
+                  example: 10
+              example: {}
+
+    BookEnvelope:
+      type: object
+      required: [channel, type, data]
+      properties:
+        channel:
+          type: string
+          enum: [book]
+          example: book
+        type:
+          type: string
+          enum: [snapshot, update]
+          example: snapshot
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BookData'
+
+          example: []
+    BookData:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        bids:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevel'
+          example: []
+        asks:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceLevel'
+          example: []
+        checksum:
+          type: integer
+          format: int64
+          description: CRC32 checksum of the top 10 bids and asks.
+          example: 1
+        timestamp:
+          type: string
+          format: date-time
+
+          example: '2026-05-30T00:00:00Z'
+    PriceLevel:
+      type: object
+      properties:
+        price:
+          type: number
+          format: double
+          example: '0.01'
+        qty:
+          type: number
+          format: double
+
+    # ---------- OHLC ----------
+
+          example: 0.01
+    SubscribeOHLCRequest:
+      allOf:
+        - $ref: '#/components/schemas/SubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [ohlc]
+                  example: ohlc
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: PI_XBTUSD
+                interval:
+                  type: integer
+                  enum: [1, 5, 15, 30, 60, 240, 1440, 10080, 21600]
+                  example: 1
+                snapshot:
+                  type: boolean
+                  default: true
+
+                  example: true
+              example: {}
+    UnsubscribeOHLCRequest:
+      allOf:
+        - $ref: '#/components/schemas/UnsubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [ohlc]
+                  example: ohlc
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: PI_XBTUSD
+                interval:
+                  type: integer
+                  enum: [1, 5, 15, 30, 60, 240, 1440, 10080, 21600]
+                  example: 1
+              example: {}
+
+    OHLCEnvelope:
+      type: object
+      required: [channel, type, data]
+      properties:
+        channel:
+          type: string
+          enum: [ohlc]
+          example: ohlc
+        type:
+          type: string
+          enum: [snapshot, update]
+          example: snapshot
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Candle'
+
+          example: []
+    Candle:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        open:
+          type: number
+          format: double
+          example: 0.01
+        high:
+          type: number
+          format: double
+          example: 0.01
+        low:
+          type: number
+          format: double
+          example: 0.01
+        close:
+          type: number
+          format: double
+          example: 0.01
+        vwap:
+          type: number
+          format: double
+          example: 0.01
+        trades:
+          type: integer
+          description: Number of trades in the interval.
+          example: 1
+        volume:
+          type: number
+          format: double
+          description: Total traded volume in the base currency.
+          example: '0.01'
+        interval_begin:
+          type: string
+          format: date-time
+          description: RFC3339 timestamp of interval start.
+          example: string
+        interval:
+          type: integer
+          description: Interval length in minutes.
+
+    # ---------- Trade ----------
+
+          example: 1
+    SubscribeTradeRequest:
+      allOf:
+        - $ref: '#/components/schemas/SubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [trade]
+                  example: trade
+                symbol:
+                  type: array
+                  items:
+                    type: string
+                  example: PI_XBTUSD
+                snapshot:
+                  type: boolean
+                  default: false
+                  description: When true, returns the most recent 50 trades on subscribe.
+
+                  example: true
+              example: {}
+    UnsubscribeTradeRequest:
+      allOf:
+        - $ref: '#/components/schemas/UnsubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel, symbol]
+              properties:
+                channel:
+                  type: string
+                  enum: [trade]
+                  example: trade
+                symbol:
+                  type: array
+                  items:
+                    type: string
+
+                  example: PI_XBTUSD
+              example: {}
+    TradeEnvelope:
+      type: object
+      required: [channel, type, data]
+      properties:
+        channel:
+          type: string
+          enum: [trade]
+          example: trade
+        type:
+          type: string
+          enum: [snapshot, update]
+          example: snapshot
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Trade'
+
+          example: []
+    Trade:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        side:
+          type: string
+          enum: [buy, sell]
+          description: Taker order direction.
+          example: buy
+        qty:
+          type: number
+          format: double
+          example: 0.01
+        price:
+          type: number
+          format: double
+          example: '0.01'
+        ord_type:
+          type: string
+          enum: [limit, market]
+          description: Taker order type.
+          example: limit
+        trade_id:
+          type: integer
+          format: int64
+          description: Sequence number unique per trading book.
+          example: OQCLML-BW3P3-BUCMWZ
+        timestamp:
+          type: string
+          format: date-time
+
+    # ---------- Instrument ----------
+
+          example: '2026-05-30T00:00:00Z'
+    SubscribeInstrumentRequest:
+      allOf:
+        - $ref: '#/components/schemas/SubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel]
+              properties:
+                channel:
+                  type: string
+                  enum: [instrument]
+                  example: instrument
+                execution_venue:
+                  type: string
+                  enum: [international, bitnomial-exchange]
+                  default: international
+                  example: international
+                include_tokenized_assets:
+                  type: boolean
+                  default: false
+                  example: true
+                snapshot:
+                  type: boolean
+                  default: true
+
+                  example: true
+              example: {}
+    UnsubscribeInstrumentRequest:
+      allOf:
+        - $ref: '#/components/schemas/UnsubscribeRequestBase'
+        - type: object
+          properties:
+            params:
+              type: object
+              required: [channel]
+              properties:
+                channel:
+                  type: string
+                  enum: [instrument]
+                  example: instrument
+              example: {}
+
+    InstrumentEnvelope:
+      type: object
+      required: [channel, type, data]
+      properties:
+        channel:
+          type: string
+          enum: [instrument]
+          example: instrument
+        type:
+          type: string
+          enum: [snapshot, update]
+          example: snapshot
+        data:
+          type: object
+          properties:
+            assets:
+              type: array
+              items:
+                $ref: '#/components/schemas/Asset'
+              example: []
+            pairs:
+              type: array
+              items:
+                $ref: '#/components/schemas/Pair'
+
+              example: XBTUSD
+          example: {}
+    Asset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: OQCLML-BW3P3-BUCMWZ
+        status:
+          type: string
+          example: string
+        precision:
+          type: integer
+          example: 1
+        precision_display:
+          type: integer
+          example: 1
+        borrowable:
+          type: boolean
+          example: true
+        collateral_value:
+          type: number
+          format: double
+          example: 0.01
+        margin_rate:
+          type: number
+          format: double
+          example: '0.01'
+        multiplier:
+          type: number
+          format: double
+
+          example: 0.01
+    Pair:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        base:
+          type: string
+          example: string
+        quote:
+          type: string
+          example: string
+        status:
+          type: string
+          example: string
+        marginable:
+          type: boolean
+          example: '0.01'
+        has_index:
+          type: boolean
+          example: true
+        qty_min:
+          type: string
+          example: string
+        qty_increment:
+          type: string
+          example: string
+        qty_precision:
+          type: integer
+          example: 1
+        price_increment:
+          type: string
+          example: '0.01'
+        price_precision:
+          type: integer
+          example: '0.01'
+        cost_precision:
+          type: integer
+          example: 1
+        cost_min:
+          type: string
+          example: string
+        margin_initial:
+          type: number
+          format: double
+          example: '0.01'
+        position_limit_long:
+          type: integer
+          example: 1
+        position_limit_short:
+          type: integer
+
+    # ---------- Ping / Pong ----------
+
+          example: 1
+    PingRequest:
+      type: object
+      required: [method]
+      properties:
+        method:
+          type: string
+          enum: [ping]
+          example: ping
+        req_id:
+          type: integer
+
+          example: OQCLML-BW3P3-BUCMWZ
+    PongResponse:
+      type: object
+      required: [method]
+      properties:
+        method:
+          type: string
+          enum: [pong]
+          example: pong
+        req_id:
+          type: integer
+          example: OQCLML-BW3P3-BUCMWZ
+        success:
+          type: boolean
+          example: true
+        time_in:
+          type: string
+          format: date-time
+          example: string
+        time_out:
+          type: string
+          format: date-time
+          example: string
+        result:
+          type: object
+          example: {}
+        error:
+          type: string
+          example: string
+        warnings:
+          type: array
+          items:
+            type: string
+          example: []

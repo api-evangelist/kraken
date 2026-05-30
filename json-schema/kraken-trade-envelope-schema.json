@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-trade-envelope-schema.json",
+  "title": "TradeEnvelope",
+  "description": "TradeEnvelope schema from Kraken Spot WebSocket API v2",
+  "type": "object",
+  "properties": {
+    "channel": {
+      "type": "string",
+      "enum": [
+        "trade"
+      ],
+      "example": "trade"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "snapshot",
+        "update"
+      ],
+      "example": "snapshot"
+    },
+    "data": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "symbol": {
+            "type": "string",
+            "example": "PI_XBTUSD"
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "buy",
+              "sell"
+            ],
+            "description": "Taker order direction.",
+            "example": "buy"
+          },
+          "qty": {
+            "type": "number",
+            "format": "double",
+            "example": 0.01
+          },
+          "price": {
+            "type": "number",
+            "format": "double",
+            "example": "0.01"
+          },
+          "ord_type": {
+            "type": "string",
+            "enum": [
+              "limit",
+              "market"
+            ],
+            "description": "Taker order type.",
+            "example": "limit"
+          },
+          "trade_id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Sequence number unique per trading book.",
+            "example": "OQCLML-BW3P3-BUCMWZ"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2026-05-30T00:00:00Z"
+          }
+        }
+      },
+      "example": []
+    }
+  },
+  "required": [
+    "channel",
+    "type",
+    "data"
+  ]
+}

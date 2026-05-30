@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-earn-allocations-response-schema.json",
+  "title": "EarnAllocationsResponse",
+  "description": "EarnAllocationsResponse schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Array of error strings; empty on success.",
+          "example": []
+        },
+        "result": {
+          "description": "Endpoint-specific result object.",
+          "example": "string"
+        }
+      },
+      "required": [
+        "error"
+      ]
+    },
+    {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "converted_asset": {
+              "type": "string",
+              "example": "XBT"
+            },
+            "total_allocated": {
+              "type": "string",
+              "example": "string"
+            },
+            "total_rewarded": {
+              "type": "string",
+              "example": "string"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "strategy_id": {
+                    "type": "string",
+                    "example": "OQCLML-BW3P3-BUCMWZ"
+                  },
+                  "native_asset": {
+                    "type": "string",
+                    "example": "XBT"
+                  },
+                  "amount_allocated": {
+                    "type": "object",
+                    "properties": {
+                      "bonding": {
+                        "type": "object",
+                        "example": {}
+                      },
+                      "unbonding": {
+                        "type": "object",
+                        "example": {}
+                      },
+                      "allocated": {
+                        "type": "object",
+                        "example": {}
+                      },
+                      "total": {
+                        "type": "object",
+                        "properties": {
+                          "native": {
+                            "type": "string",
+                            "example": "string"
+                          },
+                          "converted": {
+                            "type": "string",
+                            "example": "string"
+                          }
+                        },
+                        "example": {}
+                      }
+                    },
+                    "example": {}
+                  },
+                  "total_rewarded": {
+                    "type": "object",
+                    "properties": {
+                      "native": {
+                        "type": "string",
+                        "example": "string"
+                      },
+                      "converted": {
+                        "type": "string",
+                        "example": "string"
+                      }
+                    },
+                    "example": {}
+                  }
+                }
+              },
+              "example": []
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

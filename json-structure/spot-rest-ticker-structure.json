@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-ticker-structure.json",
+  "name": "Ticker",
+  "type": "object",
+  "description": "Ticker schema from Kraken Spot REST API",
+  "properties": {
+    "a": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[price, whole-lot volume, lot volume] ask",
+      "examples": [
+        []
+      ]
+    },
+    "b": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[price, whole-lot volume, lot volume] bid",
+      "examples": [
+        []
+      ]
+    },
+    "c": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[price, lot volume] last trade closed",
+      "examples": [
+        []
+      ]
+    },
+    "v": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[today, last 24h] volume",
+      "examples": [
+        []
+      ]
+    },
+    "p": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[today, last 24h] vwap",
+      "examples": [
+        []
+      ]
+    },
+    "t": {
+      "type": "array",
+      "items": {
+        "type": "int64"
+      },
+      "description": "[today, last 24h] number of trades",
+      "examples": [
+        []
+      ]
+    },
+    "l": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[today, last 24h] low",
+      "examples": [
+        []
+      ]
+    },
+    "h": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "[today, last 24h] high",
+      "examples": [
+        []
+      ]
+    },
+    "o": {
+      "type": "string",
+      "description": "Today's opening price",
+      "examples": [
+        "string"
+      ]
+    }
+  }
+}

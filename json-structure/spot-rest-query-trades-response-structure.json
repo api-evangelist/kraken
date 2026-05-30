@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/json-structure/v0/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-structure/spot-rest-query-trades-response-structure.json",
+  "name": "QueryTradesResponse",
+  "type": "object",
+  "description": "QueryTradesResponse schema from Kraken Spot REST API",
+  "properties": {}
+}

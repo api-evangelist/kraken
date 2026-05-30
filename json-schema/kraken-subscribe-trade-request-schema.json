@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-subscribe-trade-request-schema.json",
+  "title": "SubscribeTradeRequest",
+  "description": "SubscribeTradeRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "subscribe"
+          ],
+          "example": "subscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "description": "Optional client-originated request identifier echoed in the response.",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel",
+            "symbol"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "trade"
+              ],
+              "example": "trade"
+            },
+            "symbol": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": "PI_XBTUSD"
+            },
+            "snapshot": {
+              "type": "boolean",
+              "default": false,
+              "description": "When true, returns the most recent 50 trades on subscribe.",
+              "example": true
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

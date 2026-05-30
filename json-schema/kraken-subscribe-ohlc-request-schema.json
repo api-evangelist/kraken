@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/kraken-subscribe-ohlc-request-schema.json",
+  "title": "SubscribeOHLCRequest",
+  "description": "SubscribeOHLCRequest schema from Kraken Spot WebSocket API v2",
+  "allOf": [
+    {
+      "type": "object",
+      "required": [
+        "method",
+        "params"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": [
+            "subscribe"
+          ],
+          "example": "subscribe"
+        },
+        "req_id": {
+          "type": "integer",
+          "description": "Optional client-originated request identifier echoed in the response.",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "properties": {
+        "params": {
+          "type": "object",
+          "required": [
+            "channel",
+            "symbol"
+          ],
+          "properties": {
+            "channel": {
+              "type": "string",
+              "enum": [
+                "ohlc"
+              ],
+              "example": "ohlc"
+            },
+            "symbol": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": "PI_XBTUSD"
+            },
+            "interval": {
+              "type": "integer",
+              "enum": [
+                1,
+                5,
+                15,
+                30,
+                60,
+                240,
+                1440,
+                10080,
+                21600
+              ],
+              "example": 1
+            },
+            "snapshot": {
+              "type": "boolean",
+              "default": true,
+              "example": true
+            }
+          },
+          "example": {}
+        }
+      }
+    }
+  ]
+}

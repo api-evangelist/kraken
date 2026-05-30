@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-add-order-request-schema.json",
+  "title": "AddOrderRequest",
+  "description": "AddOrderRequest schema from Kraken Spot REST API",
+  "allOf": [
+    {
+      "type": "object",
+      "description": "All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.",
+      "required": [
+        "nonce"
+      ],
+      "properties": {
+        "nonce": {
+          "type": "integer",
+          "format": "int64",
+          "example": 1717000000000
+        },
+        "otp": {
+          "type": "string",
+          "description": "Two-factor password / OTP if the key is OTP-protected.",
+          "example": "123456"
+        }
+      }
+    },
+    {
+      "type": "object",
+      "required": [
+        "ordertype",
+        "type",
+        "volume",
+        "pair"
+      ],
+      "properties": {
+        "userref": {
+          "type": "integer",
+          "example": 1
+        },
+        "cl_ord_id": {
+          "type": "string",
+          "example": "OQCLML-BW3P3-BUCMWZ"
+        },
+        "ordertype": {
+          "type": "string",
+          "enum": [
+            "market",
+            "limit",
+            "iceberg",
+            "stop-loss",
+            "take-profit",
+            "stop-loss-limit",
+            "take-profit-limit",
+            "trailing-stop",
+            "trailing-stop-limit",
+            "settle-position"
+          ],
+          "example": "market"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "buy",
+            "sell"
+          ],
+          "example": "buy"
+        },
+        "volume": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "displayvol": {
+          "type": "string",
+          "description": "For iceberg orders the visible part of the order.",
+          "example": "0.01"
+        },
+        "pair": {
+          "type": "string",
+          "example": "XBTUSD"
+        },
+        "price": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "price2": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "trigger": {
+          "type": "string",
+          "enum": [
+            "last",
+            "index"
+          ],
+          "example": "last"
+        },
+        "leverage": {
+          "type": "string",
+          "example": "none"
+        },
+        "reduce_only": {
+          "type": "boolean",
+          "example": true
+        },
+        "stptype": {
+          "type": "string",
+          "enum": [
+            "cancel-newest",
+            "cancel-oldest",
+            "cancel-both"
+          ],
+          "example": "cancel-newest"
+        },
+        "oflags": {
+          "type": "string",
+          "description": "Comma-delimited flags (post",
+          "fcib": null,
+          "fciq": null,
+          "nompp": null,
+          "viqc).": null,
+          "example": "string"
+        },
+        "timeinforce": {
+          "type": "string",
+          "enum": [
+            "GTC",
+            "IOC",
+            "GTD"
+          ],
+          "example": "GTC"
+        },
+        "starttm": {
+          "type": "string",
+          "example": "string"
+        },
+        "expiretm": {
+          "type": "string",
+          "example": "string"
+        },
+        "close[ordertype]": {
+          "type": "string",
+          "example": "string"
+        },
+        "close[price]": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "close[price2]": {
+          "type": "string",
+          "example": "0.01"
+        },
+        "deadline": {
+          "type": "string",
+          "example": "string"
+        },
+        "validate": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    }
+  ]
+}

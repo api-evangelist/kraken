@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/kraken/refs/heads/main/json-schema/spot-rest-asset-info-schema.json",
+  "title": "AssetInfo",
+  "description": "AssetInfo schema from Kraken Spot REST API",
+  "type": "object",
+  "properties": {
+    "aclass": {
+      "type": "string",
+      "example": "string"
+    },
+    "altname": {
+      "type": "string",
+      "example": "string"
+    },
+    "decimals": {
+      "type": "integer",
+      "example": 1
+    },
+    "display_decimals": {
+      "type": "integer",
+      "example": 1
+    },
+    "collateral_value": {
+      "type": "number",
+      "example": 0.01
+    },
+    "status": {
+      "type": "string",
+      "example": "string"
+    }
+  }
+}
