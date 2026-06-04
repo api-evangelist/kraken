@@ -329,6 +329,39 @@ apis:
       - type: Documentation
         url: https://docs.kraken.com/api/docs/category/prime/
 common:
+  - type: ArazzoWorkflows
+    url: arazzo/
+    workflows:
+    - url: arazzo/kraken-amend-open-order-workflow.yml
+      name: Kraken Amend an Open Order
+      summary: List open orders, amend one in place, then confirm the new terms.
+    - url: arazzo/kraken-balance-aware-buy-workflow.yml
+      name: Kraken Balance-Aware Spot Buy
+      summary: Read the account balance and live ticker, then branch on funding before buying.
+    - url: arazzo/kraken-cancel-and-replace-order-workflow.yml
+      name: Kraken Cancel and Replace a Spot Order
+      summary: Inspect an order, cancel it, then place a replacement order.
+    - url: arazzo/kraken-earn-allocate-and-confirm-workflow.yml
+      name: Kraken Allocate Earn Funds and Confirm
+      summary: Pick an Earn strategy, allocate funds, then poll until the allocation settles.
+    - url: arazzo/kraken-fund-futures-wallet-workflow.yml
+      name: Kraken Fund the Futures Wallet from Spot
+      summary: Check spot balance, transfer to the futures wallet, then confirm it landed.
+    - url: arazzo/kraken-futures-account-snapshot-workflow.yml
+      name: Kraken Futures Account Snapshot
+      summary: Pull account balances, open positions, and recent fills for a futures risk view.
+    - url: arazzo/kraken-place-futures-order-workflow.yml
+      name: Kraken Place a Futures Order
+      summary: Check instrument status and ticker, place a futures order, then confirm it is open.
+    - url: arazzo/kraken-preflight-place-spot-order-workflow.yml
+      name: Kraken Preflight and Place Spot Order
+      summary: Check system status and live ticker, place a spot order, then confirm it.
+    - url: arazzo/kraken-reconcile-trade-history-workflow.yml
+      name: Kraken Reconcile Spot Trade History
+      summary: Pull trade history, drill into specific trades, then tie them to ledger entries.
+    - url: arazzo/kraken-withdraw-funds-workflow.yml
+      name: Kraken Withdraw Funds with Fee Preview
+      summary: Check balance and withdrawal fees, withdraw to a saved address, then track status.
   - type: Website
     url: https://www.kraken.com/
   - type: Portal

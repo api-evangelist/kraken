@@ -1,0 +1,90 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Fund the Futures Wallet from Spot
+  summary: Check spot balance, transfer to the futures wallet, then confirm it landed.
+  description: >-
+    A cross-product funding flow spanning the Kraken Spot and Futures REST APIs.
+    It reads the spot account balance, transfers an asset from the Spot wallet to
+    the Futures wallet, and reads the futures accounts to confirm the funds
+    arrived. Because the WalletTransfer call lives in the Spot description and the
+    confirming Accounts call lives in the Futures description, both sources are
+    referenced. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+- name: krakenFuturesApi
+  url: ../openapi/kraken-futures-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: fund-futures-wallet
+  summary: Transfer an asset from the spot wallet to the futures wallet and confirm.
+  description: >-
+    Reads the spot balance, transfers the asset from Spot Wallet to Futures
+    Wallet, and reads futures accounts to confirm the balance change.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - asset
+    - amount
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed spot request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      asset:
+        type: string
+        description: The asset to move to the futures wallet (e.g. XBT).
+      amount:
+        type: string
+        description: The amount of the asset to transfer.
+  steps:
+  - stepId: readSpotBalance
+    description: >-
+      Read spot balances to confirm the asset is available before transferring.
+      Private Spot endpoints are signed and accept application/x-www-form-urlencoded
+      bodies.
+    operationId: getAccountBalance
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      balances: $response.body#/result
+  - stepId: transfer
+    description: >-
+      Transfer the asset from the Spot wallet to the Futures wallet.
+    operationId: walletTransfer
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+        from: 'Spot Wallet'
+        to: 'Futures Wallet'
+        amount: $inputs.amount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      refid: $response.body#/result/refid
+  - stepId: confirmFutures
+    description: >-
+      Read futures accounts to confirm the transferred funds have landed in the
+      futures wallet.
+    operationId: getAccounts
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      accounts: $response.body#/accounts
+  outputs:
+    refid: $steps.transfer.outputs.refid
+    accounts: $steps.confirmFutures.outputs.accounts

@@ -1,0 +1,112 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Allocate Earn Funds and Confirm
+  summary: Pick an Earn strategy, allocate funds, then poll until the allocation settles.
+  description: >-
+    A staking flow for the Kraken Spot REST API. It lists the Earn strategies
+    available for an asset, allocates the requested amount to a chosen strategy,
+    and then polls the allocate-status endpoint until the in-flight allocation is
+    no longer pending. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: earn-allocate-and-confirm
+  summary: Allocate funds to a Kraken Earn strategy and poll until it settles.
+  description: >-
+    Lists strategies for the asset, allocates the requested amount to the chosen
+    strategy id, and polls the allocate-status endpoint until pending clears.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - asset
+    - amount
+    - strategyId
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      asset:
+        type: string
+        description: The asset to allocate (e.g. XBT).
+      amount:
+        type: string
+        description: The amount of the asset to allocate to the strategy.
+      strategyId:
+        type: string
+        description: The Earn strategy id to allocate into.
+  steps:
+  - stepId: listStrategies
+    description: >-
+      List the Earn strategies available for the asset so the caller can confirm
+      the chosen strategy id is offered. Private Spot endpoints are signed and
+      accept application/x-www-form-urlencoded bodies.
+    operationId: listEarnStrategies
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      strategies: $response.body#/result/items
+  - stepId: allocate
+    description: >-
+      Allocate the requested amount into the chosen strategy. The call is
+      asynchronous; a true result means the allocation request was accepted.
+    operationId: allocateEarnFunds
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        amount: $inputs.amount
+        strategy_id: $inputs.strategyId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      accepted: $response.body#/result
+  - stepId: pollStatus
+    description: >-
+      Poll the allocate-status endpoint until the in-flight allocation for the
+      strategy is no longer pending. Retries on a pending result.
+    operationId: getEarnAllocateStatus
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        strategy_id: $inputs.strategyId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pending: $response.body#/result/pending
+    onSuccess:
+    - name: settled
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.result.pending == false
+        type: jsonpath
+    onFailure:
+    - name: retryWhilePending
+      type: retry
+      retryAfter: 5
+      retryLimit: 12
+      criteria:
+      - context: $response.body
+        condition: $.result.pending == true
+        type: jsonpath
+  outputs:
+    strategies: $steps.listStrategies.outputs.strategies
+    accepted: $steps.allocate.outputs.accepted
+    pending: $steps.pollStatus.outputs.pending

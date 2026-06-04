@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Cancel and Replace a Spot Order
+  summary: Inspect an order, cancel it, then place a replacement order.
+  description: >-
+    A reprice flow for the Kraken Spot REST API for cases where an in-place
+    amendment is not appropriate. It queries the existing order, cancels it, and
+    on a confirmed cancellation submits a fresh order with new terms. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: cancel-and-replace-order
+  summary: Cancel a resting spot order and submit a replacement.
+  description: >-
+    Reads the target order, cancels it, branches on a confirmed cancellation,
+    and places a new order with the supplied replacement terms.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - txid
+    - pair
+    - type
+    - ordertype
+    - volume
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      txid:
+        type: string
+        description: The transaction id of the order to cancel.
+      pair:
+        type: string
+        description: The asset pair for the replacement order (e.g. XBTUSD).
+      type:
+        type: string
+        description: Direction of the replacement order, buy or sell.
+      ordertype:
+        type: string
+        description: Type of the replacement order (market, limit, etc.).
+      volume:
+        type: string
+        description: Volume of the replacement order in base-asset terms.
+      price:
+        type: string
+        description: Limit price for the replacement order.
+  steps:
+  - stepId: inspectOrder
+    description: >-
+      Query the existing order to confirm its current terms before cancelling.
+      Private Spot endpoints are signed and accept application/x-www-form-urlencoded
+      bodies.
+    operationId: queryOrdersInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $inputs.txid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      orders: $response.body#/result
+  - stepId: cancel
+    description: >-
+      Cancel the order by transaction id. The result count reflects how many
+      orders were cancelled.
+    operationId: cancelOrder
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $inputs.txid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      count: $response.body#/result/count
+    onSuccess:
+    - name: cancelled
+      type: goto
+      stepId: replace
+      criteria:
+      - context: $response.body
+        condition: $.result.count > 0
+        type: jsonpath
+    - name: nothingCancelled
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.result.count == 0
+        type: jsonpath
+  - stepId: replace
+    description: >-
+      Place the replacement order with the new terms once the original has been
+      confirmed cancelled.
+    operationId: addOrder
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        pair: $inputs.pair
+        type: $inputs.type
+        ordertype: $inputs.ordertype
+        volume: $inputs.volume
+        price: $inputs.price
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      txid: $response.body#/result/txid
+      descr: $response.body#/result/descr
+  outputs:
+    cancelledCount: $steps.cancel.outputs.count
+    replacementTxid: $steps.replace.outputs.txid

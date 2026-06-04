@@ -1,0 +1,117 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Preflight and Place Spot Order
+  summary: Check system status and live ticker, place a spot order, then confirm it.
+  description: >-
+    A defensive order-entry flow for the Kraken Spot REST API. Before committing
+    capital the workflow confirms the exchange is online, reads the live ticker
+    for the target pair so the caller can price against the current bid/ask, then
+    submits the order and immediately queries it back by transaction id to
+    confirm acceptance. Every step spells out its request inline so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: preflight-place-spot-order
+  summary: Verify the exchange is online and priced, place a spot order, and confirm it.
+  description: >-
+    Reads system status and the current ticker for the pair, submits a single
+    order via AddOrder, and queries the resulting transaction id to confirm the
+    order was accepted.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - pair
+    - ordertype
+    - type
+    - volume
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce (typically a millisecond timestamp) for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      pair:
+        type: string
+        description: The asset pair to trade (e.g. XBTUSD).
+      ordertype:
+        type: string
+        description: Order type (market, limit, stop-loss, take-profit, etc.).
+      type:
+        type: string
+        description: Order direction, buy or sell.
+      volume:
+        type: string
+        description: Order volume in base-asset terms.
+      price:
+        type: string
+        description: Limit price; required for limit and stop order types.
+  steps:
+  - stepId: checkStatus
+    description: >-
+      Confirm the exchange is operational before trading. A status other than
+      online (maintenance, cancel_only, post_only) is a signal to abort.
+    operationId: getSystemStatus
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      status: $response.body#/result/status
+  - stepId: readTicker
+    description: >-
+      Read the live ticker for the pair so the caller can price the order against
+      the current best bid and ask.
+    operationId: getTickerInformation
+    parameters:
+    - name: pair
+      in: query
+      value: $inputs.pair
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      ticker: $response.body#/result
+  - stepId: placeOrder
+    description: >-
+      Submit the order. Private Spot endpoints are signed and accept
+      application/x-www-form-urlencoded bodies; the nonce must increase on every
+      call.
+    operationId: addOrder
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        pair: $inputs.pair
+        ordertype: $inputs.ordertype
+        type: $inputs.type
+        volume: $inputs.volume
+        price: $inputs.price
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      txid: $response.body#/result/txid
+      descr: $response.body#/result/descr
+  - stepId: confirmOrder
+    description: >-
+      Query the freshly created order by its transaction id to confirm it was
+      accepted and read back its current status.
+    operationId: queryOrdersInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $steps.placeOrder.outputs.txid
+        trades: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      orders: $response.body#/result
+  outputs:
+    systemStatus: $steps.checkStatus.outputs.status
+    txid: $steps.placeOrder.outputs.txid
+    orders: $steps.confirmOrder.outputs.orders

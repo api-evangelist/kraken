@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Amend an Open Order
+  summary: List open orders, amend one in place, then confirm the new terms.
+  description: >-
+    An in-place order-management flow for the Kraken Spot REST API. It lists the
+    account's open orders, amends a specific resting order without changing its
+    order id (AmendOrder preserves queue priority where possible), and queries
+    the order back to confirm the amended quantity or price took effect. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: amend-open-order
+  summary: Amend a resting spot order in place and confirm the change.
+  description: >-
+    Reads open orders, applies an in-place amendment (new quantity and/or limit
+    price) to the supplied order, and queries the order to confirm.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - txid
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      txid:
+        type: string
+        description: The transaction id of the resting order to amend.
+      order_qty:
+        type: string
+        description: New total order quantity in base-asset terms.
+      limit_price:
+        type: string
+        description: New limit price for the order.
+      post_only:
+        type: boolean
+        description: Whether the amended order must remain post-only.
+  steps:
+  - stepId: listOpenOrders
+    description: >-
+      List all open orders so the caller can confirm the target order is still
+      resting before amending it. Private Spot endpoints are signed and accept
+      application/x-www-form-urlencoded bodies.
+    operationId: getOpenOrders
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        trades: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      open: $response.body#/result/open
+  - stepId: amend
+    description: >-
+      Amend the resting order in place. AmendOrder accepts a JSON body and keeps
+      the original order id; only the supplied fields are changed.
+    operationId: amendOrder
+    requestBody:
+      contentType: application/json
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $inputs.txid
+        order_qty: $inputs.order_qty
+        limit_price: $inputs.limit_price
+        post_only: $inputs.post_only
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      amendId: $response.body#/result/amend_id
+  - stepId: confirm
+    description: >-
+      Query the order back by transaction id to confirm the amendment took
+      effect.
+    operationId: queryOrdersInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $inputs.txid
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      orders: $response.body#/result
+  outputs:
+    amendId: $steps.amend.outputs.amendId
+    orders: $steps.confirm.outputs.orders

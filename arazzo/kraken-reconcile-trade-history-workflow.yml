@@ -1,0 +1,104 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Reconcile Spot Trade History
+  summary: Pull trade history, drill into specific trades, then tie them to ledger entries.
+  description: >-
+    A reconciliation flow for the Kraken Spot REST API. It pulls recent trade
+    history, queries detailed information for a specific set of trade ids, and
+    reads the ledger so the caller can tie executed trades back to the cash and
+    fee movements they produced. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: reconcile-trade-history
+  summary: Reconcile spot trades against ledger entries for a period.
+  description: >-
+    Reads trade history, fetches detail for the supplied trade ids, and reads
+    the ledger so trades can be matched to the resulting balance movements.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - txid
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      txid:
+        type: string
+        description: Comma-delimited trade ids to query in detail (max 20).
+      asset:
+        type: string
+        description: Asset to scope the ledger query to (e.g. XBT).
+      start:
+        type: integer
+        description: Unix timestamp lower bound for the history and ledger windows.
+      end:
+        type: integer
+        description: Unix timestamp upper bound for the history and ledger windows.
+  steps:
+  - stepId: tradesHistory
+    description: >-
+      Pull recent trade history for the account. Private Spot endpoints are
+      signed and accept application/x-www-form-urlencoded bodies.
+    operationId: getTradesHistory
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        type: all
+        trades: true
+        start: $inputs.start
+        end: $inputs.end
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      trades: $response.body#/result/trades
+      count: $response.body#/result/count
+  - stepId: tradeDetail
+    description: >-
+      Query detailed information for the supplied trade ids to inspect fees,
+      prices, and the orders that produced them.
+    operationId: queryTradesInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        txid: $inputs.txid
+        trades: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      tradeDetail: $response.body#/result
+  - stepId: ledger
+    description: >-
+      Read ledger entries over the same window so trades can be matched to the
+      cash and fee movements they generated.
+    operationId: getLedgersInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+        type: trade
+        start: $inputs.start
+        end: $inputs.end
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      ledger: $response.body#/result/ledger
+  outputs:
+    tradeCount: $steps.tradesHistory.outputs.count
+    tradeDetail: $steps.tradeDetail.outputs.tradeDetail
+    ledger: $steps.ledger.outputs.ledger

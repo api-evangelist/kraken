@@ -1,0 +1,62 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Futures Account Snapshot
+  summary: Pull account balances, open positions, and recent fills for a futures risk view.
+  description: >-
+    A risk-monitoring flow for the Kraken Futures REST API. It reads account
+    balances and margin, the currently open positions, and recent execution
+    fills so the caller can assemble a single point-in-time view of futures
+    exposure. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenFuturesApi
+  url: ../openapi/kraken-futures-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: futures-account-snapshot
+  summary: Assemble balances, open positions, and recent fills into one futures view.
+  description: >-
+    Reads accounts, open positions, and recent fills in sequence to build a
+    point-in-time snapshot of futures exposure.
+  inputs:
+    type: object
+    properties:
+      lastFillTime:
+        type: string
+        description: Optional cursor; only return fills after this time (ISO 8601).
+  steps:
+  - stepId: accounts
+    description: >-
+      Read balances and margin for every futures account. Private Futures
+      endpoints are signed with the API key and secret.
+    operationId: getAccounts
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      accounts: $response.body#/accounts
+  - stepId: openPositions
+    description: >-
+      Read currently open futures positions to measure directional exposure.
+    operationId: getOpenPositionsFutures
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      positions: $response.body#/result
+  - stepId: fills
+    description: >-
+      Read recent execution fills, optionally bounded by the supplied cursor, to
+      see what has executed since the last snapshot.
+    operationId: getFills
+    parameters:
+    - name: lastFillTime
+      in: query
+      value: $inputs.lastFillTime
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      fills: $response.body#/result
+  outputs:
+    accounts: $steps.accounts.outputs.accounts
+    positions: $steps.openPositions.outputs.positions
+    fills: $steps.fills.outputs.fills

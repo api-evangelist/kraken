@@ -1,0 +1,99 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Place a Futures Order
+  summary: Check instrument status and ticker, place a futures order, then confirm it is open.
+  description: >-
+    An order-entry flow for the Kraken Futures REST API. It confirms the
+    instrument is trading, reads the live ticker for the symbol to price the
+    order, submits the order via SendOrder, and lists open orders to confirm the
+    new order is resting on the book. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenFuturesApi
+  url: ../openapi/kraken-futures-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: place-futures-order
+  summary: Confirm the instrument is trading, place a futures order, and confirm it is open.
+  description: >-
+    Reads instrument status and the ticker for the symbol, submits a futures
+    order, and lists open orders to confirm acceptance.
+  inputs:
+    type: object
+    required:
+    - symbol
+    - orderType
+    - side
+    - size
+    properties:
+      symbol:
+        type: string
+        description: The futures instrument to trade (e.g. PI_XBTUSD).
+      orderType:
+        type: string
+        description: Futures order type (lmt, mkt, stp, take_profit, ioc).
+      side:
+        type: string
+        description: Order direction, buy or sell.
+      size:
+        type: number
+        description: Order size in contracts.
+      limitPrice:
+        type: string
+        description: Limit price; required for lmt orders.
+      cliOrdId:
+        type: string
+        description: Optional client order id for idempotency and later lookup.
+  steps:
+  - stepId: instrumentStatus
+    description: >-
+      Confirm the instrument is in a tradable state before submitting an order.
+    operationId: getInstrumentsStatus
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      result: $response.body#/result
+  - stepId: readTicker
+    description: >-
+      Read the live ticker for the symbol to price the order against the current
+      market.
+    operationId: getTickerForSymbol
+    parameters:
+    - name: symbol
+      in: path
+      value: $inputs.symbol
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      ticker: $response.body#/result
+  - stepId: sendOrder
+    description: >-
+      Submit the futures order. Private Futures endpoints are signed and accept
+      application/x-www-form-urlencoded bodies.
+    operationId: sendOrder
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        orderType: $inputs.orderType
+        symbol: $inputs.symbol
+        side: $inputs.side
+        size: $inputs.size
+        limitPrice: $inputs.limitPrice
+        cliOrdId: $inputs.cliOrdId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      sendStatus: $response.body#/result
+  - stepId: confirmOpen
+    description: >-
+      List open orders to confirm the new order is resting on the book.
+    operationId: getOpenOrdersFutures
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      openOrders: $response.body#/result
+  outputs:
+    sendStatus: $steps.sendOrder.outputs.sendStatus
+    openOrders: $steps.confirmOpen.outputs.openOrders

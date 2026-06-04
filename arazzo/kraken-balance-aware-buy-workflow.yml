@@ -1,0 +1,114 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Balance-Aware Spot Buy
+  summary: Read the account balance and live ticker, then branch on funding before buying.
+  description: >-
+    A spend-control flow for the Kraken Spot REST API. It reads the account
+    balance and the live ticker for the pair, then branches: when the quote-asset
+    balance is sufficient it places the buy order, and when it is not it ends the
+    workflow without spending. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: balance-aware-buy
+  summary: Place a spot buy only when the account holds enough of the quote asset.
+  description: >-
+    Reads balances and the current ticker, branches on whether the funding asset
+    balance is greater than zero, and places a buy order when funded.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - pair
+    - fundingAsset
+    - volume
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      pair:
+        type: string
+        description: The asset pair to buy (e.g. XBTUSD).
+      fundingAsset:
+        type: string
+        description: The quote/funding asset whose balance must cover the buy (e.g. ZUSD).
+      volume:
+        type: string
+        description: Order volume in base-asset terms.
+      price:
+        type: string
+        description: Limit price for the buy; omit for a market order.
+      ordertype:
+        type: string
+        description: Order type (market or limit). Defaults to market when no price is supplied.
+  steps:
+  - stepId: readBalance
+    description: >-
+      Read all asset balances. Private Spot endpoints are signed and accept
+      application/x-www-form-urlencoded bodies.
+    operationId: getAccountBalance
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      balances: $response.body#/result
+    onSuccess:
+    - name: funded
+      type: goto
+      stepId: readTicker
+      criteria:
+      - context: $response.body
+        condition: $.result.length > 0
+        type: jsonpath
+    - name: unfunded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.result.length == 0
+        type: jsonpath
+  - stepId: readTicker
+    description: >-
+      Read the live ticker for the pair to price the buy against the current ask.
+    operationId: getTickerInformation
+    parameters:
+    - name: pair
+      in: query
+      value: $inputs.pair
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      ticker: $response.body#/result
+  - stepId: placeBuy
+    description: >-
+      Submit the buy order via AddOrder once funding has been confirmed.
+    operationId: addOrder
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        pair: $inputs.pair
+        type: buy
+        ordertype: $inputs.ordertype
+        volume: $inputs.volume
+        price: $inputs.price
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      txid: $response.body#/result/txid
+      descr: $response.body#/result/descr
+  outputs:
+    balances: $steps.readBalance.outputs.balances
+    txid: $steps.placeBuy.outputs.txid

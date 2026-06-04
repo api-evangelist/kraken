@@ -1,0 +1,118 @@
+arazzo: 1.0.1
+info:
+  title: Kraken Withdraw Funds with Fee Preview
+  summary: Check balance and withdrawal fees, withdraw to a saved address, then track status.
+  description: >-
+    A safe withdrawal flow for the Kraken Spot REST API. It reads the account
+    balance, previews the fee and limit for the chosen withdrawal address (key),
+    submits the withdrawal, and then reads recent withdrawal statuses so the
+    caller can track the resulting transfer by its reference id. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: krakenSpotApi
+  url: ../openapi/kraken-spot-rest-openapi.yml
+  type: openapi
+workflows:
+- workflowId: withdraw-funds
+  summary: Preview fees, withdraw to a saved address, and track the withdrawal.
+  description: >-
+    Reads balances, previews withdrawal fee and limit for the asset and key,
+    submits the withdrawal, and lists recent withdrawal statuses for the asset.
+  inputs:
+    type: object
+    required:
+    - nonce
+    - asset
+    - key
+    - amount
+    properties:
+      nonce:
+        type: string
+        description: Ever-increasing nonce for the signed request.
+      otp:
+        type: string
+        description: One-time password if two-factor is enabled on the API key.
+      asset:
+        type: string
+        description: The asset to withdraw (e.g. XBT).
+      key:
+        type: string
+        description: The name of the pre-configured withdrawal address (withdrawal key).
+      amount:
+        type: string
+        description: The amount of the asset to withdraw.
+      address:
+        type: string
+        description: Optional explicit destination address when the key allows it.
+  steps:
+  - stepId: readBalance
+    description: >-
+      Read account balances to confirm funds are available. Private Spot
+      endpoints are signed and accept application/x-www-form-urlencoded bodies.
+    operationId: getAccountBalance
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      balances: $response.body#/result
+  - stepId: previewFee
+    description: >-
+      Preview the fee and limit for the withdrawal to the chosen key before
+      committing.
+    operationId: getWithdrawalInfo
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+        key: $inputs.key
+        amount: $inputs.amount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      fee: $response.body#/result/fee
+      limit: $response.body#/result/limit
+  - stepId: withdraw
+    description: >-
+      Submit the withdrawal. The result reference id is used to track the
+      transfer.
+    operationId: withdrawFunds
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+        key: $inputs.key
+        address: $inputs.address
+        amount: $inputs.amount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      refid: $response.body#/result/refid
+  - stepId: trackStatus
+    description: >-
+      List recent withdrawal statuses for the asset so the caller can locate the
+      new withdrawal by its reference id and watch it progress.
+    operationId: getWithdrawalStatus
+    requestBody:
+      contentType: application/x-www-form-urlencoded
+      payload:
+        nonce: $inputs.nonce
+        otp: $inputs.otp
+        asset: $inputs.asset
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      withdrawals: $response.body#/result
+  outputs:
+    fee: $steps.previewFee.outputs.fee
+    refid: $steps.withdraw.outputs.refid
+    withdrawals: $steps.trackStatus.outputs.withdrawals
