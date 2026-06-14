@@ -1,14 +1,12 @@
 aid: kraken
 name: Kraken
-description: >-
-  Kraken is one of the world's largest and longest-running cryptocurrency
-  exchanges, founded in 2011 and headquartered in San Francisco. Kraken offers
-  Spot and Futures trading, staking and yield through Kraken Earn, NFT
-  marketplace access, OTC services, custody, prime brokerage, and a B2B Embed
-  surface for partners. Kraken exposes a comprehensive set of APIs spanning
-  REST, WebSocket, and FIX across the Spot exchange, Futures exchange (Kraken
-  Futures, formerly Crypto Facilities), institutional services (Custody, OTC,
-  Prime), and partner integration surfaces (Embed, Ramp, OAuth).
+description: Kraken is one of the world's largest and longest-running cryptocurrency
+  exchanges, founded in 2011 and headquartered in San Francisco. Kraken offers Spot
+  and Futures trading, staking and yield through Kraken Earn, NFT marketplace access,
+  OTC services, custody, prime brokerage, and a B2B Embed surface for partners. Kraken
+  exposes a comprehensive set of APIs spanning REST, WebSocket, and FIX across the
+  Spot exchange, Futures exchange (Kraken Futures, formerly Crypto Facilities), institutional
+  services (Custody, OTC, Prime), and partner integration surfaces (Embed, Ramp, OAuth).
 url: https://docs.kraken.com/api/
 specificationVersion: '0.20'
 created: '2026-05-28'
@@ -20,575 +18,502 @@ x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 image: https://assets.kraken.com/marketing/web/kraken-logo.svg
 tags:
-  - Cryptocurrency
-  - Exchange
+- Cryptocurrency
+- Exchange
+- Trading
+- Market Data
+- Spot Trading
+- Futures
+- Derivatives
+- Staking
+- Earn
+- NFT
+- WebSocket
+- FIX
+- Custody
+- OTC
+- Prime Brokerage
+- Embed
+- OAuth
+- Public APIs
+apis:
+- name: Kraken Spot REST API
+  description: Public and private REST endpoints for the Kraken Spot exchange. Covers
+    public market data (server time, system status, asset info, ticker, OHLC, order
+    book depth, recent trades, recent spreads), private account data (balances, trade
+    balance, open orders, closed orders, query orders, trades history, query trades,
+    open positions, ledgers, query ledgers, trade volume, API key info), trading (add
+    order, edit order, amend order, cancel order, cancel all, cancel all orders after,
+    add order batch, cancel order batch), funding (deposit methods, deposit addresses,
+    deposit status, withdraw info, withdraw, withdraw status, withdrawal cancel, wallet
+    transfer), subaccounts (create, transfer), Earn (allocate, deallocate, allocations,
+    allocation status, strategies), and the WebSocket token endpoint used to authorize
+    private WebSocket subscriptions.
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Spot
+  - REST
   - Trading
   - Market Data
-  - Spot Trading
-  - Futures
-  - Derivatives
-  - Staking
+  - Funding
   - Earn
-  - NFT
-  - WebSocket
-  - FIX
-  - Custody
-  - OTC
-  - Prime Brokerage
-  - Embed
-  - OAuth
-  - Public APIs
-apis:
-  - name: Kraken Spot REST API
-    description: >-
-      Public and private REST endpoints for the Kraken Spot exchange. Covers
-      public market data (server time, system status, asset info, ticker, OHLC,
-      order book depth, recent trades, recent spreads), private account data
-      (balances, trade balance, open orders, closed orders, query orders,
-      trades history, query trades, open positions, ledgers, query ledgers,
-      trade volume, API key info), trading (add order, edit order, amend order,
-      cancel order, cancel all, cancel all orders after, add order batch,
-      cancel order batch), funding (deposit methods, deposit addresses, deposit
-      status, withdraw info, withdraw, withdraw status, withdrawal cancel,
-      wallet transfer), subaccounts (create, transfer), Earn (allocate,
-      deallocate, allocations, allocation status, strategies), and the
-      WebSocket token endpoint used to authorize private WebSocket
-      subscriptions.
-    humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
-    baseURL: https://api.kraken.com
-    tags:
-      - Spot
-      - REST
-      - Trading
-      - Market Data
-      - Funding
-      - Earn
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/rest-api/get-server-time
-      - type: APIReference
-        url: https://docs.kraken.com/api/docs/category/spot-rest/
-      - type: Authentication
-        url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
-      - type: RateLimits
-        url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
-      - type: OpenAPI
-        url: openapi/kraken-spot-rest-openapi.yml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-market-data.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-account-data.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-trading.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-funding.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-subaccounts.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-earn.yaml
-      - type: NaftikoCapability
-        url: capabilities/spot-rest-websocket.yaml
-  - name: Kraken Spot WebSocket API v2
-    description: >-
-      Real-time market data and private user data over WebSocket v2 using
-      subscribe/unsubscribe semantics. Public channels include ticker (L1),
-      book (L2), trade, ohlc, instrument, and admin frames (status, heartbeat,
-      ping/pong). Authenticated channels include executions and balances.
-      Trading methods include add_order, amend_order, edit_order, cancel_order,
-      cancel_all, cancel_on_disconnect, batch_add, and batch_cancel. The
-      authenticated endpoint requires a token obtained from the Spot REST
-      GetWebSocketsToken operation.
-    humanURL: https://docs.kraken.com/api/docs/websocket-v2/ping
-    baseURL: wss://ws.kraken.com/v2
-    tags:
-      - Spot
-      - WebSocket
-      - Market Data
-      - Trading
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/websocket-v2/
-      - type: APIReference
-        url: https://docs.kraken.com/api/docs/websocket-v2/ping
-      - type: Authentication
-        url: https://docs.kraken.com/api/docs/guides/spot-ws-auth
-      - type: AsyncAPI
-        url: asyncapi/kraken-asyncapi.yml
-      - type: NaftikoCapability
-        url: capabilities/spot-websocket-v2-streams.yaml
-  - name: Kraken Spot WebSocket API v1 (Legacy)
-    description: >-
-      Legacy Kraken Spot WebSocket API. Continues to operate alongside v2 but
-      v2 is the recommended path for new integrations. Public channels include
-      ticker, book, trade, ohlc, spread; private channels include ownTrades and
-      openOrders.
-    humanURL: https://docs.kraken.com/api/docs/category/websocket-v1
-    baseURL: wss://ws.kraken.com
-    tags:
-      - Spot
-      - WebSocket
-      - Legacy
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/websocket-v1
-      - type: APIReference
-        url: https://docs.kraken.com/api/docs/websocket-v1/ping
-  - name: Kraken Futures REST API
-    description: >-
-      REST API for the Kraken Futures derivatives exchange (formerly Crypto
-      Facilities). Provides trading (send order, edit order, cancel order,
-      cancel all, batch order), market data (instruments, tickers, orderbook,
-      history, recent orders), account data (accounts, open positions, open
-      orders, fills, notifications, account log, transfers, withdrawal),
-      history (account history, execution events, order events, trigger
-      events, market history), charts (candles, analytics), and API key
-      management endpoints.
-    humanURL: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
-    baseURL: https://futures.kraken.com/derivatives/api/v3
-    tags:
-      - Futures
-      - Derivatives
-      - REST
-      - Trading
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
-      - type: APIReference
-        url: https://docs.kraken.com/api/docs/category/futures-api/
-      - type: Authentication
-        url: https://docs.kraken.com/api/docs/guides/futures-api-auth
-      - type: OpenAPI
-        url: openapi/kraken-futures-rest-openapi.yml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-market-data.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-account.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-trading.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-transfers.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-history.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-charts.yaml
-      - type: NaftikoCapability
-        url: capabilities/futures-rest-auth.yaml
-  - name: Kraken Futures WebSocket API
-    description: >-
-      Real-time market data and private user feeds for Kraken Futures over
-      WebSocket. Public feeds include trade, book, ticker, ticker_lite, heartbeat;
-      private feeds include fills, open_positions, open_orders, account_log,
-      notifications_auth, deposits_withdrawals.
-    humanURL: https://docs.kraken.com/api/docs/category/futures-websocket
-    baseURL: wss://futures.kraken.com/ws/v1
-    tags:
-      - Futures
-      - Derivatives
-      - WebSocket
-      - Market Data
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/futures-websocket
-      - type: APIReference
-        url: https://docs.kraken.com/api/docs/futures-websocket/feeds/heartbeat
-  - name: Kraken FIX API
-    description: >-
-      FIX 4.4 / 5.0 SP2 protocol access for Kraken Spot and Futures, used by
-      institutional and high-frequency clients. Provides order management
-      (NewOrderSingle, OrderCancelRequest, OrderCancelReplaceRequest, etc.) and
-      market data request flows (MarketDataRequest, MarketDataSnapshot/Refresh).
-    humanURL: https://docs.kraken.com/api/docs/category/fix-api/
-    baseURL: colo-london.vip-fix.kraken.com
-    tags:
-      - FIX
-      - Institutional
-      - Spot
-      - Futures
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/fix-api/
-      - type: Authentication
-        url: https://docs.kraken.com/api/docs/guides/fix-api-auth
-  - name: Kraken NFT API
-    description: >-
-      REST API for Kraken's NFT marketplace surfaces: collections, asset
-      lookups, listings, offers, watchlist, and user portfolio views. The NFT
-      API is consumed alongside the Spot REST API using the same API key
-      authentication scheme.
-    humanURL: https://docs.kraken.com/api/docs/category/nft-rest/
-    baseURL: https://api.kraken.com
-    tags:
-      - NFT
-      - Marketplace
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/nft-rest/
-  - name: Kraken Earn API
-    description: >-
-      REST endpoints for Kraken Earn (staking, yield, rewards). Lists
-      strategies, allocates funds to a strategy, deallocates funds, and
-      surfaces allocation status and reward history.
-    humanURL: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
-    baseURL: https://api.kraken.com
-    tags:
-      - Earn
-      - Staking
-      - Yield
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
-  - name: Kraken Embed REST API
-    description: >-
-      B2B integration API enabling partners to embed Kraken trading, custody,
-      and Earn capabilities into their own products. Provides user management,
-      assets, deposits, withdrawals, quote-based and custom orders, portfolio,
-      Earn features, and webhooks for real-time event delivery.
-    humanURL: https://docs.kraken.com/api/docs/category/embed/
-    baseURL: https://embed.kraken.com
-    tags:
-      - Embed
-      - B2B
-      - Partner
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/embed/
-  - name: Kraken OAuth REST API
-    description: >-
-      OAuth 2.0 authorization surface allowing third-party applications to
-      request scoped delegated access to a Kraken account holder's data and
-      trading capabilities.
-    humanURL: https://docs.kraken.com/api/docs/category/oauth/
-    baseURL: https://www.kraken.com/oauth
-    tags:
-      - OAuth
-      - Authorization
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/oauth/
-  - name: Kraken Ramp REST API
-    description: >-
-      Fiat on/off-ramp API surface that lets partner applications offer crypto
-      purchase and conversion experiences powered by Kraken liquidity.
-    humanURL: https://docs.kraken.com/api/docs/category/ramp/
-    baseURL: https://ramp.kraken.com
-    tags:
-      - Ramp
-      - On-Ramp
-      - Off-Ramp
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/ramp/
-  - name: Kraken Custody REST API
-    description: >-
-      Institutional custody API providing programmatic access to vaulting,
-      sub-vaulting, wallet generation, transfers, and policy/governance
-      configuration for assets held in Kraken Custody.
-    humanURL: https://docs.kraken.com/api/docs/category/custody/
-    baseURL: https://custody.kraken.com
-    tags:
-      - Custody
-      - Institutional
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/custody/
-  - name: Kraken OTC REST API
-    description: >-
-      Over-the-counter execution API for institutional clients to request
-      quotes (RFQ), execute block trades, and retrieve OTC trade history.
-    humanURL: https://docs.kraken.com/api/docs/category/otc/
-    baseURL: https://otc.kraken.com
-    tags:
-      - OTC
-      - Institutional
-      - RFQ
-      - REST
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/otc/
-  - name: Kraken Prime REST + WebSocket + FIX API
-    description: >-
-      Prime brokerage API surface (REST, WebSocket, FIX) for institutional
-      clients consolidating execution, custody, financing, and reporting under
-      a single relationship.
-    humanURL: https://docs.kraken.com/api/docs/category/prime/
-    baseURL: https://prime.kraken.com
-    tags:
-      - Prime
-      - Brokerage
-      - Institutional
-      - REST
-      - WebSocket
-      - FIX
-    properties:
-      - type: Documentation
-        url: https://docs.kraken.com/api/docs/category/prime/
-common:
-  - type: ArazzoWorkflows
-    url: arazzo/
-    workflows:
-    - url: arazzo/kraken-amend-open-order-workflow.yml
-      name: Kraken Amend an Open Order
-      summary: List open orders, amend one in place, then confirm the new terms.
-    - url: arazzo/kraken-balance-aware-buy-workflow.yml
-      name: Kraken Balance-Aware Spot Buy
-      summary: Read the account balance and live ticker, then branch on funding before buying.
-    - url: arazzo/kraken-cancel-and-replace-order-workflow.yml
-      name: Kraken Cancel and Replace a Spot Order
-      summary: Inspect an order, cancel it, then place a replacement order.
-    - url: arazzo/kraken-earn-allocate-and-confirm-workflow.yml
-      name: Kraken Allocate Earn Funds and Confirm
-      summary: Pick an Earn strategy, allocate funds, then poll until the allocation settles.
-    - url: arazzo/kraken-fund-futures-wallet-workflow.yml
-      name: Kraken Fund the Futures Wallet from Spot
-      summary: Check spot balance, transfer to the futures wallet, then confirm it landed.
-    - url: arazzo/kraken-futures-account-snapshot-workflow.yml
-      name: Kraken Futures Account Snapshot
-      summary: Pull account balances, open positions, and recent fills for a futures risk view.
-    - url: arazzo/kraken-place-futures-order-workflow.yml
-      name: Kraken Place a Futures Order
-      summary: Check instrument status and ticker, place a futures order, then confirm it is open.
-    - url: arazzo/kraken-preflight-place-spot-order-workflow.yml
-      name: Kraken Preflight and Place Spot Order
-      summary: Check system status and live ticker, place a spot order, then confirm it.
-    - url: arazzo/kraken-reconcile-trade-history-workflow.yml
-      name: Kraken Reconcile Spot Trade History
-      summary: Pull trade history, drill into specific trades, then tie them to ledger entries.
-    - url: arazzo/kraken-withdraw-funds-workflow.yml
-      name: Kraken Withdraw Funds with Fee Preview
-      summary: Check balance and withdrawal fees, withdraw to a saved address, then track status.
-  - type: Website
-    url: https://www.kraken.com/
-  - type: Portal
-    url: https://docs.kraken.com/api/
-  - type: GettingStarted
-    url: https://docs.kraken.com/api/docs/guides/global-intro
-  - type: SignUp
-    url: https://www.kraken.com/sign-up
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
   - type: Authentication
     url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
-  - type: Pricing
-    url: https://www.kraken.com/features/fee-schedule
-  - type: TermsOfService
-    url: https://www.kraken.com/legal
-  - type: PrivacyPolicy
-    url: https://www.kraken.com/legal/privacy
-  - type: Blog
-    url: https://blog.kraken.com/
-  - type: StatusPage
-    url: https://status.kraken.com/
-  - type: Support
-    url: https://support.kraken.com/
-  - type: FAQ
-    url: https://support.kraken.com/categories/360001393671-Trading-Funding
-  - type: GitHubOrganization
-    url: https://github.com/krakenfx
-  - type: GitHubOrganization
-    url: https://github.com/CryptoFacilities
-  - type: SDK
-    name: Kraken Go SDK (Spot + Derivatives)
-    url: https://github.com/krakenfx/api-go
-  - type: SDK
-    name: Kraken PHP API Client (Spot)
-    url: https://github.com/krakenfx/kraken-api-client
-  - type: SDK
-    name: Kraken Python WebSocket Client
-    url: https://github.com/krakenfx/kraken-wsclient-py
-  - type: SDK
-    name: Crypto Facilities REST v3 Python (Futures)
-    url: https://github.com/CryptoFacilities/REST-v3-Python
-  - type: SDK
-    name: Crypto Facilities REST v3 Java (Futures)
-    url: https://github.com/CryptoFacilities/REST-v3-Java
-  - type: SDK
-    name: Crypto Facilities REST v3 C# (Futures)
-    url: https://github.com/CryptoFacilities/REST-v3-CSharp
-  - type: SDK
-    name: Crypto Facilities REST v3 Node.js (Futures)
-    url: https://github.com/CryptoFacilities/REST-v3-NodeJs
-  - type: SDK
-    name: Crypto Facilities REST v3 Kotlin (Futures)
-    url: https://github.com/CryptoFacilities/REST-v3-kotlin
-  - type: SDK
-    name: Crypto Facilities WebSocket v1 Python (Futures)
-    url: https://github.com/CryptoFacilities/WebSocket-v1-Python
-  - type: SDK
-    name: Crypto Facilities WebSocket v1 C# (Futures)
-    url: https://github.com/CryptoFacilities/WebSocket-v1-CSharp
-  - type: SDK
-    name: Crypto Facilities WebSocket v1 Rust (Futures)
-    url: https://github.com/CryptoFacilities/WebSocket-v1-Rust
-  - type: CLI
-    name: Kraken CLI (Rust, AI-native, MCP-capable)
-    url: https://github.com/krakenfx/kraken-cli
-  - type: Tools
-    name: Kraken CLI MCP Server (official)
-    description: >-
-      The Kraken CLI (krakenfx/kraken-cli) embeds a Model Context Protocol
-      server over stdio so LLM agents can call Kraken Spot, Futures, and Earn
-      endpoints through tool-calling without writing a custom HTTP client.
-    url: https://github.com/krakenfx/kraken-cli
-  - type: Tools
-    name: oilst/kraken-mcp (community FastMCP server)
-    description: >-
-      Community-maintained FastMCP server exposing the Kraken Pro REST API as
-      tools for the Gemini CLI and other MCP-compatible agent runtimes.
-    url: https://github.com/oilst/kraken-mcp
-  - type: Tools
-    name: Kraken Wallet (self-custody)
-    url: https://github.com/krakenfx/wallet
-  - type: SpectralRules
-    url: rules/kraken-rules.yml
-  - type: Vocabulary
-    url: vocabulary/kraken-vocabulary.yml
-  - type: JSON-LD
-    url: json-ld/kraken-context.jsonld
-  - type: Plans
-    url: plans/kraken-plans-pricing.yml
   - type: RateLimits
-    url: rate-limits/kraken-rate-limits.yml
-  - type: FinOps
-    url: finops/kraken-finops.yml
-  - type: Features
-    data:
-      - name: Spot Trading
-        description: >-
-          Spot trading on 200+ cryptocurrency pairs with limit, market, stop
-          loss, take profit, stop-loss-limit, take-profit-limit, settle
-          position, trailing stop, and iceberg order types.
-      - name: Margin Trading
-        description: >-
-          Margin trading on supported pairs with leverage up to 5x for eligible
-          users in eligible jurisdictions.
-      - name: Futures Trading
-        description: >-
-          Perpetual and fixed-maturity futures on Bitcoin, Ethereum, and other
-          major assets via Kraken Futures.
-      - name: Kraken Earn (Staking and Yield)
-        description: >-
-          On-chain and off-chain staking plus opt-in bonded yield strategies
-          across supported proof-of-stake and DeFi assets.
-      - name: NFT Marketplace
-        description: >-
-          Browse, list, bid, and buy NFTs across Ethereum and Solana with
-          gas-free transactions and fiat settlement.
-      - name: Subaccounts
-        description: >-
-          Logical subaccount creation and inter-account transfers for
-          institutional and family-office structuring.
-      - name: Embed (B2B Integration)
-        description: >-
-          White-label trading, custody, and Earn primitives that partners can
-          embed into their own consumer or business products.
-      - name: OAuth Delegated Access
-        description: >-
-          OAuth 2.0 surface enabling third-party apps to act on a user's behalf
-          with scoped permissions.
-      - name: Co-located Connectivity
-        description: >-
-          Colocation endpoints in London (colo-london.*) for ultra-low-latency
-          access to Spot, Futures, FIX, and WebSocket surfaces.
-      - name: FIX Connectivity
-        description: >-
-          FIX 4.4 / 5.0 SP2 connectivity for institutional execution and
-          market data flows.
-      - name: WebSocket v2 with Authenticated Trading
-        description: >-
-          Modern WebSocket v2 surface supporting subscribe/unsubscribe for
-          market data and authenticated request/response trading methods.
-      - name: Cancel on Disconnect
-        description: >-
-          Automatic cancellation of resting orders when the trading session
-          terminates, protecting algorithmic strategies from runaway risk.
-  - type: UseCases
-    data:
-      - name: Algorithmic Spot Trading
-        description: >-
-          Build and operate automated trading strategies against Kraken Spot
-          using REST for order management and WebSocket v2 for low-latency
-          market data and execution streams.
-      - name: Cross-Exchange Arbitrage
-        description: >-
-          Use real-time order book and ticker feeds with low-latency colocation
-          endpoints to power arbitrage strategies across Kraken and other
-          venues.
-      - name: Derivatives Market Making
-        description: >-
-          Run market-making strategies on Kraken Futures using batched order
-          entry, WebSocket fills, and FIX for high-volume connectivity.
-      - name: Treasury and Custody Operations
-        description: >-
-          Manage corporate or fund treasury balances using Kraken Custody and
-          programmatic transfers, deposits, and withdrawals.
-      - name: Staking-as-a-Service
-        description: >-
-          Offer staking and yield products to end users via Kraken Earn
-          allocation/deallocation endpoints, exposed through your own product.
-      - name: Embedded Crypto Brokerage
-        description: >-
-          Partners (fintechs, neobanks, wallets) use Kraken Embed to add
-          trading, conversion, and custody capabilities to their own apps
-          without building exchange infrastructure.
-      - name: NFT Portfolio Management
-        description: >-
-          Use the NFT API to power portfolio dashboards, valuation feeds, and
-          collection-level analytics.
-      - name: AI Agent Trading
-        description: >-
-          Use the Kraken CLI's built-in MCP server (or the community
-          oilst/kraken-mcp) to let LLM agents place orders, manage positions,
-          and stream market data with tool-calling.
-      - name: Tax and Reporting Pipelines
-        description: >-
-          Pull trades history, ledgers, deposits, and withdrawals to drive
-          tax-lot accounting, regulatory reporting, and audit pipelines.
-  - type: Integrations
-    data:
-      - name: Crypto Facilities (Kraken Futures)
-        description: >-
-          Kraken Futures uses the Crypto Facilities REST v3 and WebSocket v1
-          protocols, with public GitHub example clients in multiple languages.
-      - name: Kraken Wallet
-        description: >-
-          Self-custody wallet that signs transactions locally; integrates with
-          dApps and uses Kraken-published OAuth helpers.
-      - name: Model Context Protocol
-        description: >-
-          The Kraken CLI ships an embedded MCP server so any MCP-compatible
-          agent runtime (Claude, Gemini, Cursor) can drive Kraken accounts.
-      - name: TradingView
-        description: >-
-          Kraken markets are available as a charting source on TradingView,
-          and Kraken Pro embeds TradingView charts in its web client.
-      - name: CCXT
-        description: >-
-          Kraken Spot is supported as a first-class exchange adapter in the
-          CCXT cryptocurrency exchange library.
-  - type: Solutions
-    data:
-      - name: Kraken
-        description: >-
-          The simplified Kraken consumer app for buying, selling, sending, and
-          staking crypto with a fixed 1.0% / 1.5% spread on instant and custom
-          orders.
-      - name: Kraken Pro
-        description: >-
-          The advanced trading platform with full Spot, Margin, and Futures
-          surfaces, volume-tiered maker/taker fees from 0.25%/0.40% down to
-          0.00%/0.10% at $10M+ 30-day USD volume.
-      - name: Kraken Institutional
-        description: >-
-          Institutional offering bundling Custody, OTC, Prime brokerage,
-          colocation, FIX, and dedicated relationship management.
-      - name: Kraken Embed
-        description: >-
-          B2B integration platform letting partners offer Kraken trading,
-          custody, and Earn primitives inside their own products.
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: OpenAPI
+    url: openapi/kraken-spot-rest-openapi.yml
+  - url: graphql/kraken-graphql.md
+    type: GraphQL
+- name: Kraken Spot WebSocket API v2
+  description: Real-time market data and private user data over WebSocket v2 using
+    subscribe/unsubscribe semantics. Public channels include ticker (L1), book (L2),
+    trade, ohlc, instrument, and admin frames (status, heartbeat, ping/pong). Authenticated
+    channels include executions and balances. Trading methods include add_order, amend_order,
+    edit_order, cancel_order, cancel_all, cancel_on_disconnect, batch_add, and batch_cancel.
+    The authenticated endpoint requires a token obtained from the Spot REST GetWebSocketsToken
+    operation.
+  humanURL: https://docs.kraken.com/api/docs/websocket-v2/ping
+  baseURL: wss://ws.kraken.com/v2
+  tags:
+  - Spot
+  - WebSocket
+  - Market Data
+  - Trading
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/websocket-v2/
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/websocket-v2/ping
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-ws-auth
+  - type: AsyncAPI
+    url: asyncapi/kraken-asyncapi.yml
+- name: Kraken Spot WebSocket API v1 (Legacy)
+  description: Legacy Kraken Spot WebSocket API. Continues to operate alongside v2
+    but v2 is the recommended path for new integrations. Public channels include ticker,
+    book, trade, ohlc, spread; private channels include ownTrades and openOrders.
+  humanURL: https://docs.kraken.com/api/docs/category/websocket-v1
+  baseURL: wss://ws.kraken.com
+  tags:
+  - Spot
+  - WebSocket
+  - Legacy
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/websocket-v1
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/websocket-v1/ping
+- name: Kraken Futures REST API
+  description: REST API for the Kraken Futures derivatives exchange (formerly Crypto
+    Facilities). Provides trading (send order, edit order, cancel order, cancel all,
+    batch order), market data (instruments, tickers, orderbook, history, recent orders),
+    account data (accounts, open positions, open orders, fills, notifications, account
+    log, transfers, withdrawal), history (account history, execution events, order
+    events, trigger events, market history), charts (candles, analytics), and API
+    key management endpoints.
+  humanURL: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  baseURL: https://futures.kraken.com/derivatives/api/v3
+  tags:
+  - Futures
+  - Derivatives
+  - REST
+  - Trading
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+  - type: OpenAPI
+    url: openapi/kraken-futures-rest-openapi.yml
+- name: Kraken Futures WebSocket API
+  description: Real-time market data and private user feeds for Kraken Futures over
+    WebSocket. Public feeds include trade, book, ticker, ticker_lite, heartbeat; private
+    feeds include fills, open_positions, open_orders, account_log, notifications_auth,
+    deposits_withdrawals.
+  humanURL: https://docs.kraken.com/api/docs/category/futures-websocket
+  baseURL: wss://futures.kraken.com/ws/v1
+  tags:
+  - Futures
+  - Derivatives
+  - WebSocket
+  - Market Data
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/futures-websocket
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/futures-websocket/feeds/heartbeat
+- name: Kraken FIX API
+  description: FIX 4.4 / 5.0 SP2 protocol access for Kraken Spot and Futures, used
+    by institutional and high-frequency clients. Provides order management (NewOrderSingle,
+    OrderCancelRequest, OrderCancelReplaceRequest, etc.) and market data request flows
+    (MarketDataRequest, MarketDataSnapshot/Refresh).
+  humanURL: https://docs.kraken.com/api/docs/category/fix-api/
+  baseURL: colo-london.vip-fix.kraken.com
+  tags:
+  - FIX
+  - Institutional
+  - Spot
+  - Futures
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/fix-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/fix-api-auth
+- name: Kraken NFT API
+  description: 'REST API for Kraken''s NFT marketplace surfaces: collections, asset
+    lookups, listings, offers, watchlist, and user portfolio views. The NFT API is
+    consumed alongside the Spot REST API using the same API key authentication scheme.'
+  humanURL: https://docs.kraken.com/api/docs/category/nft-rest/
+  baseURL: https://api.kraken.com
+  tags:
+  - NFT
+  - Marketplace
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/nft-rest/
+- name: Kraken Earn API
+  description: REST endpoints for Kraken Earn (staking, yield, rewards). Lists strategies,
+    allocates funds to a strategy, deallocates funds, and surfaces allocation status
+    and reward history.
+  humanURL: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
+  baseURL: https://api.kraken.com
+  tags:
+  - Earn
+  - Staking
+  - Yield
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
+- name: Kraken Embed REST API
+  description: B2B integration API enabling partners to embed Kraken trading, custody,
+    and Earn capabilities into their own products. Provides user management, assets,
+    deposits, withdrawals, quote-based and custom orders, portfolio, Earn features,
+    and webhooks for real-time event delivery.
+  humanURL: https://docs.kraken.com/api/docs/category/embed/
+  baseURL: https://embed.kraken.com
+  tags:
+  - Embed
+  - B2B
+  - Partner
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/embed/
+- name: Kraken OAuth REST API
+  description: OAuth 2.0 authorization surface allowing third-party applications to
+    request scoped delegated access to a Kraken account holder's data and trading
+    capabilities.
+  humanURL: https://docs.kraken.com/api/docs/category/oauth/
+  baseURL: https://www.kraken.com/oauth
+  tags:
+  - OAuth
+  - Authorization
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/oauth/
+- name: Kraken Ramp REST API
+  description: Fiat on/off-ramp API surface that lets partner applications offer crypto
+    purchase and conversion experiences powered by Kraken liquidity.
+  humanURL: https://docs.kraken.com/api/docs/category/ramp/
+  baseURL: https://ramp.kraken.com
+  tags:
+  - Ramp
+  - On-Ramp
+  - Off-Ramp
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/ramp/
+- name: Kraken Custody REST API
+  description: Institutional custody API providing programmatic access to vaulting,
+    sub-vaulting, wallet generation, transfers, and policy/governance configuration
+    for assets held in Kraken Custody.
+  humanURL: https://docs.kraken.com/api/docs/category/custody/
+  baseURL: https://custody.kraken.com
+  tags:
+  - Custody
+  - Institutional
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/custody/
+- name: Kraken OTC REST API
+  description: Over-the-counter execution API for institutional clients to request
+    quotes (RFQ), execute block trades, and retrieve OTC trade history.
+  humanURL: https://docs.kraken.com/api/docs/category/otc/
+  baseURL: https://otc.kraken.com
+  tags:
+  - OTC
+  - Institutional
+  - RFQ
+  - REST
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/otc/
+- name: Kraken Prime REST + WebSocket + FIX API
+  description: Prime brokerage API surface (REST, WebSocket, FIX) for institutional
+    clients consolidating execution, custody, financing, and reporting under a single
+    relationship.
+  humanURL: https://docs.kraken.com/api/docs/category/prime/
+  baseURL: https://prime.kraken.com
+  tags:
+  - Prime
+  - Brokerage
+  - Institutional
+  - REST
+  - WebSocket
+  - FIX
+  properties:
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/category/prime/
+common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/kraken/overview
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/kraken-amend-open-order-workflow.yml
+    name: Kraken Amend an Open Order
+    summary: List open orders, amend one in place, then confirm the new terms.
+  - url: arazzo/kraken-balance-aware-buy-workflow.yml
+    name: Kraken Balance-Aware Spot Buy
+    summary: Read the account balance and live ticker, then branch on funding before
+      buying.
+  - url: arazzo/kraken-cancel-and-replace-order-workflow.yml
+    name: Kraken Cancel and Replace a Spot Order
+    summary: Inspect an order, cancel it, then place a replacement order.
+  - url: arazzo/kraken-earn-allocate-and-confirm-workflow.yml
+    name: Kraken Allocate Earn Funds and Confirm
+    summary: Pick an Earn strategy, allocate funds, then poll until the allocation
+      settles.
+  - url: arazzo/kraken-fund-futures-wallet-workflow.yml
+    name: Kraken Fund the Futures Wallet from Spot
+    summary: Check spot balance, transfer to the futures wallet, then confirm it landed.
+  - url: arazzo/kraken-futures-account-snapshot-workflow.yml
+    name: Kraken Futures Account Snapshot
+    summary: Pull account balances, open positions, and recent fills for a futures
+      risk view.
+  - url: arazzo/kraken-place-futures-order-workflow.yml
+    name: Kraken Place a Futures Order
+    summary: Check instrument status and ticker, place a futures order, then confirm
+      it is open.
+  - url: arazzo/kraken-preflight-place-spot-order-workflow.yml
+    name: Kraken Preflight and Place Spot Order
+    summary: Check system status and live ticker, place a spot order, then confirm
+      it.
+  - url: arazzo/kraken-reconcile-trade-history-workflow.yml
+    name: Kraken Reconcile Spot Trade History
+    summary: Pull trade history, drill into specific trades, then tie them to ledger
+      entries.
+  - url: arazzo/kraken-withdraw-funds-workflow.yml
+    name: Kraken Withdraw Funds with Fee Preview
+    summary: Check balance and withdrawal fees, withdraw to a saved address, then
+      track status.
+- type: Website
+  url: https://www.kraken.com/
+- type: Portal
+  url: https://docs.kraken.com/api/
+- type: GettingStarted
+  url: https://docs.kraken.com/api/docs/guides/global-intro
+- type: SignUp
+  url: https://www.kraken.com/sign-up
+- type: Authentication
+  url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+- type: Pricing
+  url: https://www.kraken.com/features/fee-schedule
+- type: TermsOfService
+  url: https://www.kraken.com/legal
+- type: PrivacyPolicy
+  url: https://www.kraken.com/legal/privacy
+- type: Blog
+  url: https://blog.kraken.com/
+- type: StatusPage
+  url: https://status.kraken.com/
+- type: Support
+  url: https://support.kraken.com/
+- type: FAQ
+  url: https://support.kraken.com/categories/360001393671-Trading-Funding
+- type: GitHubOrganization
+  url: https://github.com/krakenfx
+- type: GitHubOrganization
+  url: https://github.com/CryptoFacilities
+- type: SDK
+  name: Kraken Go SDK (Spot + Derivatives)
+  url: https://github.com/krakenfx/api-go
+- type: SDK
+  name: Kraken PHP API Client (Spot)
+  url: https://github.com/krakenfx/kraken-api-client
+- type: SDK
+  name: Kraken Python WebSocket Client
+  url: https://github.com/krakenfx/kraken-wsclient-py
+- type: SDK
+  name: Crypto Facilities REST v3 Python (Futures)
+  url: https://github.com/CryptoFacilities/REST-v3-Python
+- type: SDK
+  name: Crypto Facilities REST v3 Java (Futures)
+  url: https://github.com/CryptoFacilities/REST-v3-Java
+- type: SDK
+  name: Crypto Facilities REST v3 C# (Futures)
+  url: https://github.com/CryptoFacilities/REST-v3-CSharp
+- type: SDK
+  name: Crypto Facilities REST v3 Node.js (Futures)
+  url: https://github.com/CryptoFacilities/REST-v3-NodeJs
+- type: SDK
+  name: Crypto Facilities REST v3 Kotlin (Futures)
+  url: https://github.com/CryptoFacilities/REST-v3-kotlin
+- type: SDK
+  name: Crypto Facilities WebSocket v1 Python (Futures)
+  url: https://github.com/CryptoFacilities/WebSocket-v1-Python
+- type: SDK
+  name: Crypto Facilities WebSocket v1 C# (Futures)
+  url: https://github.com/CryptoFacilities/WebSocket-v1-CSharp
+- type: SDK
+  name: Crypto Facilities WebSocket v1 Rust (Futures)
+  url: https://github.com/CryptoFacilities/WebSocket-v1-Rust
+- type: CLI
+  name: Kraken CLI (Rust, AI-native, MCP-capable)
+  url: https://github.com/krakenfx/kraken-cli
+- type: Tools
+  name: Kraken CLI MCP Server (official)
+  description: The Kraken CLI (krakenfx/kraken-cli) embeds a Model Context Protocol
+    server over stdio so LLM agents can call Kraken Spot, Futures, and Earn endpoints
+    through tool-calling without writing a custom HTTP client.
+  url: https://github.com/krakenfx/kraken-cli
+- type: Tools
+  name: oilst/kraken-mcp (community FastMCP server)
+  description: Community-maintained FastMCP server exposing the Kraken Pro REST API
+    as tools for the Gemini CLI and other MCP-compatible agent runtimes.
+  url: https://github.com/oilst/kraken-mcp
+- type: Tools
+  name: Kraken Wallet (self-custody)
+  url: https://github.com/krakenfx/wallet
+- type: SpectralRules
+  url: rules/kraken-rules.yml
+- type: Vocabulary
+  url: vocabulary/kraken-vocabulary.yml
+- type: JSON-LD
+  url: json-ld/kraken-context.jsonld
+- type: Plans
+  url: plans/kraken-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/kraken-rate-limits.yml
+- type: FinOps
+  url: finops/kraken-finops.yml
+- type: Features
+  data:
+  - name: Spot Trading
+    description: Spot trading on 200+ cryptocurrency pairs with limit, market, stop
+      loss, take profit, stop-loss-limit, take-profit-limit, settle position, trailing
+      stop, and iceberg order types.
+  - name: Margin Trading
+    description: Margin trading on supported pairs with leverage up to 5x for eligible
+      users in eligible jurisdictions.
+  - name: Futures Trading
+    description: Perpetual and fixed-maturity futures on Bitcoin, Ethereum, and other
+      major assets via Kraken Futures.
+  - name: Kraken Earn (Staking and Yield)
+    description: On-chain and off-chain staking plus opt-in bonded yield strategies
+      across supported proof-of-stake and DeFi assets.
+  - name: NFT Marketplace
+    description: Browse, list, bid, and buy NFTs across Ethereum and Solana with gas-free
+      transactions and fiat settlement.
+  - name: Subaccounts
+    description: Logical subaccount creation and inter-account transfers for institutional
+      and family-office structuring.
+  - name: Embed (B2B Integration)
+    description: White-label trading, custody, and Earn primitives that partners can
+      embed into their own consumer or business products.
+  - name: OAuth Delegated Access
+    description: OAuth 2.0 surface enabling third-party apps to act on a user's behalf
+      with scoped permissions.
+  - name: Co-located Connectivity
+    description: Colocation endpoints in London (colo-london.*) for ultra-low-latency
+      access to Spot, Futures, FIX, and WebSocket surfaces.
+  - name: FIX Connectivity
+    description: FIX 4.4 / 5.0 SP2 connectivity for institutional execution and market
+      data flows.
+  - name: WebSocket v2 with Authenticated Trading
+    description: Modern WebSocket v2 surface supporting subscribe/unsubscribe for
+      market data and authenticated request/response trading methods.
+  - name: Cancel on Disconnect
+    description: Automatic cancellation of resting orders when the trading session
+      terminates, protecting algorithmic strategies from runaway risk.
+- type: UseCases
+  data:
+  - name: Algorithmic Spot Trading
+    description: Build and operate automated trading strategies against Kraken Spot
+      using REST for order management and WebSocket v2 for low-latency market data
+      and execution streams.
+  - name: Cross-Exchange Arbitrage
+    description: Use real-time order book and ticker feeds with low-latency colocation
+      endpoints to power arbitrage strategies across Kraken and other venues.
+  - name: Derivatives Market Making
+    description: Run market-making strategies on Kraken Futures using batched order
+      entry, WebSocket fills, and FIX for high-volume connectivity.
+  - name: Treasury and Custody Operations
+    description: Manage corporate or fund treasury balances using Kraken Custody and
+      programmatic transfers, deposits, and withdrawals.
+  - name: Staking-as-a-Service
+    description: Offer staking and yield products to end users via Kraken Earn allocation/deallocation
+      endpoints, exposed through your own product.
+  - name: Embedded Crypto Brokerage
+    description: Partners (fintechs, neobanks, wallets) use Kraken Embed to add trading,
+      conversion, and custody capabilities to their own apps without building exchange
+      infrastructure.
+  - name: NFT Portfolio Management
+    description: Use the NFT API to power portfolio dashboards, valuation feeds, and
+      collection-level analytics.
+  - name: AI Agent Trading
+    description: Use the Kraken CLI's built-in MCP server (or the community oilst/kraken-mcp)
+      to let LLM agents place orders, manage positions, and stream market data with
+      tool-calling.
+  - name: Tax and Reporting Pipelines
+    description: Pull trades history, ledgers, deposits, and withdrawals to drive
+      tax-lot accounting, regulatory reporting, and audit pipelines.
+- type: Integrations
+  data:
+  - name: Crypto Facilities (Kraken Futures)
+    description: Kraken Futures uses the Crypto Facilities REST v3 and WebSocket v1
+      protocols, with public GitHub example clients in multiple languages.
+  - name: Kraken Wallet
+    description: Self-custody wallet that signs transactions locally; integrates with
+      dApps and uses Kraken-published OAuth helpers.
+  - name: Model Context Protocol
+    description: The Kraken CLI ships an embedded MCP server so any MCP-compatible
+      agent runtime (Claude, Gemini, Cursor) can drive Kraken accounts.
+  - name: TradingView
+    description: Kraken markets are available as a charting source on TradingView,
+      and Kraken Pro embeds TradingView charts in its web client.
+  - name: CCXT
+    description: Kraken Spot is supported as a first-class exchange adapter in the
+      CCXT cryptocurrency exchange library.
+- type: Solutions
+  data:
+  - name: Kraken
+    description: The simplified Kraken consumer app for buying, selling, sending,
+      and staking crypto with a fixed 1.0% / 1.5% spread on instant and custom orders.
+  - name: Kraken Pro
+    description: The advanced trading platform with full Spot, Margin, and Futures
+      surfaces, volume-tiered maker/taker fees from 0.25%/0.40% down to 0.00%/0.10%
+      at $10M+ 30-day USD volume.
+  - name: Kraken Institutional
+    description: Institutional offering bundling Custody, OTC, Prime brokerage, colocation,
+      FIX, and dedicated relationship management.
+  - name: Kraken Embed
+    description: B2B integration platform letting partners offer Kraken trading, custody,
+      and Earn primitives inside their own products.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

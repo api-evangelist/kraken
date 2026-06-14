@@ -1,0 +1,661 @@
+# Kraken GraphQL Schema
+# Conceptual schema mapping Kraken REST/WebSocket API domain objects to GraphQL types.
+# Source: https://docs.kraken.com/api/
+# Community reference: https://github.com/nickcoutsos/kraken-api
+
+scalar JSON
+scalar DateTime
+scalar Decimal
+
+# ─────────────────────────────────────────────
+# System / Infrastructure
+# ─────────────────────────────────────────────
+
+type SystemStatus {
+  status: String!
+  timestamp: DateTime!
+}
+
+type ServerTime {
+  unixtime: Int!
+  rfc1123: String!
+}
+
+# ─────────────────────────────────────────────
+# Assets and Pairs
+# ─────────────────────────────────────────────
+
+type AssetInfo {
+  id: String!
+  altname: String!
+  aclass: String!
+  decimals: Int!
+  displayDecimals: Int!
+  collateralValue: Decimal
+  status: String
+}
+
+type AssetPair {
+  id: String!
+  altname: String!
+  wsname: String
+  aclassBase: String!
+  base: String!
+  aclassQuote: String!
+  quote: String!
+  lot: String
+  costDecimals: Int
+  pairDecimals: Int!
+  lotDecimals: Int!
+  lotMultiplier: Int!
+  leverageBuy: [Int!]
+  leverageSell: [Int!]
+  fees: [[Decimal!]!]
+  feesMaker: [[Decimal!]!]
+  feeVolumeCurrency: String
+  marginCall: Int
+  marginStop: Int
+  ordermin: Decimal
+  costmin: Decimal
+  tickSize: Decimal
+  status: String
+  longPositionLimit: Int
+  shortPositionLimit: Int
+}
+
+# ─────────────────────────────────────────────
+# Market Data
+# ─────────────────────────────────────────────
+
+type Ticker {
+  pair: String!
+  ask: [String!]!
+  bid: [String!]!
+  lastTradeClosed: [String!]!
+  volume: [String!]!
+  volumeWeightedAvgPrice: [String!]!
+  numberOfTrades: [Int!]!
+  low: [String!]!
+  high: [String!]!
+  openPrice: String!
+}
+
+type OHLCV {
+  time: Int!
+  open: Decimal!
+  high: Decimal!
+  low: Decimal!
+  close: Decimal!
+  vwap: Decimal!
+  volume: Decimal!
+  count: Int!
+}
+
+type OrderBookEntry {
+  price: Decimal!
+  volume: Decimal!
+  timestamp: Int!
+}
+
+type Depth {
+  pair: String!
+  asks: [OrderBookEntry!]!
+  bids: [OrderBookEntry!]!
+}
+
+type Trade {
+  price: Decimal!
+  volume: Decimal!
+  time: Decimal!
+  buySell: String!
+  marketLimit: String!
+  miscellaneous: String
+  tradeId: String
+}
+
+type Spread {
+  time: Int!
+  bid: Decimal!
+  ask: Decimal!
+}
+
+# ─────────────────────────────────────────────
+# Account Data
+# ─────────────────────────────────────────────
+
+type AccountBalance {
+  currency: String!
+  balance: Decimal!
+  holdTrade: Decimal
+}
+
+type TradeBalance {
+  equivalentBalance: Decimal!
+  tradeBalance: Decimal!
+  marginsOpenPositions: Decimal!
+  unrealizedNetProfitLoss: Decimal!
+  costBasisOpenPositions: Decimal!
+  floatingValuation: Decimal!
+  equity: Decimal!
+  freeMargin: Decimal!
+  marginLevel: Decimal
+}
+
+type MarginCallLevel {
+  level: Decimal!
+  action: String!
+}
+
+type MarginFreeLevel {
+  freeMargin: Decimal!
+  marginLevel: Decimal!
+}
+
+type Margin {
+  pair: String!
+  leverage: Decimal!
+  cost: Decimal!
+  marginAmount: Decimal!
+}
+
+# ─────────────────────────────────────────────
+# Orders
+# ─────────────────────────────────────────────
+
+type OrderFlags {
+  fcib: Boolean
+  fciq: Boolean
+  nompp: Boolean
+  post: Boolean
+  viqc: Boolean
+}
+
+type OrderDescription {
+  pair: String!
+  type: String!
+  ordertype: String!
+  price: Decimal
+  price2: Decimal
+  leverage: String
+  order: String!
+  close: String
+}
+
+type UserRef {
+  id: Int!
+}
+
+type TransactionId {
+  txid: String!
+}
+
+type OpenOrder {
+  txid: String!
+  refid: String
+  userref: Int
+  status: String!
+  opentm: Decimal!
+  starttm: Decimal
+  expiretm: Decimal
+  descr: OrderDescription!
+  vol: Decimal!
+  volExec: Decimal!
+  cost: Decimal!
+  fee: Decimal!
+  price: Decimal!
+  stopprice: Decimal
+  limitprice: Decimal
+  misc: String
+  oflags: String
+  trades: [String!]
+}
+
+type ClosedOrder {
+  txid: String!
+  refid: String
+  userref: Int
+  status: String!
+  reason: String
+  opentm: Decimal!
+  closetm: Decimal!
+  starttm: Decimal
+  expiretm: Decimal
+  descr: OrderDescription!
+  vol: Decimal!
+  volExec: Decimal!
+  cost: Decimal!
+  fee: Decimal!
+  price: Decimal!
+  stopprice: Decimal
+  limitprice: Decimal
+  misc: String
+  oflags: String
+  trades: [String!]
+}
+
+type AddOrder {
+  txid: [String!]!
+  descr: OrderDescription!
+}
+
+type CancelOrder {
+  count: Int!
+  pending: Boolean
+}
+
+# ─────────────────────────────────────────────
+# Trades and Positions
+# ─────────────────────────────────────────────
+
+type TradesHistory {
+  txid: String!
+  ordertxid: String!
+  pair: String!
+  time: Decimal!
+  type: String!
+  ordertype: String!
+  price: Decimal!
+  cost: Decimal!
+  fee: Decimal!
+  vol: Decimal!
+  margin: Decimal!
+  misc: String
+  posstatus: String
+  cprice: Decimal
+  ccost: Decimal
+  cfee: Decimal
+  cvol: Decimal
+  cmargin: Decimal
+  net: Decimal
+  trades: [String!]
+}
+
+type OpenPosition {
+  ordertxid: String!
+  posstatus: String!
+  pair: String!
+  time: Decimal!
+  type: String!
+  ordertype: String!
+  cost: Decimal!
+  fee: Decimal!
+  vol: Decimal!
+  volClosed: Decimal!
+  margin: Decimal!
+  value: Decimal
+  net: Decimal
+  terms: String
+  rollovertm: String
+  misc: String
+  oflags: String
+}
+
+# ─────────────────────────────────────────────
+# Ledger
+# ─────────────────────────────────────────────
+
+type Ledger {
+  id: String!
+  refid: String!
+  time: Decimal!
+  type: String!
+  subtype: String
+  aclass: String!
+  asset: String!
+  amount: Decimal!
+  fee: Decimal!
+  balance: Decimal!
+}
+
+type TransactionType {
+  type: String!
+  description: String
+}
+
+# ─────────────────────────────────────────────
+# Fees and Volume
+# ─────────────────────────────────────────────
+
+type FeeInfo {
+  fee: Decimal!
+  minFee: Decimal
+  maxFee: Decimal
+  nextFee: Decimal
+  tierVolume: Decimal
+  nextTierVolume: Decimal
+}
+
+type VolumeDiscount {
+  currency: String!
+  volume: Decimal!
+}
+
+type TradeVolume {
+  currency: String!
+  volume: Decimal!
+  fees: JSON
+  feesMaker: JSON
+}
+
+# ─────────────────────────────────────────────
+# API Key and Auth
+# ─────────────────────────────────────────────
+
+type APIKeyInfo {
+  expires: Int
+  permissions: [String!]!
+}
+
+type TWOFAType {
+  type: String!
+  enabled: Boolean!
+}
+
+type TokenInfo {
+  token: String!
+  expires: Int!
+}
+
+# ─────────────────────────────────────────────
+# Deposits
+# ─────────────────────────────────────────────
+
+type DepositMethod {
+  method: String!
+  limit: Decimal
+  fee: Decimal
+  genAddress: Boolean
+  minimum: Decimal
+}
+
+type DepositAddress {
+  address: String!
+  expiretm: String
+  new: Boolean
+  memo: String
+  tag: String
+}
+
+type DepositStatus {
+  method: String!
+  aclass: String!
+  asset: String!
+  refid: String!
+  txid: String
+  info: String
+  amount: Decimal!
+  fee: Decimal
+  time: Int!
+  status: String!
+  statusProp: String
+}
+
+# ─────────────────────────────────────────────
+# Withdrawals
+# ─────────────────────────────────────────────
+
+type WithdrawInfo {
+  method: String!
+  limit: Decimal!
+  amount: Decimal!
+  fee: Decimal!
+}
+
+type WithdrawStatus {
+  method: String!
+  aclass: String!
+  asset: String!
+  refid: String!
+  txid: String
+  info: String
+  amount: Decimal!
+  fee: Decimal
+  time: Int!
+  status: String!
+  statusProp: String
+  key: String
+}
+
+type WithdrawalCancel {
+  result: Boolean!
+}
+
+# ─────────────────────────────────────────────
+# Earn / Staking
+# ─────────────────────────────────────────────
+
+type StakingAsset {
+  asset: String!
+  stakingAsset: String!
+  rewards: JSON
+  onChain: Boolean
+  canStake: Boolean
+  canUnstake: Boolean
+  minimumAmount: JSON
+  lockup: JSON
+  enabledForUser: Boolean
+  disabled: Boolean
+  method: String
+}
+
+type Staking {
+  asset: String!
+  amount: Decimal!
+  time: Int!
+  type: String!
+  bond_start: Int
+  bond_end: Int
+}
+
+type PendingStaking {
+  refid: String!
+  type: String!
+  asset: String!
+  amount: Decimal!
+  time: Int!
+  bondStart: Int
+  bondEnd: Int
+  status: String!
+}
+
+# ─────────────────────────────────────────────
+# Export and Reporting
+# ─────────────────────────────────────────────
+
+type ExportReport {
+  id: String!
+  description: String!
+  format: String!
+  report: String!
+  subtype: String
+  status: String!
+  flags: Int
+  fields: String
+  createdtm: Int!
+  expiretm: Int
+  starttm: Int
+  endtm: Int
+  completedtm: Int
+  dataStarttm: Int
+  dataEndtm: Int
+  asset: String
+}
+
+type ExportStatus {
+  id: String!
+  status: String!
+  completedtm: Int
+}
+
+# ─────────────────────────────────────────────
+# NFT
+# ─────────────────────────────────────────────
+
+type NFTCollection {
+  id: String!
+  name: String!
+  description: String
+  chain: String!
+  contractAddress: String
+  imageUrl: String
+  totalSupply: Int
+  floorPrice: Decimal
+  currency: String
+}
+
+type NFTInfo {
+  id: String!
+  name: String!
+  description: String
+  imageUrl: String
+  collectionId: String!
+  collection: NFTCollection
+  chain: String!
+  contractAddress: String!
+  tokenId: String!
+  owner: String
+  listingPrice: Decimal
+  currency: String
+  status: String
+  attributes: JSON
+}
+
+type NFTBid {
+  id: String!
+  nftId: String!
+  nft: NFTInfo
+  bidder: String!
+  amount: Decimal!
+  currency: String!
+  expiry: DateTime
+  status: String!
+  createdAt: DateTime!
+}
+
+type NFTAuction {
+  id: String!
+  nftId: String!
+  nft: NFTInfo
+  seller: String!
+  startPrice: Decimal!
+  reservePrice: Decimal
+  currentBid: Decimal
+  currency: String!
+  startTime: DateTime!
+  endTime: DateTime!
+  status: String!
+  bids: [NFTBid!]
+}
+
+# ─────────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────────
+
+type Query {
+  # System
+  serverTime: ServerTime!
+  systemStatus: SystemStatus!
+
+  # Assets
+  assetInfo(assets: [String!]): [AssetInfo!]!
+  assetPairs(pairs: [String!], info: String): [AssetPair!]!
+
+  # Market Data
+  ticker(pairs: [String!]!): [Ticker!]!
+  ohlcv(pair: String!, interval: Int, since: Int): [OHLCV!]!
+  depth(pair: String!, count: Int): Depth!
+  trades(pair: String!, since: String, count: Int): [Trade!]!
+  spread(pair: String!, since: Int): [Spread!]!
+
+  # Account (authenticated)
+  accountBalance: [AccountBalance!]!
+  tradeBalance(asset: String): TradeBalance!
+  openOrders(trades: Boolean, userref: Int): [OpenOrder!]!
+  closedOrders(trades: Boolean, userref: Int, start: Int, end: Int, ofs: Int, closetime: String): [ClosedOrder!]!
+  queryOrders(txid: [String!]!, trades: Boolean, userref: Int): [OpenOrder!]!
+  tradesHistory(type: String, trades: Boolean, start: Int, end: Int, ofs: Int): [TradesHistory!]!
+  queryTrades(txid: [String!]!, trades: Boolean): [TradesHistory!]!
+  openPositions(txid: [String!], docalcs: Boolean, consolidation: String): [OpenPosition!]!
+  ledgers(asset: [String!], aclass: String, type: String, start: Int, end: Int, ofs: Int): [Ledger!]!
+  queryLedgers(id: [String!]!, trades: Boolean): [Ledger!]!
+  tradeVolume(pair: [String!], feeInfo: Boolean): TradeVolume!
+  apiKeyInfo: APIKeyInfo!
+
+  # Funding
+  depositMethods(asset: String!): [DepositMethod!]!
+  depositAddresses(asset: String!, method: String!, new: Boolean): [DepositAddress!]!
+  depositStatus(asset: String, method: String, start: String): [DepositStatus!]!
+  withdrawInfo(asset: String!, key: String!, amount: Decimal!): WithdrawInfo!
+  withdrawStatus(asset: String, method: String, start: String): [WithdrawStatus!]!
+
+  # Staking
+  stakingAssets: [StakingAsset!]!
+  stakingTransactions: [Staking!]!
+  pendingStaking: [PendingStaking!]!
+
+  # Exports
+  exportReports(report: String!, pending: Boolean): [ExportReport!]!
+  exportStatus(id: String!): ExportStatus!
+
+  # NFT
+  nftCollections(chain: String, limit: Int, offset: Int): [NFTCollection!]!
+  nftInfo(id: String!): NFTInfo
+  nftAuctions(status: String, limit: Int): [NFTAuction!]!
+
+  # Margin
+  marginLevel: TradeBalance!
+}
+
+# ─────────────────────────────────────────────
+# Mutation Root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  # Trading
+  addOrder(
+    pair: String!
+    type: String!
+    ordertype: String!
+    price: Decimal
+    price2: Decimal
+    volume: Decimal!
+    leverage: String
+    oflags: String
+    starttm: String
+    expiretm: String
+    userref: Int
+    validate: Boolean
+    close_ordertype: String
+    close_price: Decimal
+    close_price2: Decimal
+    timeinforce: String
+  ): AddOrder!
+
+  cancelOrder(txid: String!): CancelOrder!
+  cancelAllOrders: CancelOrder!
+  cancelAllOrdersAfter(timeout: Int!): JSON!
+
+  # Funding
+  withdrawFunds(asset: String!, key: String!, amount: Decimal!): TransactionId!
+  cancelWithdrawal(asset: String!, refid: String!): WithdrawalCancel!
+  walletTransfer(asset: String!, from: String!, to: String!, amount: Decimal!): TransactionId!
+
+  # Staking / Earn
+  stake(asset: String!, amount: Decimal!, method: String!): TransactionId!
+  unstake(asset: String!, amount: Decimal!, method: String!): TransactionId!
+
+  # Exports
+  addExport(
+    report: String!
+    description: String!
+    format: String
+    fields: String
+    starttm: Int
+    endtm: Int
+    asset: String
+  ): ExportReport!
+  removeExport(id: String!, type: String!): JSON!
+
+  # WebSocket Token
+  getWebSocketsToken: TokenInfo!
+}
