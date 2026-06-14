@@ -548,6 +548,56 @@ type NFTAuction {
 }
 
 # ─────────────────────────────────────────────
+# Earn Strategy
+# ─────────────────────────────────────────────
+
+type EarnStrategy {
+  id: String!
+  asset: String!
+  lockType: JSON
+  aprEstimate: JSON
+  userMinAllocation: Decimal
+  userMaxAllocation: Decimal
+  allocationFee: Decimal
+  deallocationFee: Decimal
+  autoCompound: JSON
+  yieldSource: JSON
+  canAllocate: Boolean
+  canDeallocate: Boolean
+  allocationRestrictionInfo: [String!]
+  deallocationRestrictionInfo: [String!]
+}
+
+type EarnAllocation {
+  strategyId: String!
+  nativeAsset: String!
+  amountAllocated: JSON
+  totalRewarded: JSON
+  pendingAllocations: [JSON!]
+  pendingDeallocations: [JSON!]
+}
+
+type SubAccount {
+  userId: String!
+  username: String!
+  permissions: [String!]
+}
+
+type WalletTransfer {
+  refid: String!
+}
+
+type OTCQuote {
+  id: String!
+  pair: String!
+  side: String!
+  quantity: Decimal!
+  price: Decimal!
+  quoteCurrency: String!
+  expiry: DateTime!
+}
+
+# ─────────────────────────────────────────────
 # Query Root
 # ─────────────────────────────────────────────
 
