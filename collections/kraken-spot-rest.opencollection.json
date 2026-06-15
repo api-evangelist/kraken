@@ -1,0 +1,1040 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Spot REST API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Server Time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Time"
+          },
+          "docs": "Returns the server's current Unix and human-readable time. Use to synchronize client clocks."
+        },
+        {
+          "info": {
+            "name": "Kraken Get System Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/SystemStatus"
+          },
+          "docs": "Returns the current system status (online, maintenance, cancel_only, post_only) and the last status change timestamp."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Asset Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Assets",
+            "params": [
+              {
+                "name": "asset",
+                "value": "XBT",
+                "type": "query",
+                "description": "Comma-delimited list of assets to filter (e.g. XBT,ETH)"
+              },
+              {
+                "name": "aclass",
+                "value": "string",
+                "type": "query",
+                "description": "Asset class (currency, crypto)"
+              }
+            ]
+          },
+          "docs": "Returns information about supported assets including precision, display decimals, collateral value, and status."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Tradable Asset Pairs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/AssetPairs",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query",
+                "description": "Comma-delimited list of asset pairs (e.g. XBTUSD,ETHUSD)"
+              },
+              {
+                "name": "info",
+                "value": "info",
+                "type": "query",
+                "description": "Info detail level (info, leverage, fees, margin)"
+              }
+            ]
+          },
+          "docs": "Returns metadata for every tradable currency pair (base, quote, fee schedule, lot decimals, ordermin)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ticker Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Ticker",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query",
+                "description": "Comma-delimited list of asset pairs"
+              }
+            ]
+          },
+          "docs": "Returns ticker data (ask, bid, last trade, 24h volume, vwap, high, low, opening price) for one or more pairs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get OHLC Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/OHLC",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "interval",
+                "value": "1",
+                "type": "query",
+                "description": "Candle interval in minutes (1, 5, 15, 30, 60, 240, 1440, 10080, 21600)"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query",
+                "description": "Return OHLC entries since this timestamp"
+              }
+            ]
+          },
+          "docs": "Returns OHLC (open/high/low/close/volume/count) candles for a pair at a chosen interval, optionally bounded by a since cursor."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Order Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Depth",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of bids/asks (1-500)"
+              }
+            ]
+          },
+          "docs": "Returns the order book (bids and asks) for a pair to a requested depth."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Recent Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Trades",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of trades (1-1000)"
+              }
+            ]
+          },
+          "docs": "Returns recent trades for a pair, optionally since a cursor."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Recent Spreads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.kraken.com/0/public/Spread",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns recent bid/ask spread snapshots for a pair, optionally since a cursor."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Account Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Balance",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the asset balances held in the account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Extended Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/BalanceEx",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns asset balances with hold-trade and credit details."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trade Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/TradeBalance",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the trade balance for the requested asset class (margin equity, used margin, free margin, margin level)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/OpenOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns all open orders for the account, optionally including trades."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Closed Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/ClosedOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the most recent 50 closed orders for the account, with pagination via offset."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Orders Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/QueryOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns information about the requested order IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trades History",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/TradesHistory",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns trade history for the account, ordered most recent first."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Trades Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/QueryTrades",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns information about the requested trade IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/OpenPositions",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns open margin positions for the account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ledgers Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Ledgers",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns ledger entries (deposits, withdrawals, trades, fees, transfers)."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Ledgers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/QueryLedgers",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns ledger information for the requested ledger IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trade Volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/TradeVolume",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the account's 30-day trade volume and the fee tier currently applied."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trading",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Add Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/AddOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Places a new order. Supports market, limit, stop-loss, take-profit, stop-loss-limit, take-profit-limit, settle-position, trailing-stop, and iceberg order types."
+        },
+        {
+          "info": {
+            "name": "Kraken Add Order Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/AddOrderBatch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Places a batch of up to 15 orders for a single pair in one signed request."
+        },
+        {
+          "info": {
+            "name": "Kraken Edit Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/EditOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels and replaces an existing order with new parameters (volume, price, or price2)."
+        },
+        {
+          "info": {
+            "name": "Kraken Amend Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/AmendOrder",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modifies a resting order in place (volume, limit/trigger prices, post-only) without changing its order ID."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/CancelOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels a specific open order by transaction ID or user-reference."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/CancelAll",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels every open order for the API key."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders After (Dead Man's Switch)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/CancelAllOrdersAfter",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Arms a dead-man's-switch — all open orders will be cancelled after the specified timeout (seconds) unless the call is re-issued."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/CancelOrderBatch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels up to 50 orders in a single signed call."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Funding",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Deposit Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/DepositMethods",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Lists deposit methods available for the requested asset."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Deposit Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/DepositAddresses",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns existing or generates new deposit addresses for the requested asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Status of Recent Deposits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/DepositStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent deposit statuses, filterable by asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Withdrawal Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/WithdrawInfo",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns fee and limit information for a configured withdrawal address (key)."
+        },
+        {
+          "info": {
+            "name": "Kraken Withdraw Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Withdraw",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a withdrawal to a previously configured withdrawal address."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Status of Recent Withdrawals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/WithdrawStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent withdrawal statuses, filterable by asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Request Withdrawal Cancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/WithdrawCancel",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Requests cancellation of a pending withdrawal by reference ID."
+        },
+        {
+          "info": {
+            "name": "Kraken Wallet Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/WalletTransfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Transfers funds between Kraken Spot and Kraken Futures wallets."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subaccounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Create Subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/CreateSubaccount",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Creates a new subaccount under the master account (institutional / pro feature)."
+        },
+        {
+          "info": {
+            "name": "Kraken Account Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/AccountTransfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Transfers an asset between the master account and a subaccount."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Earn",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Allocate Earn Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/Allocate",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Allocates the requested amount of an asset to a Kraken Earn strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken Deallocate Earn Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/Deallocate",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Removes the requested amount from an Earn strategy and returns funds to the trading balance once bonding/unbonding completes."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Earn Allocate Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/AllocateStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the in-flight status of the last Allocate call for a strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Earn Deallocate Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/DeallocateStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the in-flight status of the last Deallocate call for a strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken List Earn Strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/Strategies",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the catalog of Earn strategies available to the account (lockup periods, APR ranges, asset)."
+        },
+        {
+          "info": {
+            "name": "Kraken List Earn Allocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/Earn/Allocations",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the current Earn allocations for the account, including bonded, allocated, and rewards balances."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "WebSocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get WebSockets Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.kraken.com/0/private/GetWebSocketsToken",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "API-Key",
+              "value": "{{API-Key}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Mints a short-lived (15 minute) token used to authenticate subscriptions on the private WebSocket endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

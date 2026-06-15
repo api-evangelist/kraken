@@ -1,0 +1,590 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Instruments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/instruments"
+          },
+          "docs": "Returns the list of supported instruments and their metadata."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Instruments Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/instruments/status"
+          },
+          "docs": "Returns instrument trading status (open, paused, etc.)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Tickers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/tickers"
+          },
+          "docs": "Returns the latest ticker for every instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ticker for Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/tickers/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the latest ticker for a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Order Book (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/orderbook",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the order book for a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Market History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/history",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "lastTime",
+                "value": "2026-05-30T00:00:00Z",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns recent public trade history for an instrument."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/accounts",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns balances and margin information for every Futures account / sub-account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Positions (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/openpositions",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns currently open futures positions."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Orders (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/openorders",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns currently open orders."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Fills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/fills",
+            "params": [
+              {
+                "name": "lastFillTime",
+                "value": "2026-05-30T00:00:00Z",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent execution fills."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/notifications",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns any maintenance or risk notifications affecting the account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Trading",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Send Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/sendorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Places a new futures order (lmt, mkt, stp, take_profit, ioc)."
+        },
+        {
+          "info": {
+            "name": "Kraken Edit Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/editorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modifies a resting futures order (size, limitPrice, stopPrice)."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "order_id",
+                  "value": ""
+                },
+                {
+                  "name": "cliOrdId",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels a specific open futures order."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelallorders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "symbol",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels every open futures order, optionally scoped to a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders After (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelallordersafter",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "timeout",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Dead-man's-switch for futures — cancels all orders after the timeout unless re-armed."
+        },
+        {
+          "info": {
+            "name": "Kraken Batch Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/batchorder",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submits a batch of order operations (place/edit/cancel) in a single signed call."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Transfer Funds (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/transfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "amount",
+                  "value": ""
+                },
+                {
+                  "name": "fromAccount",
+                  "value": ""
+                },
+                {
+                  "name": "toAccount",
+                  "value": ""
+                },
+                {
+                  "name": "unit",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Transfers funds between a Spot wallet and a Futures account, or between Futures accounts."
+        },
+        {
+          "info": {
+            "name": "Kraken Withdrawal (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/withdrawal",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "amount",
+                  "value": ""
+                },
+                {
+                  "name": "currency",
+                  "value": ""
+                },
+                {
+                  "name": "targetAddress",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a withdrawal from a Futures wallet to a Spot wallet."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Historical Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicalorders",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent historical orders."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Historical Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicalexecutions",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent execution events."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Historical Triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicaltriggers",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent trigger events."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Account Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/accountlog",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the account log (settlements, funding, transfers)."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Charts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Chart Candles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/charts/:tickSize/:symbol/:interval",
+            "params": [
+              {
+                "name": "tickSize",
+                "value": "trade",
+                "type": "path"
+              },
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "path"
+              },
+              {
+                "name": "interval",
+                "value": "1m",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "1",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns OHLC candles for a futures instrument at a given interval."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Check API Key (V3)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/apikey/v3",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Validates an API key's identity, permissions, and expiry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
