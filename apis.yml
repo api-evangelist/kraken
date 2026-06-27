@@ -281,53 +281,43 @@ apis:
 common:
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/kraken/overview
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/kraken-amend-open-order-workflow.yml
-    name: Kraken Amend an Open Order
-    summary: List open orders, amend one in place, then confirm the new terms.
-  - url: arazzo/kraken-balance-aware-buy-workflow.yml
-    name: Kraken Balance-Aware Spot Buy
-    summary: Read the account balance and live ticker, then branch on funding before
-      buying.
-  - url: arazzo/kraken-cancel-and-replace-order-workflow.yml
-    name: Kraken Cancel and Replace a Spot Order
-    summary: Inspect an order, cancel it, then place a replacement order.
-  - url: arazzo/kraken-earn-allocate-and-confirm-workflow.yml
-    name: Kraken Allocate Earn Funds and Confirm
-    summary: Pick an Earn strategy, allocate funds, then poll until the allocation
-      settles.
-  - url: arazzo/kraken-fund-futures-wallet-workflow.yml
-    name: Kraken Fund the Futures Wallet from Spot
-    summary: Check spot balance, transfer to the futures wallet, then confirm it landed.
-  - url: arazzo/kraken-futures-account-snapshot-workflow.yml
-    name: Kraken Futures Account Snapshot
-    summary: Pull account balances, open positions, and recent fills for a futures
-      risk view.
-  - url: arazzo/kraken-place-futures-order-workflow.yml
-    name: Kraken Place a Futures Order
-    summary: Check instrument status and ticker, place a futures order, then confirm
-      it is open.
-  - url: arazzo/kraken-preflight-place-spot-order-workflow.yml
-    name: Kraken Preflight and Place Spot Order
-    summary: Check system status and live ticker, place a spot order, then confirm
-      it.
-  - url: arazzo/kraken-reconcile-trade-history-workflow.yml
-    name: Kraken Reconcile Spot Trade History
-    summary: Pull trade history, drill into specific trades, then tie them to ledger
-      entries.
-  - url: arazzo/kraken-withdraw-funds-workflow.yml
-    name: Kraken Withdraw Funds with Fee Preview
-    summary: Check balance and withdrawal fees, withdraw to a saved address, then
-      track status.
+- type: Arazzo
+  url: arazzo/kraken-amend-open-order-workflow.yml
+  name: Kraken Amend an Open Order
+- type: Arazzo
+  url: arazzo/kraken-balance-aware-buy-workflow.yml
+  name: Kraken Balance-Aware Spot Buy
+- type: Arazzo
+  url: arazzo/kraken-cancel-and-replace-order-workflow.yml
+  name: Kraken Cancel and Replace a Spot Order
+- type: Arazzo
+  url: arazzo/kraken-earn-allocate-and-confirm-workflow.yml
+  name: Kraken Allocate Earn Funds and Confirm
+- type: Arazzo
+  url: arazzo/kraken-fund-futures-wallet-workflow.yml
+  name: Kraken Fund the Futures Wallet from Spot
+- type: Arazzo
+  url: arazzo/kraken-futures-account-snapshot-workflow.yml
+  name: Kraken Futures Account Snapshot
+- type: Arazzo
+  url: arazzo/kraken-place-futures-order-workflow.yml
+  name: Kraken Place a Futures Order
+- type: Arazzo
+  url: arazzo/kraken-preflight-place-spot-order-workflow.yml
+  name: Kraken Preflight and Place Spot Order
+- type: Arazzo
+  url: arazzo/kraken-reconcile-trade-history-workflow.yml
+  name: Kraken Reconcile Spot Trade History
+- type: Arazzo
+  url: arazzo/kraken-withdraw-funds-workflow.yml
+  name: Kraken Withdraw Funds with Fee Preview
 - type: Website
   url: https://www.kraken.com/
 - type: Portal
   url: https://docs.kraken.com/api/
 - type: GettingStarted
   url: https://docs.kraken.com/api/docs/guides/global-intro
-- type: SignUp
+- type: Signup
   url: https://www.kraken.com/sign-up
 - type: Authentication
   url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
@@ -349,37 +339,37 @@ common:
   url: https://github.com/krakenfx
 - type: GitHubOrganization
   url: https://github.com/CryptoFacilities
-- type: SDK
+- type: SDKs
   name: Kraken Go SDK (Spot + Derivatives)
   url: https://github.com/krakenfx/api-go
-- type: SDK
+- type: SDKs
   name: Kraken PHP API Client (Spot)
   url: https://github.com/krakenfx/kraken-api-client
-- type: SDK
+- type: SDKs
   name: Kraken Python WebSocket Client
   url: https://github.com/krakenfx/kraken-wsclient-py
-- type: SDK
+- type: SDKs
   name: Crypto Facilities REST v3 Python (Futures)
   url: https://github.com/CryptoFacilities/REST-v3-Python
-- type: SDK
+- type: SDKs
   name: Crypto Facilities REST v3 Java (Futures)
   url: https://github.com/CryptoFacilities/REST-v3-Java
-- type: SDK
+- type: SDKs
   name: Crypto Facilities REST v3 C# (Futures)
   url: https://github.com/CryptoFacilities/REST-v3-CSharp
-- type: SDK
+- type: SDKs
   name: Crypto Facilities REST v3 Node.js (Futures)
   url: https://github.com/CryptoFacilities/REST-v3-NodeJs
-- type: SDK
+- type: SDKs
   name: Crypto Facilities REST v3 Kotlin (Futures)
   url: https://github.com/CryptoFacilities/REST-v3-kotlin
-- type: SDK
+- type: SDKs
   name: Crypto Facilities WebSocket v1 Python (Futures)
   url: https://github.com/CryptoFacilities/WebSocket-v1-Python
-- type: SDK
+- type: SDKs
   name: Crypto Facilities WebSocket v1 C# (Futures)
   url: https://github.com/CryptoFacilities/WebSocket-v1-CSharp
-- type: SDK
+- type: SDKs
   name: Crypto Facilities WebSocket v1 Rust (Futures)
   url: https://github.com/CryptoFacilities/WebSocket-v1-Rust
 - type: CLI
@@ -403,7 +393,7 @@ common:
   url: rules/kraken-rules.yml
 - type: Vocabulary
   url: vocabulary/kraken-vocabulary.yml
-- type: JSON-LD
+- type: JSONLD
   url: json-ld/kraken-context.jsonld
 - type: Plans
   url: plans/kraken-plans-pricing.yml
