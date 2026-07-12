@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/kraken-futures-rest-openapi.yml, openapi/kraken-spot-rest-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: futures_signature
+  type: apiKey
+  in: header
+  parameter: APIKey
+  description: 'Kraken Futures signs requests with two headers: `APIKey` (public key) and `Authent`
+    (base64 HMAC-SHA512 over `postData + nonce + endpointPath` using the SHA-256 hash of those
+    values, then HMAC-SHA512 keyed by the base64-decoded secret). A `Nonce` header carries the
+    incrementing nonce.'
+  sources:
+  - openapi/kraken-futures-rest-openapi.yml
+- name: kraken_signature
+  type: apiKey
+  in: header
+  parameter: API-Key
+  description: 'Kraken signs private REST requests with two headers: `API-Key` (your public
+    API key) and `API-Sign` (HMAC-SHA512 of the URI path plus SHA256(nonce + POST body), keyed
+    by the base64-decoded secret). All private endpoints must include an incrementing `nonce`
+    in the POST body.'
+  sources:
+  - openapi/kraken-spot-rest-openapi.yml
