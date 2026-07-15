@@ -279,6 +279,8 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/prime/
 common:
+- type: AgenticAccess
+  url: agentic-access/kraken-agentic-access.yml
 - type: TrustCenter
   url: security/kraken-trust-center.yml
 - type: VulnerabilityDisclosure
