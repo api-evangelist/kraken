@@ -1,0 +1,38 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kraken Futures REST API
+  version: 1.0.0
+extends: openapi/kraken-futures-rest-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: kraken
+      x-apievangelist-api: kraken-futures-rest
+      x-apievangelist-enrichment-round: '2026-06-20'
+      x-artifacts:
+        authentication: authentication/kraken-authentication.yml
+        errors: errors/kraken-error-codes.yml
+        conventions: conventions/kraken-conventions.yml
+        data-model: data-model/kraken-data-model.yml
+        conformance: conformance/kraken-conformance.yml
+        lifecycle: lifecycle/kraken-lifecycle.yml
+        sandbox: sandbox/kraken-sandbox.yml
+        mcp: mcp/kraken-mcp.yml
+        cli: cli/kraken-cli.yml
+  - target: $.info
+    update:
+      x-error-model:
+        note: >-
+          Kraken Futures returns a {result, serverTime, errors} envelope; result
+          == "error" with an errors[] array signals failure. See
+          errors/kraken-error-codes.yml.
+  - target: $.paths['/sendorder'].post
+    update:
+      x-agentic-consequence: physical
+      x-note: >-
+        Places a live derivatives order. Acting/physical operation; see
+        agentic-access/kraken-agentic-access.yml.
+  - target: $.paths['/withdrawal'].post
+    update:
+      x-agentic-consequence: physical
+      x-note: Moves collateral off the futures wallet. Gate behind explicit human approval.

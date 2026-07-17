@@ -1,0 +1,61 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  Derived from openapi/kraken-spot-rest-openapi.yml and
+  openapi/kraken-futures-rest-openapi.yml (securitySchemes, error envelope,
+  tags) and Kraken documentation claims (docs.kraken.com/api,
+  support.kraken.com). Cross-cutting industry standards the Kraken API surface
+  does or does not conform to.
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: >-
+      Kraken publishes an OAuth 2.0 authorization surface for third-party
+      delegated access (apis.yml "Kraken OAuth REST API",
+      docs.kraken.com/api/docs/category/oauth/). Note: the harvested Spot/Futures
+      OpenAPI use API-key HMAC auth, not oauth2, so no oauth2 securityScheme is
+      present in openapi/.
+  - id: oidc
+    conforms: false
+    evidence: No /.well-known/openid-configuration on kraken.com hosts (see well-known/kraken-well-known.yml).
+  - id: api-key-hmac
+    conforms: true
+    evidence: >-
+      Spot signs with API-Key + API-Sign (HMAC-SHA512); Futures signs with APIKey
+      + Authent. See authentication/kraken-authentication.yml.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors are returned as HTTP 200 with {"error": [...], "result": {...}}
+      string codes, not application/problem+json. See errors/kraken-error-codes.yml.
+  - id: fix-protocol
+    conforms: true
+    evidence: FIX 4.4 / 5.0 SP2 connectivity for Spot and Futures (apis.yml "Kraken FIX API").
+  - id: websocket
+    conforms: true
+    evidence: Spot WebSocket v2/v1 and Futures WebSocket feeds (asyncapi/kraken-asyncapi.yml).
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: Valid /.well-known/security.txt published (well-known/kraken-security.txt).
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: No Sunset/Deprecation headers; see lifecycle/kraken-lifecycle.yml.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Cursor/offset-style pagination on history endpoints (trades history,
+      ledgers) via count/ofs and time bounds. See conventions/kraken-conventions.yml.
+  - id: idempotency
+    conforms: partial
+    evidence: >-
+      No generic Idempotency-Key header. Order placement supports client-supplied
+      identifiers (cl_ord_id / userref) and cancel_on_disconnect for de-duplication.
+  - id: pci-dss
+    conforms: true
+    evidence: Kraken (Payward) trust center lists PCI DSS. See security/kraken-trust-center.yml.
+  - id: soc2
+    conforms: true
+    evidence: SOC 2 listed on trust.payward.com. See security/kraken-trust-center.yml.
+  - id: iso-27001
+    conforms: true
+    evidence: ISO/IEC 27001 listed on trust.payward.com. See security/kraken-trust-center.yml.

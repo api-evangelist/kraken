@@ -1,0 +1,42 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://support.kraken.com/articles/360024809011-api-testing-environment-derivatives,
+  https://support.kraken.com/hc/en-us/articles/360000919926-Does-Kraken-offer-an-API-test-environment-,
+  https://docs.kraken.com/api/docs/guides/futures-introduction/
+description: >-
+  Kraken's test/sandbox posture. The Spot exchange has NO public sandbox — Spot
+  REST/WebSocket integrations are developed against production with small live
+  amounts (the Kraken CLI additionally offers a local `paper` simulated mode,
+  see cli/kraken-cli.yml). Kraken Futures historically ran a full demo
+  environment; Kraken has not published static magic test values (test cards /
+  IBANs) the way payment providers do, so none are recorded here.
+spot:
+  sandbox: none
+  notes: >-
+    No hosted Spot test environment. Test against api.kraken.com with minimal
+    real balances, or use the Kraken CLI's `paper` mode for simulated order flow.
+  cli_paper_mode: cli/kraken-cli.yml   # `kraken paper` — local simulated trading
+futures:
+  demo_environment:
+    url: https://demo-futures.kraken.com
+    api_base: https://demo-futures.kraken.com/derivatives/api/v3
+    separate_from_production: true
+    credentials: >-
+      Self-service sign-up with any email + password; email verification is
+      disabled in the demo, so the address need not be real. API keys are then
+      generated inside the demo account for testing.
+    parity: >-
+      Demo API code is identical to production in feeds, endpoints, and response
+      structure; only the base URL differs.
+    status: >-
+      Kraken announced the existing demo-futures.kraken.com environment was
+      decommissioned at 13:00 UTC on 2026-07-14. Confirm current availability
+      and any replacement with Kraken support before relying on it.
+test_values:
+  cards: none published
+  bank_accounts: none published
+  note: >-
+    Kraken publishes no static magic test identifiers; testing is done with real
+    (small) balances on Spot or generated keys in the Futures demo. Never invent
+    test values.

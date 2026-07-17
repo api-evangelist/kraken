@@ -1,0 +1,76 @@
+generated: '2026-06-20'
+method: searched
+source: https://github.com/krakenfx/kraken-cli
+description: >-
+  The official Kraken CLI (krakenfx/kraken-cli) — a Rust, AI-native command-line
+  client over the Kraken Spot, Futures, and Earn REST/WebSocket surfaces. It
+  embeds a Model Context Protocol server (`kraken mcp`) exposing 151 tools, so
+  the same binary is both a human CLI and an agent tool provider. The binary is
+  catalogued in packages/kraken-packages.yml; this artifact enumerates its
+  command surface. The embedded MCP server is profiled in mcp/kraken-mcp.yml.
+repo: https://github.com/krakenfx/kraken-cli
+language: rust
+install:
+  installer_script: >-
+    curl --proto '=https' --tlsv1.2 -LsSf
+    https://github.com/krakenfx/kraken-cli/releases/latest/download/kraken-cli-installer.sh | sh
+  cargo: cargo install --git https://github.com/krakenfx/kraken-cli
+  binaries: Pre-built macOS and Linux binaries from GitHub Releases
+auth:
+  env:
+    - KRAKEN_API_KEY
+    - KRAKEN_API_SECRET
+    - KRAKEN_FUTURES_API_KEY
+    - KRAKEN_FUTURES_API_SECRET
+  config_file: ~/.config/kraken/config.toml
+  flags: [--api-key, --api-secret]
+  interactive: kraken setup
+commands:
+  market_data:
+    - {name: status, description: System status.}
+    - {name: server-time, description: Server time.}
+    - {name: assets, description: Asset info.}
+    - {name: pairs, description: Tradable asset pairs.}
+    - {name: ticker, description: Ticker information.}
+    - {name: ohlc, description: OHLC candle data.}
+    - {name: orderbook, description: Order book depth.}
+    - {name: orderbook-grouped, description: Grouped/aggregated order book.}
+    - {name: trades, description: Recent public trades.}
+    - {name: spreads, description: Recent spreads.}
+  account:
+    - {name: balance, description: Account balance.}
+    - {name: extended-balance, description: Extended balance with holds.}
+    - {name: credit-lines, description: Credit lines.}
+    - {name: trade-balance, description: Trade balance summary.}
+    - {name: open-orders, description: Open orders.}
+    - {name: closed-orders, description: Closed orders.}
+    - {name: query-orders, description: Query orders by id.}
+    - {name: trades-history, description: Trades history.}
+    - {name: query-trades, description: Query trades by id.}
+    - {name: positions, description: Open margin positions.}
+    - {name: ledgers, description: Ledger entries.}
+    - {name: query-ledgers, description: Query ledgers by id.}
+    - {name: volume, description: 30-day trade volume and fees.}
+    - {name: export-report, description: Request a data export report.}
+    - {name: export-status, description: Export report status.}
+    - {name: export-retrieve, description: Retrieve export report.}
+    - {name: export-delete, description: Delete export report.}
+  trading:
+    - {name: order, description: Add, edit, amend, and cancel orders.}
+  funding:
+    - {name: deposit, description: Deposit methods, addresses, and status.}
+    - {name: withdraw, description: Withdraw funds.}
+    - {name: withdrawal, description: Withdrawal info, status, and cancel.}
+    - {name: wallet-transfer, description: Transfer between wallets.}
+  products:
+    - {name: earn, description: Kraken Earn allocate/deallocate/strategies.}
+    - {name: subaccount, description: Subaccount create and transfer.}
+    - {name: futures, description: Kraken Futures surface.}
+  realtime:
+    - {name: websocket, aliases: [ws], description: WebSocket streaming (market and private).}
+  developer:
+    - {name: paper, description: Paper-trading (simulated) mode.}
+    - {name: auth, description: Auth/token helpers.}
+    - {name: setup, description: Interactive credential setup.}
+    - {name: shell, description: Interactive shell / completions.}
+    - {name: mcp, description: Run the embedded MCP server over stdio (151 tools). See mcp/kraken-mcp.yml.}

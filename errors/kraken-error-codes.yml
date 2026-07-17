@@ -1,0 +1,78 @@
+generated: '2026-06-20'
+method: searched
+format: kraken-error-strings
+source: >-
+  https://docs.kraken.com/api/docs/guides/spot-errors/ and
+  https://support.kraken.com/hc/en-us/articles/360001491786-API-error-messages
+description: >-
+  Kraken does NOT use HTTP status codes or RFC 9457 problem+json for API-level
+  errors. Every Spot REST call returns HTTP 200 with a JSON envelope
+  {"error": [...], "result": {...}}; a non-empty `error` array means the request
+  failed. Each error is a string of the form `E<Category>:<Description>` (an
+  optional `W<...>` warning prefix also occurs). This catalog captures the
+  documented error strings; it is the non-payments sibling of a decline-code
+  registry. The HMAC/nonce auth model that produces the EAPI/EGeneral auth
+  errors is profiled in authentication/kraken-authentication.yml.
+envelope:
+  media_type: application/json
+  http_status: 200
+  shape: '{ "error": ["E<Category>:<Description>", ...], "result": { ... } }'
+  success_test: error array is empty
+categories:
+  EAPI: API key and request-signature errors
+  EAuth: Authentication and account-status errors
+  EGeneral: General, argument, and permission errors
+  EOrder: Order placement and management errors
+  EService: Service / platform availability errors
+  ETrade: Trade request errors
+  EAccount: Account permission errors
+  EFunding: Deposit / withdrawal / funding errors
+  EQuery: Query errors (unknown order/asset/pair)
+  EBM: Business/market limit errors
+errors:
+  - {code: 'EAPI:Invalid key', category: EAPI, meaning: API-Key header missing, malformed, or refers to a deleted/revoked key.}
+  - {code: 'EAPI:Invalid signature', category: EAPI, meaning: HMAC-SHA512 API-Sign did not match the expected signature.}
+  - {code: 'EAPI:Invalid nonce', category: EAPI, meaning: Nonce was not strictly greater than the previous request's nonce.}
+  - {code: 'EAPI:Rate limit exceeded', category: EAPI, meaning: API call-frequency rate limit surpassed.}
+  - {code: 'EAuth:Account temporary disabled', category: EAuth, meaning: Account suspended for security or compliance reasons.}
+  - {code: 'EAuth:Account unconfirmed', category: EAuth, meaning: Email verification incomplete.}
+  - {code: 'EAuth:Rate limit exceeded', category: EAuth, meaning: Too many authentication attempts.}
+  - {code: 'EAuth:Too many requests', category: EAuth, meaning: Excessive authentication requests.}
+  - {code: 'EGeneral:Temporary lockout', category: EGeneral, meaning: Repeated invalid-key errors triggered brute-force lockout (~15 min).}
+  - {code: 'EGeneral:Permission denied', category: EGeneral, meaning: API key lacks the permission required for this endpoint.}
+  - {code: 'EGeneral:Invalid arguments', category: EGeneral, meaning: Malformed payload or missing/invalid required parameters.}
+  - {code: 'EGeneral:Invalid arguments:Index unavailable', category: EGeneral, meaning: Index price unavailable for a trigger/stop order.}
+  - {code: 'EGeneral:Internal error', category: EGeneral, meaning: Unexpected server-side error; retry with backoff.}
+  - {code: 'EOrder:Insufficient funds', category: EOrder, meaning: Inadequate balance to place the order.}
+  - {code: 'EOrder:Order minimum not met', category: EOrder, meaning: Volume below the pair''s ordermin.}
+  - {code: 'EOrder:Cost minimum not met', category: EOrder, meaning: Total cost below the pair''s costmin.}
+  - {code: 'EOrder:Tick size check failed', category: EOrder, meaning: Price is not a valid multiple of the pair''s tick_size.}
+  - {code: 'EOrder:Invalid price', category: EOrder, meaning: Zero, negative, or otherwise invalid price.}
+  - {code: 'EOrder:Rate limit exceeded', category: EOrder, meaning: Order-management rate limit threshold reached.}
+  - {code: 'EOrder:Orders limit exceeded', category: EOrder, meaning: Too many open orders.}
+  - {code: 'EOrder:Domain rate limit exceeded', category: EOrder, meaning: Combined master + subaccount order rate limit reached.}
+  - {code: 'EOrder:Scheduled orders limit exceeded', category: EOrder, meaning: Too many open trigger/scheduled orders.}
+  - {code: 'EOrder:Positions limit exceeded', category: EOrder, meaning: Maximum number of margin positions reached.}
+  - {code: 'EOrder:Reduce only:No position exists', category: EOrder, meaning: Reduce-only order placed with no open position.}
+  - {code: 'EOrder:Margin allowance exceeded', category: EOrder, meaning: Order exceeds the account''s total margin allowance.}
+  - {code: 'EOrder:Margin level too low', category: EOrder, meaning: Insufficient equity/collateral for margin.}
+  - {code: 'EOrder:Margin position size exceeded', category: EOrder, meaning: Order exceeds the pair''s maximum margin position size.}
+  - {code: 'EOrder:Insufficient margin', category: EOrder, meaning: Exchange-side margin pool depleted.}
+  - {code: 'EService:Unavailable', category: EService, meaning: Matching engine or API temporarily offline; back off and retry.}
+  - {code: 'EService:Market in cancel_only mode', category: EService, meaning: Only order cancellations are permitted right now.}
+  - {code: 'EService:Market in post_only mode', category: EService, meaning: Only maker (post-only) orders are accepted right now.}
+  - {code: 'EService:Deadline elapsed', category: EService, meaning: Request timed out before it could be processed.}
+  - {code: 'ETrade:Invalid request', category: ETrade, meaning: Structurally invalid trade request.}
+  - {code: 'EAccount:Invalid permissions', category: EAccount, meaning: Account lacks the required permissions.}
+  - {code: 'EFunding:Max fee exceeded', category: EFunding, meaning: Withdrawal fee exceeds the supplied max_fee.}
+  - {code: 'EFunding:No funding method', category: EFunding, meaning: Funding endpoint called with an invalid or missing method parameter.}
+  - {code: 'EFunding:Too many addresses', category: EFunding, meaning: Maximum number of new (unused) deposit addresses reached.}
+  - {code: 'EQuery:Unknown asset', category: EQuery, meaning: Referenced asset code is not recognized.}
+  - {code: 'EQuery:Unknown asset pair', category: EQuery, meaning: Referenced asset pair is not recognized.}
+  - {code: 'EBM:limit exceeded:CAL', category: EBM, meaning: Canadian Acquisition Limits exceeded.}
+remediation_guidance: >-
+  Do not retry authentication errors (EAPI/EAuth) without fixing key, signature,
+  or nonce logic first. Use exponential backoff for EService and EGeneral:Internal
+  error. Reduce request frequency on any *Rate limit exceeded*. Check balances
+  before retrying EOrder:Insufficient funds. See rate-limits/kraken-rate-limits.yml
+  and conventions/kraken-conventions.yml.

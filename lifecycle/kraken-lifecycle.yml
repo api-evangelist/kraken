@@ -1,0 +1,49 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://docs.kraken.com/api/, https://status.kraken.com/,
+  https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits;
+  legacy/deprecation posture derived from apis.yml (WebSocket v1 vs v2) and the
+  Spot/Futures OpenAPI in openapi/.
+description: >-
+  Versioning, deprecation, and availability posture across Kraken's API surfaces.
+  Kraken versions primarily by URI path (Spot endpoints under /0/, Futures under
+  /api/v3) and by protocol generation (Spot WebSocket v1 legacy vs v2). Kraken
+  does not implement RFC 8594 Sunset/Deprecation response headers; deprecations
+  are announced via blog/support and legacy surfaces are kept running.
+versioning:
+  spot_rest:
+    scheme: uri-path
+    current: '/0/'
+    base: https://api.kraken.com
+  futures_rest:
+    scheme: uri-path
+    current: v3
+    base: https://futures.kraken.com/derivatives/api/v3
+  spot_websocket:
+    scheme: protocol-generation
+    current: v2
+    base: wss://ws.kraken.com/v2
+    legacy: v1 (wss://ws.kraken.com) — still operational, v2 recommended for new work
+  docs: https://docs.kraken.com/api/
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: >-
+    No RFC 8594 Sunset/Deprecation headers. Legacy surfaces (Spot WebSocket v1,
+    Crypto Facilities Futures v3 clients) remain operational; migration guidance
+    is published via the docs and blog rather than machine-readable headers.
+legacy_surfaces:
+  - name: Kraken Spot WebSocket API v1
+    superseded_by: Kraken Spot WebSocket API v2
+    status: operational
+    evidence: apis.yml — "Continues to operate alongside v2 but v2 is the recommended path."
+  - name: Crypto Facilities REST v3 / WebSocket v1 clients
+    context: Kraken Futures (formerly Crypto Facilities); example clients still published.
+sla:
+  url: null
+  public_uptime_target: null
+  notes: Kraken publishes no numeric public API uptime SLA; institutional commitments are handled per agreement.
+status_page: https://status.kraken.com/
+rate_limits: rate-limits/kraken-rate-limits.yml
+deprecated_operations: []

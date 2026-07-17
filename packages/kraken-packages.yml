@@ -1,0 +1,92 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  Derived from the first-party SDK / CLI / Tools links already catalogued in
+  apis.yml (krakenfx and CryptoFacilities GitHub organizations). Kraken does not
+  publish official client libraries to the language package registries (npm,
+  PyPI, Packagist, crates.io, Maven Central) — its first-party clients are
+  distributed as source on GitHub, so `registry: github` is recorded rather than
+  a registry package name. Popular registry packages for Kraken (e.g. krakenex,
+  pykrakenapi, node-kraken-api, CCXT) are community-maintained and are NOT listed
+  here as first-party.
+packages:
+  - language: go
+    registry: github
+    name: krakenfx/api-go
+    url: https://github.com/krakenfx/api-go
+    install: go get github.com/krakenfx/api-go
+    official: true
+    note: Kraken Go SDK covering Spot and Derivatives.
+  - language: php
+    registry: github
+    name: krakenfx/kraken-api-client
+    url: https://github.com/krakenfx/kraken-api-client
+    official: true
+    note: Kraken PHP API client (Spot).
+  - language: python
+    registry: github
+    name: krakenfx/kraken-wsclient-py
+    url: https://github.com/krakenfx/kraken-wsclient-py
+    official: true
+    note: Kraken Python WebSocket client (Spot).
+  - language: rust
+    registry: github
+    name: krakenfx/kraken-cli
+    url: https://github.com/krakenfx/kraken-cli
+    install: cargo install --git https://github.com/krakenfx/kraken-cli
+    official: true
+    note: Official AI-native CLI with an embedded MCP server. See cli/kraken-cli.yml and mcp/kraken-mcp.yml.
+  - language: typescript
+    registry: github
+    name: krakenfx/wallet
+    url: https://github.com/krakenfx/wallet
+    official: true
+    note: Kraken Wallet (self-custody) — application, not an API SDK; listed for completeness.
+  - language: python
+    registry: github
+    name: CryptoFacilities/REST-v3-Python
+    url: https://github.com/CryptoFacilities/REST-v3-Python
+    official: true
+    note: Kraken Futures (Crypto Facilities) REST v3 example client.
+  - language: java
+    registry: github
+    name: CryptoFacilities/REST-v3-Java
+    url: https://github.com/CryptoFacilities/REST-v3-Java
+    official: true
+    note: Kraken Futures REST v3 example client.
+  - language: csharp
+    registry: github
+    name: CryptoFacilities/REST-v3-CSharp
+    url: https://github.com/CryptoFacilities/REST-v3-CSharp
+    official: true
+    note: Kraken Futures REST v3 example client.
+  - language: javascript
+    registry: github
+    name: CryptoFacilities/REST-v3-NodeJs
+    url: https://github.com/CryptoFacilities/REST-v3-NodeJs
+    official: true
+    note: Kraken Futures REST v3 example client.
+  - language: kotlin
+    registry: github
+    name: CryptoFacilities/REST-v3-kotlin
+    url: https://github.com/CryptoFacilities/REST-v3-kotlin
+    official: true
+    note: Kraken Futures REST v3 example client.
+  - language: python
+    registry: github
+    name: CryptoFacilities/WebSocket-v1-Python
+    url: https://github.com/CryptoFacilities/WebSocket-v1-Python
+    official: true
+    note: Kraken Futures WebSocket v1 example client.
+  - language: csharp
+    registry: github
+    name: CryptoFacilities/WebSocket-v1-CSharp
+    url: https://github.com/CryptoFacilities/WebSocket-v1-CSharp
+    official: true
+    note: Kraken Futures WebSocket v1 example client.
+  - language: rust
+    registry: github
+    name: CryptoFacilities/WebSocket-v1-Rust
+    url: https://github.com/CryptoFacilities/WebSocket-v1-Rust
+    official: true
+    note: Kraken Futures WebSocket v1 example client.

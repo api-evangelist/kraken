@@ -1,0 +1,70 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  https://docs.kraken.com/api/docs/guides/spot-rest-auth,
+  https://docs.kraken.com/api/docs/guides/spot-errors/,
+  https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits,
+  and derived from openapi/kraken-spot-rest-openapi.yml +
+  openapi/kraken-futures-rest-openapi.yml.
+description: >-
+  Cross-cutting request/response conventions that apply across the Kraken Spot
+  and Futures REST surfaces, beyond what any single OpenAPI operation expresses.
+base_urls:
+  spot: https://api.kraken.com
+  futures: https://futures.kraken.com/derivatives/api/v3
+api_style: >-
+  REST over HTTPS. Spot private endpoints take application/x-www-form-urlencoded
+  POST bodies and return a {error, result} JSON envelope. Futures return a
+  {result, serverTime, ...} JSON envelope.
+authentication:
+  spot:
+    scheme: API-Key + API-Sign headers (HMAC-SHA512 over URI path + SHA256(nonce + POST body))
+    nonce: Required incrementing nonce in the POST body on every private call.
+  futures:
+    scheme: APIKey + Authent headers (HMAC-SHA512 over postData + nonce + endpointPath)
+    nonce: Nonce header carries the incrementing nonce.
+  detail: authentication/kraken-authentication.yml
+  oauth: Separate OAuth 2.0 delegated-access surface (docs.kraken.com/api/docs/category/oauth/).
+idempotency:
+  generic_header: false
+  mechanism: >-
+    No generic Idempotency-Key. Orders accept a client-supplied reference
+    (userref / cl_ord_id) for de-duplication and matching, and
+    cancel_all_orders_after / cancel_on_disconnect act as a dead-man's switch to
+    avoid duplicate resting orders on reconnect.
+pagination:
+  style: offset-and-time-window
+  request_params:
+    count: page size on history endpoints (e.g. trades history)
+    ofs: result offset
+    start: unix timestamp / tx id lower bound
+    end: unix timestamp / tx id upper bound
+  response_fields:
+    count: total matching records (Spot history responses)
+  notes: >-
+    Spot history endpoints (TradesHistory, Ledgers, ClosedOrders) page by ofs +
+    start/end. Futures history uses continuation tokens / since parameters.
+field_expansion:
+  supported: false
+metadata:
+  supported: partial
+  mechanism: userref / cl_ord_id client-supplied identifiers on orders.
+request_tracing:
+  request_id_header: null
+  notes: No documented per-request correlation-id header; use userref for order correlation.
+versioning:
+  spot: URI path under /0/
+  futures: URI path v3
+  websocket: v2 current, v1 legacy
+  detail: lifecycle/kraken-lifecycle.yml
+error_envelope:
+  spot: '{ "error": ["E<Category>:<Description>"], "result": { ... } }  (HTTP 200)'
+  futures: '{ "result": "error", "errors": [ ... ], "serverTime": "..." }'
+  detail: errors/kraken-error-codes.yml
+rate_limit_signaling:
+  model: >-
+    Counter-based. Spot uses per-tier API call rate counters and a separate order
+    (trading) rate-limit counter that decays over time; exceeding them returns
+    EAPI:Rate limit exceeded or EOrder:Rate limit exceeded rather than HTTP 429.
+  headers: No standard X-RateLimit-* headers documented.
+  detail: rate-limits/kraken-rate-limits.yml

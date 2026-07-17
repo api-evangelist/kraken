@@ -1,0 +1,52 @@
+generated: '2026-06-20'
+method: searched
+source: >-
+  Probed the /.well-known/ discovery surface for the base hosts in apis.yml
+  (baseURL) and the OpenAPI servers[] (api.kraken.com, futures.kraken.com,
+  www.kraken.com, docs.kraken.com). Status is the HTTP code observed at fetch
+  time. Only real, correctly-typed documents were saved verbatim.
+hosts:
+  - host: https://www.kraken.com
+    documents:
+      - path: /.well-known/security.txt        # RFC 9116
+        status: 200
+        type: text/plain
+        file: kraken-security.txt
+      - path: /.well-known/pgp-key.txt          # referenced by security.txt Encryption:
+        status: 200
+        type: text/plain
+        note: PGP public key for encrypted disclosure; pointer only, not re-hosted.
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.kraken.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://futures.kraken.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+  - host: https://docs.kraken.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404

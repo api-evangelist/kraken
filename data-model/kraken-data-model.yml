@@ -1,0 +1,61 @@
+generated: '2026-06-20'
+method: derived
+source: >-
+  Derived from the object schemas and id-reference fields in
+  openapi/kraken-spot-rest-openapi.yml and
+  openapi/kraken-futures-rest-openapi.yml (and the json-schema/ mirrors).
+  Captures the core entity-relationship graph behind the Spot and Futures
+  trading domains. Kraken identifies most objects by short string ids
+  (transaction ids like OQCLML-BW3P3-BUCMWZ, ledger ids, refids) rather than
+  typed prefixes.
+docs: https://docs.kraken.com/api/
+notation: >-
+  relationships use has_one / has_many / belongs_to with the reference field
+  name in `via`; direction is from the entity that owns the reference.
+entities:
+  - {name: Asset, domain: reference, description: A tradable asset/currency (e.g. XBT, ETH, USD).}
+  - {name: AssetPair, domain: reference, description: A tradable market pair with base + quote asset and trading rules (ordermin, costmin, tick_size).}
+  - {name: Ticker, domain: market-data, description: Snapshot L1 quote for an AssetPair.}
+  - {name: OHLC, domain: market-data, description: Candlestick series for an AssetPair.}
+  - {name: OrderBook, domain: market-data, description: Bid/ask depth for an AssetPair.}
+  - {name: Balance, domain: account, description: Per-asset account balance.}
+  - {name: Order, domain: trading, description: A Spot order (txid), with pair, type, price, volume, and status.}
+  - {name: Trade, domain: trading, description: An execution/fill against an Order.}
+  - {name: Position, domain: trading, description: An open margin position for an AssetPair.}
+  - {name: LedgerEntry, domain: account, description: A ledger record affecting an asset balance (trade, deposit, withdrawal, transfer, staking).}
+  - {name: DepositMethod, domain: funding, description: An available deposit method for an asset.}
+  - {name: DepositAddress, domain: funding, description: A generated deposit address for an asset + method.}
+  - {name: Withdrawal, domain: funding, description: A withdrawal request (refid) for an asset.}
+  - {name: Subaccount, domain: account, description: A logical subaccount under a master account.}
+  - {name: EarnStrategy, domain: earn, description: A staking/yield strategy for an asset.}
+  - {name: EarnAllocation, domain: earn, description: Funds allocated to an EarnStrategy.}
+  - {name: FuturesInstrument, domain: futures, description: A Kraken Futures tradable instrument (symbol).}
+  - {name: FuturesAccount, domain: futures, description: A Futures account with margin/collateral balances.}
+  - {name: FuturesOrder, domain: futures, description: A Futures order (order_id) against an instrument.}
+  - {name: Fill, domain: futures, description: An execution against a FuturesOrder.}
+  - {name: FuturesPosition, domain: futures, description: An open Futures position for an instrument.}
+relationships:
+  - {from: AssetPair, to: Asset, kind: belongs_to, via: base}
+  - {from: AssetPair, to: Asset, kind: belongs_to, via: quote}
+  - {from: Ticker, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: OHLC, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: OrderBook, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: Order, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: Order, to: Trade, kind: has_many, via: ordertxid}
+  - {from: Trade, to: Order, kind: belongs_to, via: ordertxid}
+  - {from: Trade, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: Position, to: AssetPair, kind: belongs_to, via: pair}
+  - {from: Position, to: Order, kind: belongs_to, via: ordertxid}
+  - {from: LedgerEntry, to: Asset, kind: belongs_to, via: asset}
+  - {from: LedgerEntry, to: Trade, kind: has_one, via: refid}
+  - {from: Balance, to: Asset, kind: belongs_to, via: asset}
+  - {from: DepositMethod, to: Asset, kind: belongs_to, via: asset}
+  - {from: DepositAddress, to: Asset, kind: belongs_to, via: asset}
+  - {from: DepositAddress, to: DepositMethod, kind: belongs_to, via: method}
+  - {from: Withdrawal, to: Asset, kind: belongs_to, via: asset}
+  - {from: EarnAllocation, to: EarnStrategy, kind: belongs_to, via: strategy_id}
+  - {from: FuturesOrder, to: FuturesInstrument, kind: belongs_to, via: symbol}
+  - {from: FuturesOrder, to: Fill, kind: has_many, via: order_id}
+  - {from: Fill, to: FuturesOrder, kind: belongs_to, via: order_id}
+  - {from: FuturesPosition, to: FuturesInstrument, kind: belongs_to, via: symbol}
+  - {from: FuturesPosition, to: FuturesAccount, kind: belongs_to, via: account}

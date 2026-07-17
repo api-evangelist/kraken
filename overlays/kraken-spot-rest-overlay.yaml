@@ -1,0 +1,40 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Kraken Spot REST API
+  version: 1.0.0
+extends: openapi/kraken-spot-rest-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: kraken
+      x-apievangelist-api: kraken-spot-rest
+      x-apievangelist-enrichment-round: '2026-06-20'
+      x-artifacts:
+        authentication: authentication/kraken-authentication.yml
+        errors: errors/kraken-error-codes.yml
+        conventions: conventions/kraken-conventions.yml
+        data-model: data-model/kraken-data-model.yml
+        conformance: conformance/kraken-conformance.yml
+        lifecycle: lifecycle/kraken-lifecycle.yml
+        rate-limits: rate-limits/kraken-rate-limits.yml
+        mcp: mcp/kraken-mcp.yml
+        cli: cli/kraken-cli.yml
+  - target: $.info
+    update:
+      x-error-model:
+        note: >-
+          Kraken Spot returns HTTP 200 with a {error, result} envelope; a
+          non-empty error[] array of E<Category>:<Description> strings signals
+          failure. See errors/kraken-error-codes.yml.
+  - target: $.paths['/0/private/AddOrder'].post
+    update:
+      x-agentic-consequence: physical
+      x-note: >-
+        Places a live order that moves real funds. Treat as an acting/physical
+        operation; see agentic-access/kraken-agentic-access.yml.
+  - target: $.paths['/0/private/Withdraw'].post
+    update:
+      x-agentic-consequence: physical
+      x-note: >-
+        Initiates a withdrawal of funds off the exchange. High-consequence;
+        gate behind explicit human approval.

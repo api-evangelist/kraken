@@ -10,7 +10,7 @@ description: Kraken is one of the world's largest and longest-running cryptocurr
 url: https://docs.kraken.com/api/
 specificationVersion: '0.20'
 created: '2026-05-28'
-modified: '2026-05-30'
+modified: '2026-06-20'
 x-source: public-apis/public-apis
 x-category: Cryptocurrency
 x-type: company
@@ -321,6 +321,37 @@ common:
 - type: Arazzo
   url: arazzo/kraken-withdraw-funds-workflow.yml
   name: Kraken Withdraw Funds with Fee Preview
+- type: Packages
+  url: packages/kraken-packages.yml
+- type: WellKnown
+  url: well-known/kraken-well-known.yml
+- type: SecurityTxt
+  url: well-known/kraken-security.txt
+- type: MCPServer
+  url: mcp/kraken-mcp.yml
+- type: LLMsTxt
+  url: llms/kraken-llms.txt
+- type: Overlay
+  name: Kraken Spot REST enhancements
+  url: overlays/kraken-spot-rest-overlay.yaml
+- type: Overlay
+  name: Kraken Futures REST enhancements
+  url: overlays/kraken-futures-rest-overlay.yaml
+- type: Conformance
+  url: conformance/kraken-conformance.yml
+- type: ErrorCatalog
+  url: errors/kraken-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/kraken-lifecycle.yml
+- type: Sandbox
+  url: sandbox/kraken-sandbox.yml
+- type: Conventions
+  url: conventions/kraken-conventions.yml
+- type: DataModel
+  url: data-model/kraken-data-model.yml
+- type: CLI
+  name: Kraken CLI command surface
+  url: cli/kraken-cli.yml
 - type: Website
   url: https://www.kraken.com/
 - type: Portal

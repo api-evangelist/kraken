@@ -1,0 +1,47 @@
+generated: '2026-06-20'
+method: searched
+status: published
+source: https://github.com/krakenfx/kraken-cli
+description: >-
+  Kraken ships an official MCP server embedded in the Kraken CLI
+  (krakenfx/kraken-cli). Running `kraken mcp` starts a Model Context Protocol
+  server over stdio that exposes 151 tools across the Spot, Futures, and Earn
+  surfaces, letting LLM agents (Claude, Cursor, Gemini) drive Kraken accounts by
+  tool-calling without writing a custom HTTP client. Authentication uses the
+  same API-key credentials as the CLI (KRAKEN_API_KEY / KRAKEN_API_SECRET and
+  the futures pair). A separate community FastMCP server (oilst/kraken-mcp) also
+  exists. There is no Kraken-hosted remote (HTTP) MCP endpoint; the official
+  server is local/stdio via the CLI.
+server:
+  name: kraken
+  transport: stdio
+  launch: kraken mcp
+  package: https://github.com/krakenfx/kraken-cli
+  auth: api-key
+  tool_count: 151
+tool_groups:
+  - market
+  - account
+  - trade
+  - funding
+  - earn
+  - subaccount
+  - futures
+  - futures-paper
+  - paper
+  - websocket
+  - futures-ws
+community_servers:
+  - name: oilst/kraken-mcp
+    transport: stdio
+    framework: FastMCP
+    url: https://github.com/oilst/kraken-mcp
+    description: >-
+      Community-maintained FastMCP server exposing the Kraken Pro REST API as
+      tools for the Gemini CLI and other MCP-compatible agent runtimes. Not
+      first-party.
+    official: false
+notes: >-
+  The Kraken CLI's 151 MCP tools map onto the same operations catalogued in
+  openapi/kraken-spot-rest-openapi.yml and openapi/kraken-futures-rest-openapi.yml;
+  each CLI command group above corresponds to a cluster of MCP tools.
