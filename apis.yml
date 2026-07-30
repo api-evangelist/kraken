@@ -8,6 +8,19 @@ description: Kraken is one of the world's largest and longest-running cryptocurr
   Spot exchange, Futures exchange (Kraken Futures, formerly Crypto Facilities), institutional
   services (Custody, OTC, Prime), and partner integration surfaces (Embed, Ramp, OAuth).
 url: https://docs.kraken.com/api/
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-05-28'
 modified: '2026-06-20'
@@ -37,47 +50,13 @@ tags:
 - OAuth
 - Public APIs
 apis:
-- name: Kraken Spot REST API
-  description: Public and private REST endpoints for the Kraken Spot exchange. Covers
-    public market data (server time, system status, asset info, ticker, OHLC, order
-    book depth, recent trades, recent spreads), private account data (balances, trade
-    balance, open orders, closed orders, query orders, trades history, query trades,
-    open positions, ledgers, query ledgers, trade volume, API key info), trading (add
-    order, edit order, amend order, cancel order, cancel all, cancel all orders after,
-    add order batch, cancel order batch), funding (deposit methods, deposit addresses,
-    deposit status, withdraw info, withdraw, withdraw status, withdrawal cancel, wallet
-    transfer), subaccounts (create, transfer), Earn (allocate, deallocate, allocations,
-    allocation status, strategies), and the WebSocket token endpoint used to authorize
-    private WebSocket subscriptions.
-  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
-  baseURL: https://api.kraken.com
-  tags:
-  - Spot
-  - REST
-  - Trading
-  - Market Data
-  - Funding
-  - Earn
-  properties:
-  - type: Documentation
-    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
-  - type: APIReference
-    url: https://docs.kraken.com/api/docs/category/spot-rest/
-  - type: Authentication
-    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
-  - type: RateLimits
-    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
-  - type: OpenAPI
-    url: openapi/kraken-spot-rest-openapi.yml
-  - url: graphql/kraken-graphql.md
-    type: GraphQL
 - name: Kraken Spot WebSocket API v2
-  description: Real-time market data and private user data over WebSocket v2 using
-    subscribe/unsubscribe semantics. Public channels include ticker (L1), book (L2),
-    trade, ohlc, instrument, and admin frames (status, heartbeat, ping/pong). Authenticated
-    channels include executions and balances. Trading methods include add_order, amend_order,
-    edit_order, cancel_order, cancel_all, cancel_on_disconnect, batch_add, and batch_cancel.
-    The authenticated endpoint requires a token obtained from the Spot REST GetWebSocketsToken
+  description: >-
+    Real-time market data and private user data over WebSocket v2 using subscribe/unsubscribe semantics.
+    Public channels include ticker (L1), book (L2), trade, ohlc, instrument, and admin frames (status,
+    heartbeat, ping/pong). Authenticated channels include executions and balances. Trading methods include
+    add_order, amend_order, edit_order, cancel_order, cancel_all, cancel_on_disconnect, batch_add, and
+    batch_cancel. The authenticated endpoint requires a token obtained from the Spot REST GetWebSocketsToken
     operation.
   humanURL: https://docs.kraken.com/api/docs/websocket-v2/ping
   baseURL: wss://ws.kraken.com/v2
@@ -96,9 +75,10 @@ apis:
   - type: AsyncAPI
     url: asyncapi/kraken-asyncapi.yml
 - name: Kraken Spot WebSocket API v1 (Legacy)
-  description: Legacy Kraken Spot WebSocket API. Continues to operate alongside v2
-    but v2 is the recommended path for new integrations. Public channels include ticker,
-    book, trade, ohlc, spread; private channels include ownTrades and openOrders.
+  description: >-
+    Legacy Kraken Spot WebSocket API. Continues to operate alongside v2 but v2 is the recommended path
+    for new integrations. Public channels include ticker, book, trade, ohlc, spread; private channels
+    include ownTrades and openOrders.
   humanURL: https://docs.kraken.com/api/docs/category/websocket-v1
   baseURL: wss://ws.kraken.com
   tags:
@@ -110,35 +90,11 @@ apis:
     url: https://docs.kraken.com/api/docs/category/websocket-v1
   - type: APIReference
     url: https://docs.kraken.com/api/docs/websocket-v1/ping
-- name: Kraken Futures REST API
-  description: REST API for the Kraken Futures derivatives exchange (formerly Crypto
-    Facilities). Provides trading (send order, edit order, cancel order, cancel all,
-    batch order), market data (instruments, tickers, orderbook, history, recent orders),
-    account data (accounts, open positions, open orders, fills, notifications, account
-    log, transfers, withdrawal), history (account history, execution events, order
-    events, trigger events, market history), charts (candles, analytics), and API
-    key management endpoints.
-  humanURL: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
-  baseURL: https://futures.kraken.com/derivatives/api/v3
-  tags:
-  - Futures
-  - Derivatives
-  - REST
-  - Trading
-  properties:
-  - type: Documentation
-    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
-  - type: APIReference
-    url: https://docs.kraken.com/api/docs/category/futures-api/
-  - type: Authentication
-    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
-  - type: OpenAPI
-    url: openapi/kraken-futures-rest-openapi.yml
 - name: Kraken Futures WebSocket API
-  description: Real-time market data and private user feeds for Kraken Futures over
-    WebSocket. Public feeds include trade, book, ticker, ticker_lite, heartbeat; private
-    feeds include fills, open_positions, open_orders, account_log, notifications_auth,
-    deposits_withdrawals.
+  description: >-
+    Real-time market data and private user feeds for Kraken Futures over WebSocket. Public feeds include
+    trade, book, ticker, ticker_lite, heartbeat; private feeds include fills, open_positions, open_orders,
+    account_log, notifications_auth, deposits_withdrawals.
   humanURL: https://docs.kraken.com/api/docs/category/futures-websocket
   baseURL: wss://futures.kraken.com/ws/v1
   tags:
@@ -152,10 +108,10 @@ apis:
   - type: APIReference
     url: https://docs.kraken.com/api/docs/futures-websocket/feeds/heartbeat
 - name: Kraken FIX API
-  description: FIX 4.4 / 5.0 SP2 protocol access for Kraken Spot and Futures, used
-    by institutional and high-frequency clients. Provides order management (NewOrderSingle,
-    OrderCancelRequest, OrderCancelReplaceRequest, etc.) and market data request flows
-    (MarketDataRequest, MarketDataSnapshot/Refresh).
+  description: >-
+    FIX 4.4 / 5.0 SP2 protocol access for Kraken Spot and Futures, used by institutional and high-frequency
+    clients. Provides order management (NewOrderSingle, OrderCancelRequest, OrderCancelReplaceRequest,
+    etc.) and market data request flows (MarketDataRequest, MarketDataSnapshot/Refresh).
   humanURL: https://docs.kraken.com/api/docs/category/fix-api/
   baseURL: colo-london.vip-fix.kraken.com
   tags:
@@ -169,9 +125,10 @@ apis:
   - type: Authentication
     url: https://docs.kraken.com/api/docs/guides/fix-api-auth
 - name: Kraken NFT API
-  description: 'REST API for Kraken''s NFT marketplace surfaces: collections, asset
-    lookups, listings, offers, watchlist, and user portfolio views. The NFT API is
-    consumed alongside the Spot REST API using the same API key authentication scheme.'
+  description: >-
+    REST API for Kraken's NFT marketplace surfaces: collections, asset lookups, listings, offers, watchlist,
+    and user portfolio views. The NFT API is consumed alongside the Spot REST API using the same API key
+    authentication scheme.
   humanURL: https://docs.kraken.com/api/docs/category/nft-rest/
   baseURL: https://api.kraken.com
   tags:
@@ -182,9 +139,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/nft-rest/
 - name: Kraken Earn API
-  description: REST endpoints for Kraken Earn (staking, yield, rewards). Lists strategies,
-    allocates funds to a strategy, deallocates funds, and surfaces allocation status
-    and reward history.
+  description: >-
+    REST endpoints for Kraken Earn (staking, yield, rewards). Lists strategies, allocates funds to a strategy,
+    deallocates funds, and surfaces allocation status and reward history.
   humanURL: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
   baseURL: https://api.kraken.com
   tags:
@@ -196,10 +153,10 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/rest-api/allocate-strategy
 - name: Kraken Embed REST API
-  description: B2B integration API enabling partners to embed Kraken trading, custody,
-    and Earn capabilities into their own products. Provides user management, assets,
-    deposits, withdrawals, quote-based and custom orders, portfolio, Earn features,
-    and webhooks for real-time event delivery.
+  description: >-
+    B2B integration API enabling partners to embed Kraken trading, custody, and Earn capabilities into
+    their own products. Provides user management, assets, deposits, withdrawals, quote-based and custom
+    orders, portfolio, Earn features, and webhooks for real-time event delivery.
   humanURL: https://docs.kraken.com/api/docs/category/embed/
   baseURL: https://embed.kraken.com
   tags:
@@ -211,9 +168,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/embed/
 - name: Kraken OAuth REST API
-  description: OAuth 2.0 authorization surface allowing third-party applications to
-    request scoped delegated access to a Kraken account holder's data and trading
-    capabilities.
+  description: >-
+    OAuth 2.0 authorization surface allowing third-party applications to request scoped delegated access
+    to a Kraken account holder's data and trading capabilities.
   humanURL: https://docs.kraken.com/api/docs/category/oauth/
   baseURL: https://www.kraken.com/oauth
   tags:
@@ -224,8 +181,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/oauth/
 - name: Kraken Ramp REST API
-  description: Fiat on/off-ramp API surface that lets partner applications offer crypto
-    purchase and conversion experiences powered by Kraken liquidity.
+  description: >-
+    Fiat on/off-ramp API surface that lets partner applications offer crypto purchase and conversion experiences
+    powered by Kraken liquidity.
   humanURL: https://docs.kraken.com/api/docs/category/ramp/
   baseURL: https://ramp.kraken.com
   tags:
@@ -237,9 +195,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/ramp/
 - name: Kraken Custody REST API
-  description: Institutional custody API providing programmatic access to vaulting,
-    sub-vaulting, wallet generation, transfers, and policy/governance configuration
-    for assets held in Kraken Custody.
+  description: >-
+    Institutional custody API providing programmatic access to vaulting, sub-vaulting, wallet generation,
+    transfers, and policy/governance configuration for assets held in Kraken Custody.
   humanURL: https://docs.kraken.com/api/docs/category/custody/
   baseURL: https://custody.kraken.com
   tags:
@@ -250,8 +208,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/custody/
 - name: Kraken OTC REST API
-  description: Over-the-counter execution API for institutional clients to request
-    quotes (RFQ), execute block trades, and retrieve OTC trade history.
+  description: >-
+    Over-the-counter execution API for institutional clients to request quotes (RFQ), execute block trades,
+    and retrieve OTC trade history.
   humanURL: https://docs.kraken.com/api/docs/category/otc/
   baseURL: https://otc.kraken.com
   tags:
@@ -263,9 +222,9 @@ apis:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/otc/
 - name: Kraken Prime REST + WebSocket + FIX API
-  description: Prime brokerage API surface (REST, WebSocket, FIX) for institutional
-    clients consolidating execution, custody, financing, and reporting under a single
-    relationship.
+  description: >-
+    Prime brokerage API surface (REST, WebSocket, FIX) for institutional clients consolidating execution,
+    custody, financing, and reporting under a single relationship.
   humanURL: https://docs.kraken.com/api/docs/category/prime/
   baseURL: https://prime.kraken.com
   tags:
@@ -278,6 +237,318 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.kraken.com/api/docs/category/prime/
+- aid: kraken:kraken-account-api
+  name: Kraken Account API
+  description: Accounts, positions, orders, fills
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-account-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-account-data-api
+  name: Kraken Account Data API
+  description: Private endpoints returning account-scoped data
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Account Data
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-account-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-auth-api
+  name: Kraken Auth API
+  description: API key checks
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-auth-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-charts-api
+  name: Kraken Charts API
+  description: OHLC candle data and analytics
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Charts
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-charts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-earn-api
+  name: Kraken Earn API
+  description: Staking and yield allocation endpoints
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Earn
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-earn-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-funding-api
+  name: Kraken Funding API
+  description: Private endpoints for deposits, withdrawals, and transfers
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Funding
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-funding-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-history-api
+  name: Kraken History API
+  description: Account, execution, order, trigger, and market history
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - History
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-history-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-market-data-api
+  name: Kraken Market Data API
+  description: Public market data (no authentication required)
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Market Data
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-market-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-subaccounts-api
+  name: Kraken Subaccounts API
+  description: Subaccount creation and inter-account transfers
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Subaccounts
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-subaccounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-trading-api
+  name: Kraken Trading API
+  description: Order placement, edit, and cancellation
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Trading
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-trading-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-transfers-api
+  name: Kraken Transfers API
+  description: Wallet, margin, and subaccount transfers
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - Transfers
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-transfers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-websocket-api
+  name: Kraken WebSocket API
+  description: Endpoints that mint tokens for private WebSocket subscriptions
+  humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  baseURL: https://api.kraken.com
+  tags:
+  - WebSocket
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-websocket-api-openapi.yml
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/rest-api/get-server-time
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/spot-rest/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/spot-rest-auth
+  - type: RateLimits
+    url: https://support.kraken.com/articles/206548367-what-are-the-api-rate-limits
+  - type: GraphQL
+    url: graphql/kraken-graphql.md
+  - type: Documentation
+    url: https://docs.kraken.com/api/docs/futures-api/trading/get-accounts
+  - type: APIReference
+    url: https://docs.kraken.com/api/docs/category/futures-api/
+  - type: Authentication
+    url: https://docs.kraken.com/api/docs/guides/futures-api-auth
 common:
 - type: AgenticAccess
   url: agentic-access/kraken-agentic-access.yml
