@@ -1,0 +1,36 @@
+{
+  "provider": "kraken",
+  "sources": [
+    "kraken-account-api-openapi.yml",
+    "kraken-account-data-api-openapi.yml",
+    "kraken-auth-api-openapi.yml",
+    "kraken-charts-api-openapi.yml",
+    "kraken-earn-api-openapi.yml",
+    "kraken-funding-api-openapi.yml",
+    "kraken-history-api-openapi.yml",
+    "kraken-market-data-api-openapi.yml",
+    "kraken-subaccounts-api-openapi.yml",
+    "kraken-trading-api-openapi.yml",
+    "kraken-transfers-api-openapi.yml",
+    "kraken-websocket-api-openapi.yml"
+  ],
+  "outputs": [
+    "kraken-account-api-openapi.yml",
+    "kraken-account-data-api-openapi.yml",
+    "kraken-auth-api-openapi.yml",
+    "kraken-charts-api-openapi.yml",
+    "kraken-earn-api-openapi.yml",
+    "kraken-funding-api-openapi.yml",
+    "kraken-history-api-openapi.yml",
+    "kraken-market-data-api-openapi.yml",
+    "kraken-subaccounts-api-openapi.yml",
+    "kraken-trading-api-openapi.yml",
+    "kraken-transfers-api-openapi.yml",
+    "kraken-websocket-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
