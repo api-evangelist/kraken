@@ -5,7 +5,7 @@
       "source": "https://blog.kraken.com/feed/",
       "feed_url": "https://blog.kraken.com/feed/",
       "title": "",
-      "saved": 0,
+      "saved": 9,
       "method": "feed"
     },
     {
@@ -13,9 +13,10 @@
       "feed_url": "https://www.kraken.com/legal/privacy",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
-  "post_count": 77,
-  "fetched": "2026-08-06T14:08:46Z"
+  "post_count": 86,
+  "fetched": "2026-08-15T12:11:08Z"
 }
