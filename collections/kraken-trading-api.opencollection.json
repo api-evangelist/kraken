@@ -1,0 +1,283 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Trading API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Trading",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Send Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/sendorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Places a new futures order (lmt, mkt, stp, take_profit, ioc)."
+        },
+        {
+          "info": {
+            "name": "Kraken Edit Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/editorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Modifies a resting futures order (size, limitPrice, stopPrice)."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelorder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "order_id",
+                  "value": ""
+                },
+                {
+                  "name": "cliOrdId",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels a specific open futures order."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelallorders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "symbol",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Cancels every open futures order, optionally scoped to a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders After (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/cancelallordersafter",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "timeout",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Dead-man's-switch for futures — cancels all orders after the timeout unless re-armed."
+        },
+        {
+          "info": {
+            "name": "Kraken Batch Order (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/batchorder",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Submits a batch of order operations (place/edit/cancel) in a single signed call."
+        },
+        {
+          "info": {
+            "name": "Kraken Add Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/AddOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Places a new order. Supports market, limit, stop-loss, take-profit, stop-loss-limit, take-profit-limit, settle-position, trailing-stop, and iceberg order types."
+        },
+        {
+          "info": {
+            "name": "Kraken Add Order Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/AddOrderBatch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Places a batch of up to 15 orders for a single pair in one signed request."
+        },
+        {
+          "info": {
+            "name": "Kraken Edit Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/EditOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Cancels and replaces an existing order with new parameters (volume, price, or price2)."
+        },
+        {
+          "info": {
+            "name": "Kraken Amend Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/AmendOrder",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Modifies a resting order in place (volume, limit/trigger prices, post-only) without changing its order ID."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/CancelOrder",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Cancels a specific open order by transaction ID or user-reference."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/CancelAll",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Cancels every open order for the API key."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel All Orders After (Dead Man's Switch)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/CancelAllOrdersAfter",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Arms a dead-man's-switch — all open orders will be cancelled after the specified timeout (seconds) unless the call is re-issued."
+        },
+        {
+          "info": {
+            "name": "Kraken Cancel Order Batch",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/CancelOrderBatch",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancels up to 50 orders in a single signed call."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1674 @@
+{
+  "item": [
+    {
+      "id": "0fcccfb7-c25f-4f3a-a637-d48ed81696ef",
+      "name": "Account Data",
+      "description": {
+        "content": "Private endpoints returning account-scoped data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d4cdc1eb-8452-4161-97a3-0273cecda741",
+          "name": "Kraken Get Account Balance",
+          "request": {
+            "name": "Kraken Get Account Balance",
+            "description": {
+              "content": "Returns the asset balances held in the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "Balance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>",
+                  "description": "Two-factor password / OTP if the key is OTP-protected."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b9a43b95-d1ea-436e-98c3-d05c584eb476",
+              "name": "Asset balances",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "Balance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Two-factor password / OTP if the key is OTP-protected.",
+                        "type": "text/plain"
+                      },
+                      "key": "otp",
+                      "value": "123456"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a10cee98-4657-492a-a92c-5063db4033df",
+          "name": "Kraken Get Extended Balance",
+          "request": {
+            "name": "Kraken Get Extended Balance",
+            "description": {
+              "content": "Returns asset balances with hold-trade and credit details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "BalanceEx"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>",
+                  "description": "Two-factor password / OTP if the key is OTP-protected."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "57d683c5-8f32-45b9-b451-e8a5acf2cab7",
+              "name": "Extended balances",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "BalanceEx"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Two-factor password / OTP if the key is OTP-protected.",
+                        "type": "text/plain"
+                      },
+                      "key": "otp",
+                      "value": "123456"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3744f348-bdbb-491d-a5b1-c6cefa3f2f60",
+          "name": "Kraken Get Trade Balance",
+          "request": {
+            "name": "Kraken Get Trade Balance",
+            "description": {
+              "content": "Returns the trade balance for the requested asset class (margin equity, used margin, free margin, margin level).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "TradeBalance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "ZUSD"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d62aa4a9-33a7-495a-bb44-cd52350a838b",
+              "name": "Trade balance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "TradeBalance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ee36a4f9-f9cc-4afc-99e5-6e5895942e5c",
+          "name": "Kraken Get Open Orders",
+          "request": {
+            "name": "Kraken Get Open Orders",
+            "description": {
+              "content": "Returns all open orders for the account, optionally including trades.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "OpenOrders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "userref",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cl_ord_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "26ffde9b-4781-46b5-b094-bbcfa239feb1",
+              "name": "Open orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "OpenOrders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "userref",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cl_ord_id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "62a1c3a2-e3e3-474c-84de-6555dfe334a6",
+          "name": "Kraken Get Closed Orders",
+          "request": {
+            "name": "Kraken Get Closed Orders",
+            "description": {
+              "content": "Returns the most recent 50 closed orders for the account, with pagination via offset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "ClosedOrders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "userref",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cl_ord_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ofs",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "closetime",
+                  "value": "both"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "75e6dd5e-4382-4299-9886-9d5c16cad586",
+              "name": "Closed orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "ClosedOrders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "userref",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cl_ord_id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "start",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "end",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ofs",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "closetime",
+                      "value": "open"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a77febf6-e29e-4419-b447-e693e26eabbc",
+          "name": "Kraken Query Orders Info",
+          "request": {
+            "name": "Kraken Query Orders Info",
+            "description": {
+              "content": "Returns information about the requested order IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "QueryOrders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "txid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userref",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cl_ord_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "006eb438-7b55-4a47-81eb-ce13049fb38d",
+              "name": "Order info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "QueryOrders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "userref",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cl_ord_id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "txid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79a875af-3caf-4449-967c-d47763937d83",
+          "name": "Kraken Get Trades History",
+          "request": {
+            "name": "Kraken Get Trades History",
+            "description": {
+              "content": "Returns trade history for the account, ordered most recent first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "TradesHistory"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ofs",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "29fd12a2-d209-4720-a75c-50917bafdc1f",
+              "name": "Trades history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "TradesHistory"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "type",
+                      "value": "all"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "start",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "end",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ofs",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0340f32-5d3d-47ba-a3f5-59c6d5ffbaed",
+          "name": "Kraken Query Trades Info",
+          "request": {
+            "name": "Kraken Query Trades Info",
+            "description": {
+              "content": "Returns information about the requested trade IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "QueryTrades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "txid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c2578222-93cf-4621-8569-96f37e27129b",
+              "name": "Trade info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "QueryTrades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "txid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf9cbe35-ad30-4008-8892-df5f64e87c4e",
+          "name": "Kraken Get Open Positions",
+          "request": {
+            "name": "Kraken Get Open Positions",
+            "description": {
+              "content": "Returns open margin positions for the account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "OpenPositions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "txid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "docalcs",
+                  "value": "false"
+                },
+                {
+                  "disabled": false,
+                  "key": "consolidation",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4e7b5f7b-d07f-44bf-a278-2ffd325c8a23",
+              "name": "Open positions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "OpenPositions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "txid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "docalcs",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "consolidation",
+                      "value": "market"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84c86961-ec08-429e-9da0-41d6648c67b0",
+          "name": "Kraken Get Ledgers Info",
+          "request": {
+            "name": "Kraken Get Ledgers Info",
+            "description": {
+              "content": "Returns ledger entries (deposits, withdrawals, trades, fees, transfers).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "Ledgers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "aclass",
+                  "value": "currency"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "all"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ofs",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a6eb6430-8c42-47cf-a77c-757c720a9aa0",
+              "name": "Ledger entries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "Ledgers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "aclass",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "type",
+                      "value": "all"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "start",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "end",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ofs",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a23f35c7-58f1-4a00-a3a3-474032b95f2f",
+          "name": "Kraken Query Ledgers",
+          "request": {
+            "name": "Kraken Query Ledgers",
+            "description": {
+              "content": "Returns ledger information for the requested ledger IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "QueryLedgers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trades",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "77ee5bd7-c3f6-454b-b6de-15546098bc77",
+              "name": "Ledger info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "QueryLedgers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trades",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2140a0d-2c30-4070-bccc-6b6a81099148",
+          "name": "Kraken Get Trade Volume",
+          "request": {
+            "name": "Kraken Get Trade Volume",
+            "description": {
+              "content": "Returns the account's 30-day trade volume and the fee tier currently applied.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "TradeVolume"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "fee-info",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6327fd68-60ef-4681-aaaa-0f8580c6b58f",
+              "name": "Trade volume",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "TradeVolume"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "fee-info",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "49ba0c97-dfea-42f8-8cbb-902591a40320",
+    "name": "Kraken Futures REST Account Account Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

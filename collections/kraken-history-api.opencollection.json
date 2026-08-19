@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account History API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "History",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Historical Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicalorders",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent historical orders."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Historical Executions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicalexecutions",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent execution events."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Historical Triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/historicaltriggers",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent trigger events."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Account Log",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/accountlog",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns the account log (settlements, funding, transfers)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

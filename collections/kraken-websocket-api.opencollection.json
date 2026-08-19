@@ -1,0 +1,33 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account WebSocket API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "WebSocket",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get WebSockets Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/GetWebSocketsToken",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Mints a short-lived (15 minute) token used to authenticate subscriptions on the private WebSocket endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

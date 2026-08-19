@@ -1,0 +1,48 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Subaccounts API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subaccounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Create Subaccount",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/CreateSubaccount",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Creates a new subaccount under the master account (institutional / pro feature)."
+        },
+        {
+          "info": {
+            "name": "Kraken Account Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/AccountTransfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Transfers an asset between the master account and a subaccount."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

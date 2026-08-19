@@ -1,0 +1,2114 @@
+{
+  "item": [
+    {
+      "id": "0dbba34f-d7c9-4ba6-8733-849182ed744d",
+      "name": "Trading",
+      "description": {
+        "content": "Order placement, edit, and cancellation",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "829907cb-e74e-44c9-96f8-f5e2efcf2860",
+          "name": "Kraken Send Order",
+          "request": {
+            "name": "Kraken Send Order",
+            "description": {
+              "content": "Places a new futures order (lmt, mkt, stp, take_profit, ioc).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "sendorder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "orderType",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<number>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "limitPrice",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stopPrice",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "triggerSignal",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "reduceOnly",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cliOrdId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trailingStopMaxDeviation",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trailingStopDeviationUnit",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3a597032-1bad-4f57-8a02-635835626e69",
+              "name": "Order acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "sendorder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "orderType",
+                      "value": "lmt"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "symbol",
+                      "value": "PI_XBTUSD"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "side",
+                      "value": "buy"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "size",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limitPrice",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "stopPrice",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "triggerSignal",
+                      "value": "mark"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "reduceOnly",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cliOrdId",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trailingStopMaxDeviation",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trailingStopDeviationUnit",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "60fe3360-87e5-4c25-a27a-510ef4e4cbdd",
+          "name": "Kraken Edit Order (Futures)",
+          "request": {
+            "name": "Kraken Edit Order (Futures)",
+            "description": {
+              "content": "Modifies a resting futures order (size, limitPrice, stopPrice).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "editorder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cliOrdId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "size",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limitPrice",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stopPrice",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trailingStopMaxDeviation",
+                  "value": "<number>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trailingStopDeviationUnit",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f947adc1-553d-4702-9f47-3baa058ef59e",
+              "name": "Edit acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "editorder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "orderId",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cliOrdId",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "size",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limitPrice",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "stopPrice",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trailingStopMaxDeviation",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trailingStopDeviationUnit",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2d6d573b-18db-4ad7-995f-3c37b6d4876b",
+          "name": "Kraken Cancel Order (Futures)",
+          "request": {
+            "name": "Kraken Cancel Order (Futures)",
+            "description": {
+              "content": "Cancels a specific open futures order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cancelorder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "order_id",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "cliOrdId",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "0df70c0d-84d9-42fc-b886-e9fba62c778b",
+              "name": "Cancel acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cancelorder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "order_id",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cliOrdId",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98fa8db4-956b-403f-9c87-1462cdf896c7",
+          "name": "Kraken Cancel All Orders (Futures)",
+          "request": {
+            "name": "Kraken Cancel All Orders (Futures)",
+            "description": {
+              "content": "Cancels every open futures order, optionally scoped to a single instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cancelallorders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3e8e2599-da94-41fc-ba9f-46b2aa347407",
+              "name": "Cancel-all acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cancelallorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "symbol",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "258aa567-23b7-4b5a-a24a-a1f4c7a27954",
+          "name": "Kraken Cancel All Orders After (Futures)",
+          "request": {
+            "name": "Kraken Cancel All Orders After (Futures)",
+            "description": {
+              "content": "Dead-man's-switch for futures — cancels all orders after the timeout unless re-armed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "cancelallordersafter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "87bdbdc8-1b72-4941-b29a-092290c2622f",
+              "name": "Dead-man's-switch status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "cancelallordersafter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "timeout",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9cae4628-501d-42e9-a9c9-41963609b74e",
+          "name": "Kraken Batch Order (Futures)",
+          "request": {
+            "name": "Kraken Batch Order (Futures)",
+            "description": {
+              "content": "Submits a batch of order operations (place/edit/cancel) in a single signed call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "batchorder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchOrder\": [\n    \"<object>\",\n    \"<object>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c797d229-7eb8-4403-b8cc-eb73ee805432",
+              "name": "Batch acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "batchorder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"batchOrder\": [\n    {}\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a653e083-b968-430d-90c4-8b36efec74be",
+          "name": "Kraken Add Order",
+          "request": {
+            "name": "Kraken Add Order",
+            "description": {
+              "content": "Places a new order. Supports market, limit, stop-loss, take-profit, stop-loss-limit, take-profit-limit, settle-position, trailing-stop, and iceberg order types.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "AddOrder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "ordertype",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "volume",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userref",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cl_ord_id",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "displayvol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "price",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "price2",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "trigger",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "leverage",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "reduce_only",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "stptype",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "oflags",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeinforce",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "starttm",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiretm",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "close[ordertype]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "close[price]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "close[price2]",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "deadline",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "validate",
+                  "value": "<boolean>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9705048e-c253-42de-be96-c18faed2ab6f",
+              "name": "Order accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "AddOrder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "userref",
+                      "value": "1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cl_ord_id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "ordertype",
+                      "value": "market"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "type",
+                      "value": "buy"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "volume",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "displayvol",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "price",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "price2",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "trigger",
+                      "value": "last"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "leverage",
+                      "value": "none"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "reduce_only",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "stptype",
+                      "value": "cancel-newest"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "oflags",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "timeinforce",
+                      "value": "GTC"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "starttm",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "expiretm",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "close[ordertype]",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "close[price]",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "close[price2]",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "deadline",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "validate",
+                      "value": "true"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c756df79-c20f-4857-8063-b3b987ed7552",
+          "name": "Kraken Add Order Batch",
+          "request": {
+            "name": "Kraken Add Order Batch",
+            "description": {
+              "content": "Places a batch of up to 15 orders for a single pair in one signed request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "AddOrderBatch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nonce\": \"<long>\",\n  \"orders\": [\n    {\n      \"ordertype\": \"<string>\",\n      \"type\": \"<string>\",\n      \"volume\": \"<string>\",\n      \"price\": \"<string>\",\n      \"price2\": \"<string>\",\n      \"userref\": \"<integer>\",\n      \"oflags\": \"<string>\",\n      \"starttm\": \"<string>\",\n      \"expiretm\": \"<string>\"\n    },\n    {\n      \"ordertype\": \"<string>\",\n      \"type\": \"<string>\",\n      \"volume\": \"<string>\",\n      \"price\": \"<string>\",\n      \"price2\": \"<string>\",\n      \"userref\": \"<integer>\",\n      \"oflags\": \"<string>\",\n      \"starttm\": \"<string>\",\n      \"expiretm\": \"<string>\"\n    }\n  ],\n  \"pair\": \"<string>\",\n  \"otp\": \"<string>\",\n  \"deadline\": \"<string>\",\n  \"validate\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60895dd9-a9b4-4451-9ca7-3199d822d419",
+              "name": "Batch order acceptance",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "AddOrderBatch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nonce\": 1717000000000,\n  \"otp\": \"123456\",\n  \"pair\": \"XBTUSD\",\n  \"deadline\": \"string\",\n  \"validate\": true,\n  \"orders\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "08988155-617e-4d7c-9bf0-2d05b70b1d1e",
+          "name": "Kraken Edit Order",
+          "request": {
+            "name": "Kraken Edit Order",
+            "description": {
+              "content": "Cancels and replaces an existing order with new parameters (volume, price, or price2).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "EditOrder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "txid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "volume",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "displayvol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "price",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "price2",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "oflags",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "deadline",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cancel_response",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "validate",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "userref",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "427fbbc8-ddbd-4e83-a32d-0f1ba0f5f0e8",
+              "name": "Edit result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "EditOrder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "txid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "volume",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "displayvol",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "price",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "price2",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "oflags",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "deadline",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cancel_response",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "validate",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "userref",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3641a63-7983-4b91-ba5c-a188e2f0c374",
+          "name": "Kraken Amend Order",
+          "request": {
+            "name": "Kraken Amend Order",
+            "description": {
+              "content": "Modifies a resting order in place (volume, limit/trigger prices, post-only) without changing its order ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "AmendOrder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nonce\": \"<long>\",\n  \"otp\": \"<string>\",\n  \"txid\": \"<string>\",\n  \"cl_ord_id\": \"<string>\",\n  \"order_qty\": \"<string>\",\n  \"display_qty\": \"<string>\",\n  \"limit_price\": \"<string>\",\n  \"trigger_price\": \"<string>\",\n  \"post_only\": \"<boolean>\",\n  \"deadline\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a51397ad-74f1-4e2b-b63c-3dcdb7a2c06c",
+              "name": "Amend acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "AmendOrder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nonce\": 1717000000000,\n  \"otp\": \"123456\",\n  \"txid\": \"OQCLML-BW3P3-BUCMWZ\",\n  \"cl_ord_id\": \"OQCLML-BW3P3-BUCMWZ\",\n  \"order_qty\": \"string\",\n  \"display_qty\": \"string\",\n  \"limit_price\": \"0.01\",\n  \"trigger_price\": \"0.01\",\n  \"post_only\": true,\n  \"deadline\": \"string\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1b3ac7df-4db4-404e-b84f-3be6bed07739",
+          "name": "Kraken Cancel Order",
+          "request": {
+            "name": "Kraken Cancel Order",
+            "description": {
+              "content": "Cancels a specific open order by transaction ID or user-reference.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "CancelOrder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "txid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cl_ord_id",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d7921ae4-9ce3-42e4-9c81-04f1f76b46a1",
+              "name": "Cancel result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "CancelOrder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "txid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cl_ord_id",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38990610-00f4-4104-99c0-4dff5382b9c7",
+          "name": "Kraken Cancel All Orders",
+          "request": {
+            "name": "Kraken Cancel All Orders",
+            "description": {
+              "content": "Cancels every open order for the API key.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "CancelAll"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>",
+                  "description": "Two-factor password / OTP if the key is OTP-protected."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "077669c9-a12a-4f29-be58-01f5df905717",
+              "name": "Cancel-all result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "CancelAll"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Two-factor password / OTP if the key is OTP-protected.",
+                        "type": "text/plain"
+                      },
+                      "key": "otp",
+                      "value": "123456"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b44e7af1-48da-47ea-914c-ccf6f6f7a91d",
+          "name": "Kraken Cancel All Orders After (Dead Man's Switch)",
+          "request": {
+            "name": "Kraken Cancel All Orders After (Dead Man's Switch)",
+            "description": {
+              "content": "Arms a dead-man's-switch — all open orders will be cancelled after the specified timeout (seconds) unless the call is re-issued.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "CancelAllOrdersAfter"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "timeout",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8ecdb3db-a99b-45aa-8281-653e44d25e55",
+              "name": "Dead-man's-switch status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "CancelAllOrdersAfter"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "timeout",
+                      "value": "60"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "036a7a1b-34f3-4bca-9064-9262adc5d808",
+          "name": "Kraken Cancel Order Batch",
+          "request": {
+            "name": "Kraken Cancel Order Batch",
+            "description": {
+              "content": "Cancels up to 50 orders in a single signed call.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "CancelOrderBatch"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nonce\": \"<long>\",\n  \"orders\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"otp\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "04925de6-1c7d-4efb-80a6-f3a646823ebf",
+              "name": "Batch cancel result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "CancelOrderBatch"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nonce\": 1717000000000,\n  \"otp\": \"123456\",\n  \"orders\": []\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cf739dd2-144f-4a05-b233-832b47ce9300",
+    "name": "Kraken Futures REST Account Trading API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

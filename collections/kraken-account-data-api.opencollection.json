@@ -1,0 +1,198 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Account Data API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Account Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Balance",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the asset balances held in the account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Extended Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/BalanceEx",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns asset balances with hold-trade and credit details."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trade Balance",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/TradeBalance",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the trade balance for the requested asset class (margin equity, used margin, free margin, margin level)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/OpenOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns all open orders for the account, optionally including trades."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Closed Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/ClosedOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the most recent 50 closed orders for the account, with pagination via offset."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Orders Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/QueryOrders",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns information about the requested order IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trades History",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/TradesHistory",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns trade history for the account, ordered most recent first."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Trades Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/QueryTrades",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns information about the requested trade IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/OpenPositions",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns open margin positions for the account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ledgers Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Ledgers",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns ledger entries (deposits, withdrawals, trades, fees, transfers)."
+        },
+        {
+          "info": {
+            "name": "Kraken Query Ledgers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/QueryLedgers",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns ledger information for the requested ledger IDs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Trade Volume",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/TradeVolume",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the account's 30-day trade volume and the fee tier currently applied."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

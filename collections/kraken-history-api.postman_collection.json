@@ -1,0 +1,408 @@
+{
+  "item": [
+    {
+      "id": "dcdbe41e-0801-4287-861b-9c53efe92a8d",
+      "name": "History",
+      "description": {
+        "content": "Account, execution, order, trigger, and market history",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d359035f-083c-4092-9236-5dfe8105f2d1",
+          "name": "Kraken Get Historical Orders",
+          "request": {
+            "name": "Kraken Get Historical Orders",
+            "description": {
+              "content": "Returns recent historical orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "historicalorders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6f825438-dcd4-4b3a-b26a-3d09b1f85002",
+              "name": "Historical orders",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "historicalorders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d3c55a6e-c1cb-430c-9dbb-635cb64d723f",
+          "name": "Kraken Get Historical Executions",
+          "request": {
+            "name": "Kraken Get Historical Executions",
+            "description": {
+              "content": "Returns recent execution events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "historicalexecutions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "05076922-ee9f-4d1b-9764-5abb5e75fbc0",
+              "name": "Historical executions",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "historicalexecutions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "323ce113-a6ce-4b70-98c7-7f41439167da",
+          "name": "Kraken Get Historical Triggers",
+          "request": {
+            "name": "Kraken Get Historical Triggers",
+            "description": {
+              "content": "Returns recent trigger events.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "historicaltriggers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a1c243b1-fa9d-4014-aa60-760b1cae576b",
+              "name": "Historical triggers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "historicaltriggers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b93f67c9-f06b-482e-bca9-502c007423ef",
+          "name": "Kraken Get Account Log",
+          "request": {
+            "name": "Kraken Get Account Log",
+            "description": {
+              "content": "Returns the account log (settlements, funding, transfers).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accountlog"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "apikey",
+              "apikey": [
+                {
+                  "key": "key",
+                  "value": "APIKey"
+                },
+                {
+                  "key": "value",
+                  "value": "{{apiKey}}"
+                },
+                {
+                  "key": "in",
+                  "value": "header"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7ec7611a-3fb7-4def-b067-5442d31f452b",
+              "name": "Account log",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accountlog"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "db09e5b7-6887-42b8-bc9a-baacbccd835d",
+    "name": "Kraken Futures REST Account History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

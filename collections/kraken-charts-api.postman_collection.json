@@ -1,0 +1,172 @@
+{
+  "item": [
+    {
+      "id": "1bc5010f-9a4a-4879-9f09-3ea162bfc2d9",
+      "name": "Charts",
+      "description": {
+        "content": "OHLC candle data and analytics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "56246f92-465c-429f-98d6-a81394034d17",
+          "name": "Kraken Get Chart Candles",
+          "request": {
+            "name": "Kraken Get Chart Candles",
+            "description": {
+              "content": "Returns OHLC candles for a futures instrument at a given interval.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "charts",
+                ":tickSize",
+                ":symbol",
+                ":interval"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tickSize",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "interval",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "24bc8056-c350-4436-b674-c0f8299e5467",
+              "name": "Candles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "charts",
+                    ":tickSize",
+                    ":symbol",
+                    ":interval"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "from",
+                      "value": "1"
+                    },
+                    {
+                      "key": "to",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tickSize",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "interval",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11155780-9985-4123-b312-22bc550afb8c",
+    "name": "Kraken Futures REST Account Charts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

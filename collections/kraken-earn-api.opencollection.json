@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Earn API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Earn",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Allocate Earn Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/Allocate",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Allocates the requested amount of an asset to a Kraken Earn strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken Deallocate Earn Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/Deallocate",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Removes the requested amount from an Earn strategy and returns funds to the trading balance once bonding/unbonding completes."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Earn Allocate Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/AllocateStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the in-flight status of the last Allocate call for a strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Earn Deallocate Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/DeallocateStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the in-flight status of the last Deallocate call for a strategy."
+        },
+        {
+          "info": {
+            "name": "Kraken List Earn Strategies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/Strategies",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the catalog of Earn strategies available to the account (lockup periods, APR ranges, asset)."
+        },
+        {
+          "info": {
+            "name": "Kraken List Earn Allocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Earn/Allocations",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns the current Earn allocations for the account, including bonded, allocated, and rewards balances."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

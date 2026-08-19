@@ -1,0 +1,1333 @@
+{
+  "item": [
+    {
+      "id": "307125b7-69a2-4d26-a5b0-134ae9e9a8e4",
+      "name": "Market Data",
+      "description": {
+        "content": "Public market data (no authentication required)",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8a3c5a83-6f76-4da6-9b8b-af87d447540b",
+          "name": "Kraken Get Instruments",
+          "request": {
+            "name": "Kraken Get Instruments",
+            "description": {
+              "content": "Returns the list of supported instruments and their metadata.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "instruments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12241cdd-a18b-4b00-8d5d-ce64a55a0211",
+              "name": "Instruments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\",\n  \"instruments\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80980198-b277-4c7d-8c7a-41bf0934267c",
+          "name": "Kraken Get Instruments Status",
+          "request": {
+            "name": "Kraken Get Instruments Status",
+            "description": {
+              "content": "Returns instrument trading status (open, paused, etc.).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "instruments",
+                "status"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6f3a88e-5883-4b08-a012-b33dbe71e627",
+              "name": "Status array",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "instruments",
+                    "status"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a58ed4d-eda9-4c3f-aff8-4bb467820cd6",
+          "name": "Kraken Get Tickers",
+          "request": {
+            "name": "Kraken Get Tickers",
+            "description": {
+              "content": "Returns the latest ticker for every instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2ae5777b-516c-42fb-9052-cdd5b408275d",
+              "name": "Tickers",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\",\n  \"tickers\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eacd7eaf-b530-46b4-953c-3289b04f4e22",
+          "name": "Kraken Get Ticker for Symbol",
+          "request": {
+            "name": "Kraken Get Ticker for Symbol",
+            "description": {
+              "content": "Returns the latest ticker for a single instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "tickers",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fef0f5d6-1d05-4b4e-95f7-50c1a2682dbc",
+              "name": "Ticker",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "tickers",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1af33db0-6aa4-4b66-83ad-2811f6965302",
+          "name": "Kraken Get Order Book (Futures)",
+          "request": {
+            "name": "Kraken Get Order Book (Futures)",
+            "description": {
+              "content": "Returns the order book for a single instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orderbook"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b699bf04-50cf-4f9d-82d3-763f602e8213",
+              "name": "Order book",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orderbook"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "PI_XBTUSD"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "007cf1d4-fba3-4f42-98f6-8995332b260b",
+          "name": "Kraken Get Market History",
+          "request": {
+            "name": "Kraken Get Market History",
+            "description": {
+              "content": "Returns recent public trade history for an instrument.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "history"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "lastTime",
+                  "value": "<dateTime>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d2e32de6-99ac-465b-ad25-9b4e687b1bf4",
+              "name": "Market history",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "history"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "PI_XBTUSD"
+                    },
+                    {
+                      "key": "lastTime",
+                      "value": "2026-05-30T00:00:00Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": \"success\",\n  \"serverTime\": \"2026-05-30T00:00:00Z\",\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "47292b87-83bb-4cb9-90e5-53646b1f2af7",
+          "name": "Kraken Get Server Time",
+          "request": {
+            "name": "Kraken Get Server Time",
+            "description": {
+              "content": "Returns the server's current Unix and human-readable time. Use to synchronize client clocks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Time"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "09bbaa33-91bb-4360-937d-4d7aa77ea62c",
+              "name": "Server time",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Time"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c90bdd80-3c8c-446d-8256-41e86c071b66",
+          "name": "Kraken Get System Status",
+          "request": {
+            "name": "Kraken Get System Status",
+            "description": {
+              "content": "Returns the current system status (online, maintenance, cancel_only, post_only) and the last status change timestamp.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "SystemStatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1f0c9c8f-c4b4-4eb8-b596-f6fd0bec0418",
+              "name": "System status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "SystemStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21cc4c63-cd6a-4330-ab3e-d47dddeeace6",
+          "name": "Kraken Get Asset Info",
+          "request": {
+            "name": "Kraken Get Asset Info",
+            "description": {
+              "content": "Returns information about supported assets including precision, display decimals, collateral value, and status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Assets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of assets to filter (e.g. XBT,ETH)"
+                },
+                {
+                  "disabled": false,
+                  "key": "aclass",
+                  "value": "<string>",
+                  "description": "Asset class (currency, crypto)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a8b2f21e-c755-4892-a41d-fb7772d820d0",
+              "name": "Asset info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Assets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "key": "aclass",
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79fa1bc3-b3b6-493c-902b-cd181a89a8ee",
+          "name": "Kraken Get Tradable Asset Pairs",
+          "request": {
+            "name": "Kraken Get Tradable Asset Pairs",
+            "description": {
+              "content": "Returns metadata for every tradable currency pair (base, quote, fee schedule, lot decimals, ordermin).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "AssetPairs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of asset pairs (e.g. XBTUSD,ETHUSD)"
+                },
+                {
+                  "disabled": false,
+                  "key": "info",
+                  "value": "<string>",
+                  "description": "Info detail level (info, leverage, fees, margin)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "734249d8-1613-4f61-933a-805e181d7830",
+              "name": "Asset pairs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "AssetPairs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "key": "info",
+                      "value": "info"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2cf6e82-b594-4c8e-b265-ec60f65051a9",
+          "name": "Kraken Get Ticker Information",
+          "request": {
+            "name": "Kraken Get Ticker Information",
+            "description": {
+              "content": "Returns ticker data (ask, bid, last trade, 24h volume, vwap, high, low, opening price) for one or more pairs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Ticker"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "Comma-delimited list of asset pairs"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6568fa2a-869e-4d32-9732-218cdf2fde34",
+              "name": "Ticker data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Ticker"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a02ce69d-e09e-44fa-9835-c4b0cf584385",
+          "name": "Kraken Get OHLC Data",
+          "request": {
+            "name": "Kraken Get OHLC Data",
+            "description": {
+              "content": "Returns OHLC (open/high/low/close/volume/count) candles for a pair at a chosen interval, optionally bounded by a since cursor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "OHLC"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "interval",
+                  "value": "1",
+                  "description": "Candle interval in minutes (1, 5, 15, 30, 60, 240, 1440, 10080, 21600)"
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<integer>",
+                  "description": "Return OHLC entries since this timestamp"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7db432fa-7e8d-422c-8d91-ef07925d2ba8",
+              "name": "OHLC candles",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "OHLC"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "key": "interval",
+                      "value": "1"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "812e4f89-8d5a-480c-a878-61f88fc1ecd1",
+          "name": "Kraken Get Order Book",
+          "request": {
+            "name": "Kraken Get Order Book",
+            "description": {
+              "content": "Returns the order book (bids and asks) for a pair to a requested depth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Depth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "100",
+                  "description": "Maximum number of bids/asks (1-500)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5b59e336-4503-476f-bb7d-47c763f88f47",
+              "name": "Order book",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Depth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "key": "count",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b6bb0ca-ede5-4eb6-8899-2fbd541bc478",
+          "name": "Kraken Get Recent Trades",
+          "request": {
+            "name": "Kraken Get Recent Trades",
+            "description": {
+              "content": "Returns recent trades for a pair, optionally since a cursor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<integer>"
+                },
+                {
+                  "disabled": false,
+                  "key": "count",
+                  "value": "1000",
+                  "description": "Maximum number of trades (1-1000)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "38f47edb-d7f2-41ec-8fd2-1e18c2795fcc",
+              "name": "Recent trades",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1"
+                    },
+                    {
+                      "key": "count",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bc0d1f1-0fab-405a-b399-21c63664cade",
+          "name": "Kraken Get Recent Spreads",
+          "request": {
+            "name": "Kraken Get Recent Spreads",
+            "description": {
+              "content": "Returns recent bid/ask spread snapshots for a pair, optionally since a cursor.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "public",
+                "Spread"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "pair",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "since",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9bdfeeaf-aee6-482d-a3be-58f4344efee4",
+              "name": "Recent spreads",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "public",
+                    "Spread"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "pair",
+                      "value": "XBTUSD"
+                    },
+                    {
+                      "key": "since",
+                      "value": "1"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "38bf5fde-53bc-4e19-885b-36d63c2130d9",
+    "name": "Kraken Futures REST Account Market Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Transfers API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transfers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Transfer Funds (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/transfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "amount",
+                  "value": ""
+                },
+                {
+                  "name": "fromAccount",
+                  "value": ""
+                },
+                {
+                  "name": "toAccount",
+                  "value": ""
+                },
+                {
+                  "name": "unit",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Transfers funds between a Spot wallet and a Futures account, or between Futures accounts."
+        },
+        {
+          "info": {
+            "name": "Kraken Withdrawal (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/withdrawal",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "amount",
+                  "value": ""
+                },
+                {
+                  "name": "currency",
+                  "value": ""
+                },
+                {
+                  "name": "targetAddress",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Initiates a withdrawal from a Futures wallet to a Spot wallet."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

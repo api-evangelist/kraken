@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Funding API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Funding",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Deposit Methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/DepositMethods",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Lists deposit methods available for the requested asset."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Deposit Addresses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/DepositAddresses",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns existing or generates new deposit addresses for the requested asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Status of Recent Deposits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/DepositStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns recent deposit statuses, filterable by asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Withdrawal Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/WithdrawInfo",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns fee and limit information for a configured withdrawal address (key)."
+        },
+        {
+          "info": {
+            "name": "Kraken Withdraw Funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/Withdraw",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Initiates a withdrawal to a previously configured withdrawal address."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Status of Recent Withdrawals",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/WithdrawStatus",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Returns recent withdrawal statuses, filterable by asset and method."
+        },
+        {
+          "info": {
+            "name": "Kraken Request Withdrawal Cancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/WithdrawCancel",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Requests cancellation of a pending withdrawal by reference ID."
+        },
+        {
+          "info": {
+            "name": "Kraken Wallet Transfer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/private/WalletTransfer",
+            "body": {
+              "type": "form-urlencoded",
+              "data": []
+            }
+          },
+          "docs": "Transfers funds between Kraken Spot and Kraken Futures wallets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

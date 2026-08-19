@@ -1,0 +1,1190 @@
+{
+  "item": [
+    {
+      "id": "6f5a3f4a-3a31-4da2-b5f7-708b33e0d7dd",
+      "name": "Funding",
+      "description": {
+        "content": "Private endpoints for deposits, withdrawals, and transfers",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "664ce522-d623-4ddc-9009-fad40427f035",
+          "name": "Kraken Get Deposit Methods",
+          "request": {
+            "name": "Kraken Get Deposit Methods",
+            "description": {
+              "content": "Lists deposit methods available for the requested asset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "DepositMethods"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f5b7326f-dfcd-4821-84c2-87360ba72676",
+              "name": "Deposit methods",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "DepositMethods"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b671c61-256e-4b4f-a7d3-c2a56c4e1a6f",
+          "name": "Kraken Get Deposit Addresses",
+          "request": {
+            "name": "Kraken Get Deposit Addresses",
+            "description": {
+              "content": "Returns existing or generates new deposit addresses for the requested asset and method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "DepositAddresses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "new",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "eb2ff124-1584-4fbb-b350-871b2171b25f",
+              "name": "Deposit addresses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "DepositAddresses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "method",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "new",
+                      "value": "true"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "amount",
+                      "value": "0.01"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ebd3d68-75a7-4da3-ac1c-244a5a27a9e2",
+          "name": "Kraken Get Status of Recent Deposits",
+          "request": {
+            "name": "Kraken Get Status of Recent Deposits",
+            "description": {
+              "content": "Returns recent deposit statuses, filterable by asset and method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "DepositStatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "72cd4dd7-7119-4a67-9116-65c3490a2bd3",
+              "name": "Deposit statuses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "DepositStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "method",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "start",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "end",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cursor",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limit",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b2d9fbd6-d5be-4e49-a62e-5e17147b20f9",
+          "name": "Kraken Get Withdrawal Information",
+          "request": {
+            "name": "Kraken Get Withdrawal Information",
+            "description": {
+              "content": "Returns fee and limit information for a configured withdrawal address (key).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "WithdrawInfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "37214162-1e16-47c5-a218-1172190a833e",
+              "name": "Withdrawal info",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "WithdrawInfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "key",
+                      "value": "Cold storage 1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "amount",
+                      "value": "0.01"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb629a54-7266-4792-b5d1-5b46617c8c23",
+          "name": "Kraken Withdraw Funds",
+          "request": {
+            "name": "Kraken Withdraw Funds",
+            "description": {
+              "content": "Initiates a withdrawal to a previously configured withdrawal address.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "Withdraw"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "key",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "max_fee",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f69b6629-e73b-415d-bb1d-88223514a976",
+              "name": "Withdrawal acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "Withdraw"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "key",
+                      "value": "Cold storage 1"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "address",
+                      "value": "bc1qexampledeadbeefaddress0000000000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "amount",
+                      "value": "0.01"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "max_fee",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3bbaad97-bcac-453b-82d7-9f2991b26c93",
+          "name": "Kraken Get Status of Recent Withdrawals",
+          "request": {
+            "name": "Kraken Get Status of Recent Withdrawals",
+            "description": {
+              "content": "Returns recent withdrawal statuses, filterable by asset and method.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "WithdrawStatus"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "method",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b4aed0ca-11d5-49c6-9db7-cba501c2c542",
+              "name": "Withdrawal statuses",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "WithdrawStatus"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "method",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "start",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "end",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "cursor",
+                      "value": "string"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "limit",
+                      "value": "1"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7b780833-0112-46f9-9f41-bfb3768e1eda",
+          "name": "Kraken Request Withdrawal Cancellation",
+          "request": {
+            "name": "Kraken Request Withdrawal Cancellation",
+            "description": {
+              "content": "Requests cancellation of a pending withdrawal by reference ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "WithdrawCancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "refid",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "85e46a7b-569d-4dbe-83fc-5490ebf6a05a",
+              "name": "Cancellation result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "WithdrawCancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "refid",
+                      "value": "OQCLML-BW3P3-BUCMWZ"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8487a74a-ead3-4821-93d7-b5f983fe1f37",
+          "name": "Kraken Wallet Transfer",
+          "request": {
+            "name": "Kraken Wallet Transfer",
+            "description": {
+              "content": "Transfers funds between Kraken Spot and Kraken Futures wallets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "0",
+                "private",
+                "WalletTransfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "amount",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "asset",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "Spot Wallet"
+                },
+                {
+                  "disabled": false,
+                  "key": "nonce",
+                  "value": "<long>"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "otp",
+                  "value": "<string>"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "4085cddc-f084-472e-ae70-f0b00e0cb28e",
+              "name": "Transfer acknowledgement",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "0",
+                    "private",
+                    "WalletTransfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "key": "nonce",
+                      "value": "1717000000000"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "otp",
+                      "value": "123456"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "asset",
+                      "value": "XBT"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "from",
+                      "value": "Spot Wallet"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "to",
+                      "value": "Futures Wallet"
+                    },
+                    {
+                      "disabled": false,
+                      "key": "amount",
+                      "value": "0.01"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": [],\n  \"result\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://futures.kraken.com/derivatives/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "449c0eac-9fe0-40d6-820f-3796c3e00444",
+    "name": "Kraken Futures REST Account Funding API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "OpenAPI description of the Kraken Futures (formerly Crypto Facilities) REST API v3. Covers trading (send/edit/cancel orders, batch), market data (instruments, tickers, orderbook, history), account data (accounts, open positions, open orders, fills), transfers, account history, and charts. Generated by the API Evangelist pipeline from docs.kraken.com/api/docs/futures-api/.\n\nContact Support:\n Name: Kraken API Support",
+      "type": "text/plain"
+    }
+  }
+}

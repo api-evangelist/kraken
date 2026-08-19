@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Auth API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Check API Key (V3)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/apikey/v3",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Validates an API key's identity, permissions, and expiry."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

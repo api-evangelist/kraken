@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Charts API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Charts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Chart Candles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/charts/:tickSize/:symbol/:interval",
+            "params": [
+              {
+                "name": "tickSize",
+                "value": "trade",
+                "type": "path"
+              },
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "path"
+              },
+              {
+                "name": "interval",
+                "value": "1m",
+                "type": "path"
+              },
+              {
+                "name": "from",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "to",
+                "value": "1",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns OHLC candles for a futures instrument at a given interval."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,307 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account Market Data API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Market Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Instruments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/instruments"
+          },
+          "docs": "Returns the list of supported instruments and their metadata."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Instruments Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/instruments/status"
+          },
+          "docs": "Returns instrument trading status (open, paused, etc.)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Tickers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/tickers"
+          },
+          "docs": "Returns the latest ticker for every instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ticker for Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/tickers/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Returns the latest ticker for a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Order Book (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/orderbook",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns the order book for a single instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Market History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/history",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "PI_XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "lastTime",
+                "value": "2026-05-30T00:00:00Z",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns recent public trade history for an instrument."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Server Time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Time"
+          },
+          "docs": "Returns the server's current Unix and human-readable time. Use to synchronize client clocks."
+        },
+        {
+          "info": {
+            "name": "Kraken Get System Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/SystemStatus"
+          },
+          "docs": "Returns the current system status (online, maintenance, cancel_only, post_only) and the last status change timestamp."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Asset Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Assets",
+            "params": [
+              {
+                "name": "asset",
+                "value": "XBT",
+                "type": "query",
+                "description": "Comma-delimited list of assets to filter (e.g. XBT,ETH)"
+              },
+              {
+                "name": "aclass",
+                "value": "string",
+                "type": "query",
+                "description": "Asset class (currency, crypto)"
+              }
+            ]
+          },
+          "docs": "Returns information about supported assets including precision, display decimals, collateral value, and status."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Tradable Asset Pairs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/AssetPairs",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query",
+                "description": "Comma-delimited list of asset pairs (e.g. XBTUSD,ETHUSD)"
+              },
+              {
+                "name": "info",
+                "value": "info",
+                "type": "query",
+                "description": "Info detail level (info, leverage, fees, margin)"
+              }
+            ]
+          },
+          "docs": "Returns metadata for every tradable currency pair (base, quote, fee schedule, lot decimals, ordermin)."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Ticker Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Ticker",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query",
+                "description": "Comma-delimited list of asset pairs"
+              }
+            ]
+          },
+          "docs": "Returns ticker data (ask, bid, last trade, 24h volume, vwap, high, low, opening price) for one or more pairs."
+        },
+        {
+          "info": {
+            "name": "Kraken Get OHLC Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/OHLC",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "interval",
+                "value": "1",
+                "type": "query",
+                "description": "Candle interval in minutes (1, 5, 15, 30, 60, 240, 1440, 10080, 21600)"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query",
+                "description": "Return OHLC entries since this timestamp"
+              }
+            ]
+          },
+          "docs": "Returns OHLC (open/high/low/close/volume/count) candles for a pair at a chosen interval, optionally bounded by a since cursor."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Order Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Depth",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of bids/asks (1-500)"
+              }
+            ]
+          },
+          "docs": "Returns the order book (bids and asks) for a pair to a requested depth."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Recent Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Trades",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query"
+              },
+              {
+                "name": "count",
+                "value": "1",
+                "type": "query",
+                "description": "Maximum number of trades (1-1000)"
+              }
+            ]
+          },
+          "docs": "Returns recent trades for a pair, optionally since a cursor."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Recent Spreads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/0/public/Spread",
+            "params": [
+              {
+                "name": "pair",
+                "value": "XBTUSD",
+                "type": "query"
+              },
+              {
+                "name": "since",
+                "value": "1",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns recent bid/ask spread snapshots for a pair, optionally since a cursor."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

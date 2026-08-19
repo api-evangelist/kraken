@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Kraken Futures REST Account API",
+    "version": "3.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Kraken Get Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/accounts",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns balances and margin information for every Futures account / sub-account."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Positions (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/openpositions",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns currently open futures positions."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Open Orders (Futures)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/openorders",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns currently open orders."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Fills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/fills",
+            "params": [
+              {
+                "name": "lastFillTime",
+                "value": "2026-05-30T00:00:00Z",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns recent execution fills."
+        },
+        {
+          "info": {
+            "name": "Kraken Get Notifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://futures.kraken.com/derivatives/api/v3/notifications",
+            "auth": {
+              "type": "apikey",
+              "key": "APIKey",
+              "value": "{{APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns any maintenance or risk notifications affecting the account."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
