@@ -47,6 +47,25 @@ tags:
 - OTC
 - Prime Brokerage
 - Embed
+- Authentication
+- Public APIs
+tags_raw:
+- Cryptocurrency
+- Exchange
+- Trading
+- Market Data
+- Spot Trading
+- Futures
+- Derivatives
+- Staking
+- Earn
+- NFT
+- WebSocket
+- FIX
+- Custody
+- OTC
+- Prime Brokerage
+- Embed
 - OAuth
 - Public APIs
 apis:
@@ -174,6 +193,10 @@ apis:
   humanURL: https://docs.kraken.com/api/docs/category/oauth/
   baseURL: https://www.kraken.com/oauth
   tags:
+  - Authentication
+  - Authorization
+  - REST
+  tags_raw:
   - OAuth
   - Authorization
   - REST
@@ -295,6 +318,8 @@ apis:
   humanURL: https://docs.kraken.com/api/docs/rest-api/get-server-time
   baseURL: https://api.kraken.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
