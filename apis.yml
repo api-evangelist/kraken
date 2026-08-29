@@ -8,6 +8,18 @@ description: Kraken is one of the world's largest and longest-running cryptocurr
   Spot exchange, Futures exchange (Kraken Futures, formerly Crypto Facilities), institutional
   services (Custody, OTC, Prime), and partner integration surfaces (Embed, Ramp, OAuth).
 url: https://docs.kraken.com/api/
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
