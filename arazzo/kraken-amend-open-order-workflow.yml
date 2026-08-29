@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: krakenSpotApi
-  url: ../openapi/kraken-spot-rest-openapi.yml
+- name: accountDataApi
+  url: ../openapi/kraken-account-data-api-openapi.yml
+  type: openapi
+- name: tradingApi
+  url: ../openapi/kraken-trading-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: amend-open-order

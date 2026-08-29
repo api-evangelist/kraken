@@ -11,8 +11,14 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: krakenFuturesApi
-  url: ../openapi/kraken-futures-rest-openapi.yml
+- name: accountApi
+  url: ../openapi/kraken-account-api-openapi.yml
+  type: openapi
+- name: marketDataApi
+  url: ../openapi/kraken-market-data-api-openapi.yml
+  type: openapi
+- name: tradingApi
+  url: ../openapi/kraken-trading-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: place-futures-order

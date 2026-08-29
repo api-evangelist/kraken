@@ -10,8 +10,8 @@ info:
     and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: krakenFuturesApi
-  url: ../openapi/kraken-futures-rest-openapi.yml
+- name: accountApi
+  url: ../openapi/kraken-account-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: futures-account-snapshot

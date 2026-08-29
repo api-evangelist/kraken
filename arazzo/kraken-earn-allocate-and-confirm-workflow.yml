@@ -10,8 +10,8 @@ info:
     be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: krakenSpotApi
-  url: ../openapi/kraken-spot-rest-openapi.yml
+- name: earnApi
+  url: ../openapi/kraken-earn-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: earn-allocate-and-confirm
