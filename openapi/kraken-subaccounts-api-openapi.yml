@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kraken Futures REST Account Subaccounts API
   version: 3.0.0
@@ -108,6 +108,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     CreateSubaccountResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -139,20 +153,6 @@ components:
           to:
             type: string
             example: string
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
     AccountTransferResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'

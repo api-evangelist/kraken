@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kraken Futures REST Account Earn API
   version: 3.0.0
@@ -281,6 +281,128 @@ components:
                 type: boolean
                 example: true
             example: {}
+    EarnSimpleResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: boolean
+            example: true
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
+    EarnStrategyScopedRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - strategy_id
+        properties:
+          strategy_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    EarnAllocationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              converted_asset:
+                type: string
+                example: XBT
+              total_allocated:
+                type: string
+                example: string
+              total_rewarded:
+                type: string
+                example: string
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    strategy_id:
+                      type: string
+                      example: OQCLML-BW3P3-BUCMWZ
+                    native_asset:
+                      type: string
+                      example: XBT
+                    amount_allocated:
+                      type: object
+                      properties:
+                        bonding:
+                          type: object
+                          example: {}
+                        unbonding:
+                          type: object
+                          example: {}
+                        allocated:
+                          type: object
+                          example: {}
+                        total:
+                          type: object
+                          properties:
+                            native:
+                              type: string
+                              example: string
+                            converted:
+                              type: string
+                              example: string
+                          example: {}
+                      example: {}
+                    total_rewarded:
+                      type: object
+                      properties:
+                        native:
+                          type: string
+                          example: string
+                        converted:
+                          type: string
+                          example: string
+                      example: {}
+                example: []
+            example: {}
+    EarnStrategiesRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          asset:
+            type: string
+            example: XBT
+          limit:
+            type: integer
+            example: 1
+          lock_type:
+            type: array
+            items:
+              type: string
+              enum:
+              - bonded
+              - flex
+              - timed
+              - instant
+            example: []
+          cursor:
+            type: string
+            example: string
+          ascending:
+            type: boolean
+            example: true
     EarnStrategy:
       type: object
       properties:
@@ -368,79 +490,6 @@ components:
                 type: string
                 example: string
             example: {}
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
-    EarnSimpleResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: boolean
-            example: true
-    EarnStrategiesRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          asset:
-            type: string
-            example: XBT
-          limit:
-            type: integer
-            example: 1
-          lock_type:
-            type: array
-            items:
-              type: string
-              enum:
-              - bonded
-              - flex
-              - timed
-              - instant
-            example: []
-          cursor:
-            type: string
-            example: string
-          ascending:
-            type: boolean
-            example: true
-    EarnAllocateRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - amount
-        - strategy_id
-        properties:
-          amount:
-            type: string
-            example: '0.01'
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    EarnStrategyScopedRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - strategy_id
-        properties:
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
     NoncedRequest:
       type: object
       description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
@@ -455,69 +504,20 @@ components:
           type: string
           description: Two-factor password / OTP if the key is OTP-protected.
           example: '123456'
-    EarnAllocationsResponse:
+    EarnAllocateRequest:
       allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
+      - $ref: '#/components/schemas/NoncedRequest'
       - type: object
+        required:
+        - amount
+        - strategy_id
         properties:
-          result:
-            type: object
-            properties:
-              converted_asset:
-                type: string
-                example: XBT
-              total_allocated:
-                type: string
-                example: string
-              total_rewarded:
-                type: string
-                example: string
-              items:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    strategy_id:
-                      type: string
-                      example: OQCLML-BW3P3-BUCMWZ
-                    native_asset:
-                      type: string
-                      example: XBT
-                    amount_allocated:
-                      type: object
-                      properties:
-                        bonding:
-                          type: object
-                          example: {}
-                        unbonding:
-                          type: object
-                          example: {}
-                        allocated:
-                          type: object
-                          example: {}
-                        total:
-                          type: object
-                          properties:
-                            native:
-                              type: string
-                              example: string
-                            converted:
-                              type: string
-                              example: string
-                          example: {}
-                      example: {}
-                    total_rewarded:
-                      type: object
-                      properties:
-                        native:
-                          type: string
-                          example: string
-                        converted:
-                          type: string
-                          example: string
-                      example: {}
-                example: []
-            example: {}
+          amount:
+            type: string
+            example: '0.01'
+          strategy_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
   securitySchemes:
     futures_signature:
       type: apiKey

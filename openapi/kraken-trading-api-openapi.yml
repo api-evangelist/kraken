@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
   title: Kraken Futures REST Account Trading API
   version: 3.0.0
@@ -657,7 +657,23 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    EditOrderResponse:
+    CancelOrderRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - txid
+        properties:
+          txid:
+            type: string
+            description: txid
+            cl_ord_id: null
+            or userref.: null
+            example: OQCLML-BW3P3-BUCMWZ
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    AddOrderBatchResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -665,42 +681,183 @@ components:
           result:
             type: object
             properties:
-              status:
+              orders:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    descr:
+                      type: object
+                      example: {}
+                    txid:
+                      type: string
+                      example: OQCLML-BW3P3-BUCMWZ
+                    error:
+                      type: string
+                      example: string
+                example: []
+            example: {}
+    CancelAllAfterRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - timeout
+        properties:
+          timeout:
+            type: integer
+            description: Seconds (0 to disable
+            max 86400).: null
+            example: 60
+    AmendOrderRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          txid:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          order_qty:
+            type: string
+            example: string
+          display_qty:
+            type: string
+            example: string
+          limit_price:
+            type: string
+            example: '0.01'
+          trigger_price:
+            type: string
+            example: '0.01'
+          post_only:
+            type: boolean
+            example: true
+          deadline:
+            type: string
+            example: string
+    CancelAllAfterResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              currentTime:
                 type: string
-                example: string
-              txid:
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
+              triggerTime:
                 type: string
-                example: OQCLML-BW3P3-BUCMWZ
-              originaltxid:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-              volume:
-                type: string
-                example: '0.01'
-              price:
-                type: string
-                example: '0.01'
-              orders_cancelled:
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
+            example: {}
+    AddOrderBatchRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - pair
+        - orders
+        properties:
+          pair:
+            type: string
+            example: XBTUSD
+          deadline:
+            type: string
+            example: string
+          validate:
+            type: boolean
+            example: true
+          orders:
+            type: array
+            maxItems: 15
+            items:
+              type: object
+              properties:
+                ordertype:
+                  type: string
+                  example: limit
+                type:
+                  type: string
+                  example: buy
+                volume:
+                  type: string
+                  example: '0.01'
+                price:
+                  type: string
+                  example: '0.01'
+                price2:
+                  type: string
+                  example: '0.01'
+                userref:
+                  type: integer
+                  example: 1
+                oflags:
+                  type: string
+                  example: string
+                starttm:
+                  type: string
+                  example: string
+                expiretm:
+                  type: string
+                  example: string
+            example: []
+    CancelOrderBatchResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              count:
                 type: integer
                 example: 1
+            example: {}
+    BaseEnvelope:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+          - success
+          - error
+          example: success
+        serverTime:
+          type: string
+          format: date-time
+          example: '2026-05-30T00:00:00Z'
+        error:
+          type: string
+          example: string
+    AddOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
               descr:
                 type: object
+                properties:
+                  order:
+                    type: string
+                    example: string
+                  close:
+                    type: string
+                    example: string
                 example: {}
+              txid:
+                type: array
+                items:
+                  type: string
+                example: OQCLML-BW3P3-BUCMWZ
             example: {}
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
     SendOrderRequest:
       type: object
       required:
@@ -756,6 +913,101 @@ components:
         trailingStopDeviationUnit:
           type: string
           example: string
+    BaseEnvelope_2:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
+    EditOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              status:
+                type: string
+                example: string
+              txid:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+              originaltxid:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+              volume:
+                type: string
+                example: '0.01'
+              price:
+                type: string
+                example: '0.01'
+              orders_cancelled:
+                type: integer
+                example: 1
+              descr:
+                type: object
+                example: {}
+            example: {}
+    CancelAllResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              count:
+                type: integer
+                example: 1
+            example: {}
+    CancelOrderBatchRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - orders
+        properties:
+          orders:
+            type: array
+            maxItems: 50
+            items:
+              type: string
+            example: []
+    AmendOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              amend_id:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+            example: {}
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
     EditOrderFuturesRequest:
       type: object
       properties:
@@ -780,43 +1032,6 @@ components:
         trailingStopDeviationUnit:
           type: string
           example: string
-    CancelOrderBatchRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - orders
-        properties:
-          orders:
-            type: array
-            maxItems: 50
-            items:
-              type: string
-            example: []
-    AddOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              descr:
-                type: object
-                properties:
-                  order:
-                    type: string
-                    example: string
-                  close:
-                    type: string
-                    example: string
-                example: {}
-              txid:
-                type: array
-                items:
-                  type: string
-                example: OQCLML-BW3P3-BUCMWZ
-            example: {}
     EditOrderRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -858,7 +1073,7 @@ components:
           userref:
             type: integer
             example: 1
-    AddOrderBatchResponse:
+    CancelOrderResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -866,38 +1081,12 @@ components:
           result:
             type: object
             properties:
-              orders:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    descr:
-                      type: object
-                      example: {}
-                    txid:
-                      type: string
-                      example: OQCLML-BW3P3-BUCMWZ
-                    error:
-                      type: string
-                      example: string
-                example: []
-            example: {}
-    CancelAllAfterResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              currentTime:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
-              triggerTime:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
+              count:
+                type: integer
+                example: 1
+              pending:
+                type: boolean
+                example: true
             example: {}
     AddOrderRequest:
       allOf:
@@ -1006,195 +1195,6 @@ components:
           validate:
             type: boolean
             example: true
-    CancelOrderBatchResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              count:
-                type: integer
-                example: 1
-            example: {}
-    CancelOrderRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - txid
-        properties:
-          txid:
-            type: string
-            description: txid
-            cl_ord_id: null
-            or userref.: null
-            example: OQCLML-BW3P3-BUCMWZ
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    BaseEnvelope_2:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
-    BaseEnvelope:
-      type: object
-      properties:
-        result:
-          type: string
-          enum:
-          - success
-          - error
-          example: success
-        serverTime:
-          type: string
-          format: date-time
-          example: '2026-05-30T00:00:00Z'
-        error:
-          type: string
-          example: string
-    CancelAllAfterRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - timeout
-        properties:
-          timeout:
-            type: integer
-            description: Seconds (0 to disable
-            max 86400).: null
-            example: 60
-    AmendOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              amend_id:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-            example: {}
-    CancelAllResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              count:
-                type: integer
-                example: 1
-            example: {}
-    AddOrderBatchRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - pair
-        - orders
-        properties:
-          pair:
-            type: string
-            example: XBTUSD
-          deadline:
-            type: string
-            example: string
-          validate:
-            type: boolean
-            example: true
-          orders:
-            type: array
-            maxItems: 15
-            items:
-              type: object
-              properties:
-                ordertype:
-                  type: string
-                  example: limit
-                type:
-                  type: string
-                  example: buy
-                volume:
-                  type: string
-                  example: '0.01'
-                price:
-                  type: string
-                  example: '0.01'
-                price2:
-                  type: string
-                  example: '0.01'
-                userref:
-                  type: integer
-                  example: 1
-                oflags:
-                  type: string
-                  example: string
-                starttm:
-                  type: string
-                  example: string
-                expiretm:
-                  type: string
-                  example: string
-            example: []
-    AmendOrderRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          txid:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          order_qty:
-            type: string
-            example: string
-          display_qty:
-            type: string
-            example: string
-          limit_price:
-            type: string
-            example: '0.01'
-          trigger_price:
-            type: string
-            example: '0.01'
-          post_only:
-            type: boolean
-            example: true
-          deadline:
-            type: string
-            example: string
-    CancelOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              count:
-                type: integer
-                example: 1
-              pending:
-                type: boolean
-                example: true
-            example: {}
   securitySchemes:
     futures_signature:
       type: apiKey

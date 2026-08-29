@@ -31,6 +31,20 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "kraken-account-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-account-data-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-auth-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-charts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-earn-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-funding-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-history-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-market-data-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-subaccounts-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-trading-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-transfers-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "kraken-websocket-api-openapi.yml: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
