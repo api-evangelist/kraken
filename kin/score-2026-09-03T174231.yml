@@ -1,38 +1,45 @@
-# Kin Score artifact — kraken — 2026-08-04T083143
+# Kin Score artifact — kraken — 2026-09-03T174231
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: kraken
-  schema_version: 0.9
-  scored_at: '2026-08-04'
-  run_ts: 2026-08-04T083143
-  composite: 68.0
+  schema_version: 0.18.2
+  scored_at: '2026-09-03'
+  run_ts: 2026-09-03T174231
+  composite: 72.1
   band: exemplar
   facets:
-    discoverability: 100.0
-    contract_quality: 37.4
-    governance: 63.5
-    operational_transparency: 52.6
-    developer_ergonomics: 78.3
-    commercial_clarity: 78.9
+    discoverability: 88.9
+    contract_quality: 33.8
+    governance: 33.3
+    operational_transparency: 50.0
+    developer_ergonomics: 92.9
+    commercial_clarity: 92.1
+    contract_governance: 33.3
+    access_clarity: 92.1
   agent_readiness:
-    score: 59.0
+    score: 34.0
     band: agent-ready
     dimensions:
       spec_presence: true
       agentic_access: derived
-      mcp_server: true
-      auth_clarity: true
+      reversibility_documented: documented
+      mcp_server: documented
+      auth_clarity: bearer
       idempotency: false
       error_semantics: documented
       openapi_examples: verified
       rate_limit_signal: documented
       event_surface_described: derived
       agent_skills: false
-      well_known_catalog: true
-      consent_identity: true
+      well_known_catalog: false
+      consent_identity: false
       agent_card: false
       dry_run_mode: false
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
   regulatory:
     applies: true
     regime: Securities & Market Data
@@ -44,7 +51,7 @@ kin_score:
     agentic_access: derived
     conformance: derived
     contracts:
-      total: 12
-      derived: 12
+      total: 14
+      derived: 14
       coverage: 100.0
       callable: 100.0
