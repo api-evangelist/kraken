@@ -45,6 +45,7 @@ x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 image: https://assets.kraken.com/marketing/web/kraken-logo.svg
 tags:
+- Kraken
 - Cryptocurrency
 - Exchange
 - Trading
