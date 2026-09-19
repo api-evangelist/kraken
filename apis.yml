@@ -63,8 +63,8 @@ tags:
 - Embed
 - Authentication
 - Public APIs
-- Kraken
 tags_raw:
+- Kraken
 - Cryptocurrency
 - Exchange
 - Trading
@@ -194,6 +194,11 @@ apis:
   humanURL: https://docs.kraken.com/api/docs/category/embed/
   baseURL: https://embed.kraken.com
   tags:
+  - Embed
+  - B2B
+  - Partners
+  - REST
+  tags_raw:
   - Embed
   - B2B
   - Partner
