@@ -267,20 +267,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
     EarnStrategyScopedRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -291,6 +277,18 @@ components:
           strategy_id:
             type: string
             example: OQCLML-BW3P3-BUCMWZ
+    EarnStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              pending:
+                type: boolean
+                example: true
+            example: {}
     EarnStrategiesResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -385,6 +383,20 @@ components:
           strategy_id:
             type: string
             example: OQCLML-BW3P3-BUCMWZ
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     EarnStrategy:
       type: object
       properties:
@@ -455,6 +467,20 @@ components:
         can_deallocate:
           type: boolean
           example: true
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
     EarnSimpleResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -463,18 +489,6 @@ components:
           result:
             type: boolean
             example: true
-    EarnStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              pending:
-                type: boolean
-                example: true
-            example: {}
     EarnStrategiesRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -502,20 +516,6 @@ components:
           ascending:
             type: boolean
             example: true
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
   securitySchemes:
     kraken_signature:
       type: apiKey
