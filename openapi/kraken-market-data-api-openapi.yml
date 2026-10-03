@@ -629,6 +629,16 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
 components:
   schemas:
+    InstrumentsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          instruments:
+            type: array
+            items:
+              $ref: '#/components/schemas/Instrument'
+            example: []
     TickersResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -639,48 +649,6 @@ components:
             items:
               $ref: '#/components/schemas/Ticker'
             example: []
-    Instrument:
-      type: object
-      properties:
-        symbol:
-          type: string
-          example: PI_XBTUSD
-        type:
-          type: string
-          enum:
-          - futures_inverse
-          - futures_vanilla
-          - flexible_futures
-          - perpetual_inverse
-          - perpetual_vanilla
-          example: futures_inverse
-        tradeable:
-          type: boolean
-          example: true
-        underlying:
-          type: string
-          example: string
-        lastTradingTime:
-          type: string
-          format: date-time
-          example: '2026-05-30T00:00:00Z'
-        tickSize:
-          type: number
-          example: 0.01
-        contractSize:
-          type: number
-          example: 0.01
-        marginLevels:
-          type: array
-          items:
-            type: object
-          example: '0.01'
-        fundingRateCoefficient:
-          type: number
-          example: 0.01
-        maxRelativeFundingRate:
-          type: number
-          example: 0.01
     BaseEnvelope:
       type: object
       properties:
@@ -755,30 +723,57 @@ components:
         pair:
           type: string
           example: XBTUSD
-    InstrumentsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          instruments:
-            type: array
-            items:
-              $ref: '#/components/schemas/Instrument'
-            example: []
-    ServerTimeResponse:
+    Instrument:
+      type: object
+      properties:
+        symbol:
+          type: string
+          example: PI_XBTUSD
+        type:
+          type: string
+          enum:
+          - futures_inverse
+          - futures_vanilla
+          - flexible_futures
+          - perpetual_inverse
+          - perpetual_vanilla
+          example: futures_inverse
+        tradeable:
+          type: boolean
+          example: true
+        underlying:
+          type: string
+          example: string
+        lastTradingTime:
+          type: string
+          format: date-time
+          example: '2026-05-30T00:00:00Z'
+        tickSize:
+          type: number
+          example: 0.01
+        contractSize:
+          type: number
+          example: 0.01
+        marginLevels:
+          type: array
+          items:
+            type: object
+          example: '0.01'
+        fundingRateCoefficient:
+          type: number
+          example: 0.01
+        maxRelativeFundingRate:
+          type: number
+          example: 0.01
+    TickerResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
         properties:
           result:
             type: object
-            properties:
-              unixtime:
-                type: integer
-                example: 1717000000
-              rfc1123:
-                type: string
-                example: Mon, 27 May 26 00:00:00 +0000
+            additionalProperties:
+              $ref: '#/components/schemas/Ticker_2'
             example: {}
     AssetPair:
       type: object
@@ -855,6 +850,66 @@ components:
         status:
           type: string
           example: string
+    OHLCResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: integer
+            description: Map of pair → candle array, plus `last` cursor.
+            example: {}
+    RecentTradesResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: string
+            example: {}
+    RecentSpreadsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: integer
+            example: {}
+    BaseEnvelope_2:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     AssetPairsResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
@@ -886,23 +941,7 @@ components:
                 format: date-time
                 example: '2026-05-30T00:00:00Z'
             example: {}
-    OrderBook:
-      type: object
-      properties:
-        asks:
-          type: array
-          items:
-            type: array
-            items: {}
-            description: '[price, volume, timestamp]'
-          example: []
-        bids:
-          type: array
-          items:
-            type: array
-            items: {}
-          example: []
-    RecentSpreadsResponse:
+    AssetInfoResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -910,63 +949,8 @@ components:
           result:
             type: object
             additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: integer
+              $ref: '#/components/schemas/AssetInfo'
             example: {}
-    AssetInfo:
-      type: object
-      properties:
-        aclass:
-          type: string
-          example: string
-        altname:
-          type: string
-          example: string
-        decimals:
-          type: integer
-          example: 1
-        display_decimals:
-          type: integer
-          example: 1
-        collateral_value:
-          type: number
-          example: 0.01
-        status:
-          type: string
-          example: string
-    RecentTradesResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: string
-            example: {}
-    BaseEnvelope_2:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
     Ticker_2:
       type: object
       properties:
@@ -1022,6 +1006,58 @@ components:
           type: string
           description: Today's opening price
           example: string
+    OrderBook:
+      type: object
+      properties:
+        asks:
+          type: array
+          items:
+            type: array
+            items: {}
+            description: '[price, volume, timestamp]'
+          example: []
+        bids:
+          type: array
+          items:
+            type: array
+            items: {}
+          example: []
+    AssetInfo:
+      type: object
+      properties:
+        aclass:
+          type: string
+          example: string
+        altname:
+          type: string
+          example: string
+        decimals:
+          type: integer
+          example: 1
+        display_decimals:
+          type: integer
+          example: 1
+        collateral_value:
+          type: number
+          example: 0.01
+        status:
+          type: string
+          example: string
+    ServerTimeResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              unixtime:
+                type: integer
+                example: 1717000000
+              rfc1123:
+                type: string
+                example: Mon, 27 May 26 00:00:00 +0000
+            example: {}
     OrderBookResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
@@ -1031,42 +1067,6 @@ components:
             type: object
             additionalProperties:
               $ref: '#/components/schemas/OrderBook'
-            example: {}
-    AssetInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/AssetInfo'
-            example: {}
-    TickerResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/Ticker_2'
-            example: {}
-    OHLCResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: integer
-            description: Map of pair → candle array, plus `last` cursor.
             example: {}
   securitySchemes:
     futures_signature:

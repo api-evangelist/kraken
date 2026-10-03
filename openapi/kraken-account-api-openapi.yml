@@ -168,32 +168,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    BaseEnvelope:
-      type: object
-      properties:
-        result:
-          type: string
-          enum:
-          - success
-          - error
-          example: success
-        serverTime:
-          type: string
-          format: date-time
-          example: '2026-05-30T00:00:00Z'
-        error:
-          type: string
-          example: string
-    AccountsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          accounts:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/Account'
-            example: {}
     Account:
       type: object
       properties:
@@ -257,6 +231,32 @@ components:
               type: number
               example: 0.01
           example: {}
+    BaseEnvelope:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+          - success
+          - error
+          example: success
+        serverTime:
+          type: string
+          format: date-time
+          example: '2026-05-30T00:00:00Z'
+        error:
+          type: string
+          example: string
+    AccountsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          accounts:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Account'
+            example: {}
   securitySchemes:
     futures_signature:
       type: apiKey

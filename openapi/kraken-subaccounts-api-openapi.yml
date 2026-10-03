@@ -114,21 +114,6 @@ components:
           result:
             type: boolean
             example: true
-    CreateSubaccountRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - username
-        - email
-        properties:
-          username:
-            type: string
-            example: subaccount-01
-          email:
-            type: string
-            format: email
-            example: trader@example.com
     AccountTransferResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -181,6 +166,21 @@ components:
           to:
             type: string
             example: string
+    CreateSubaccountRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - username
+        - email
+        properties:
+          username:
+            type: string
+            example: subaccount-01
+          email:
+            type: string
+            format: email
+            example: trader@example.com
     NoncedRequest:
       type: object
       description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.

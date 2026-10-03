@@ -267,16 +267,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    EarnStrategyScopedRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - strategy_id
-        properties:
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
     EarnStatusResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -289,6 +293,33 @@ components:
                 type: boolean
                 example: true
             example: {}
+    EarnStrategiesRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          asset:
+            type: string
+            example: XBT
+          limit:
+            type: integer
+            example: 1
+          lock_type:
+            type: array
+            items:
+              type: string
+              enum:
+              - bonded
+              - flex
+              - timed
+              - instant
+            example: []
+          cursor:
+            type: string
+            example: string
+          ascending:
+            type: boolean
+            example: true
     EarnStrategiesResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -306,97 +337,6 @@ components:
                 type: string
                 example: string
             example: {}
-    EarnAllocationsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              converted_asset:
-                type: string
-                example: XBT
-              total_allocated:
-                type: string
-                example: string
-              total_rewarded:
-                type: string
-                example: string
-              items:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    strategy_id:
-                      type: string
-                      example: OQCLML-BW3P3-BUCMWZ
-                    native_asset:
-                      type: string
-                      example: XBT
-                    amount_allocated:
-                      type: object
-                      properties:
-                        bonding:
-                          type: object
-                          example: {}
-                        unbonding:
-                          type: object
-                          example: {}
-                        allocated:
-                          type: object
-                          example: {}
-                        total:
-                          type: object
-                          properties:
-                            native:
-                              type: string
-                              example: string
-                            converted:
-                              type: string
-                              example: string
-                          example: {}
-                      example: {}
-                    total_rewarded:
-                      type: object
-                      properties:
-                        native:
-                          type: string
-                          example: string
-                        converted:
-                          type: string
-                          example: string
-                      example: {}
-                example: []
-            example: {}
-    EarnAllocateRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - amount
-        - strategy_id
-        properties:
-          amount:
-            type: string
-            example: '0.01'
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
     EarnStrategy:
       type: object
       properties:
@@ -467,20 +407,93 @@ components:
         can_deallocate:
           type: boolean
           example: true
-    NoncedRequest:
+    EarnStrategyScopedRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - strategy_id
+        properties:
+          strategy_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    BaseEnvelope:
       type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
       properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
+    EarnAllocationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              converted_asset:
+                type: string
+                example: XBT
+              total_allocated:
+                type: string
+                example: string
+              total_rewarded:
+                type: string
+                example: string
+              items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    strategy_id:
+                      type: string
+                      example: OQCLML-BW3P3-BUCMWZ
+                    native_asset:
+                      type: string
+                      example: XBT
+                    amount_allocated:
+                      type: object
+                      properties:
+                        bonding:
+                          type: object
+                          example: {}
+                        unbonding:
+                          type: object
+                          example: {}
+                        allocated:
+                          type: object
+                          example: {}
+                        total:
+                          type: object
+                          properties:
+                            native:
+                              type: string
+                              example: string
+                            converted:
+                              type: string
+                              example: string
+                          example: {}
+                      example: {}
+                    total_rewarded:
+                      type: object
+                      properties:
+                        native:
+                          type: string
+                          example: string
+                        converted:
+                          type: string
+                          example: string
+                      example: {}
+                example: []
+            example: {}
     EarnSimpleResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -489,33 +502,20 @@ components:
           result:
             type: boolean
             example: true
-    EarnStrategiesRequest:
+    EarnAllocateRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
       - type: object
+        required:
+        - amount
+        - strategy_id
         properties:
-          asset:
+          amount:
             type: string
-            example: XBT
-          limit:
-            type: integer
-            example: 1
-          lock_type:
-            type: array
-            items:
-              type: string
-              enum:
-              - bonded
-              - flex
-              - timed
-              - instant
-            example: []
-          cursor:
+            example: '0.01'
+          strategy_id:
             type: string
-            example: string
-          ascending:
-            type: boolean
-            example: true
+            example: OQCLML-BW3P3-BUCMWZ
   securitySchemes:
     kraken_signature:
       type: apiKey
