@@ -44,6 +44,9 @@ x-type: company
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 image: https://assets.kraken.com/marketing/web/kraken-logo.svg
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - Kraken
 - Cryptocurrency
