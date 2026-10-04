@@ -61,6 +61,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     WebSocketsTokenResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -90,20 +104,6 @@ components:
           type: string
           description: Two-factor password / OTP if the key is OTP-protected.
           example: '123456'
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
   securitySchemes:
     kraken_signature:
       type: apiKey

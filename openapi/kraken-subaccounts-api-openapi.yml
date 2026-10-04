@@ -106,6 +106,20 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     CreateSubaccountResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -129,20 +143,6 @@ components:
                 type: string
                 example: string
             example: {}
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
     AccountTransferRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'

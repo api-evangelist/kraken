@@ -639,32 +639,6 @@ components:
             items:
               $ref: '#/components/schemas/Instrument'
             example: []
-    TickersResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          tickers:
-            type: array
-            items:
-              $ref: '#/components/schemas/Ticker'
-            example: []
-    BaseEnvelope:
-      type: object
-      properties:
-        result:
-          type: string
-          enum:
-          - success
-          - error
-          example: success
-        serverTime:
-          type: string
-          format: date-time
-          example: '2026-05-30T00:00:00Z'
-        error:
-          type: string
-          example: string
     Ticker:
       type: object
       properties:
@@ -723,6 +697,16 @@ components:
         pair:
           type: string
           example: XBTUSD
+    TickersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          tickers:
+            type: array
+            items:
+              $ref: '#/components/schemas/Ticker'
+            example: []
     Instrument:
       type: object
       properties:
@@ -765,7 +749,23 @@ components:
         maxRelativeFundingRate:
           type: number
           example: 0.01
-    TickerResponse:
+    BaseEnvelope:
+      type: object
+      properties:
+        result:
+          type: string
+          enum:
+          - success
+          - error
+          example: success
+        serverTime:
+          type: string
+          format: date-time
+          example: '2026-05-30T00:00:00Z'
+        error:
+          type: string
+          example: string
+    OHLCResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -773,7 +773,191 @@ components:
           result:
             type: object
             additionalProperties:
-              $ref: '#/components/schemas/Ticker_2'
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: integer
+            description: Map of pair → candle array, plus `last` cursor.
+            example: {}
+    OrderBookResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/OrderBook'
+            example: {}
+    RecentTradesResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: string
+            example: {}
+    Ticker_2:
+      type: object
+      properties:
+        a:
+          type: array
+          items:
+            type: string
+          description: '[price, whole-lot volume, lot volume] ask'
+          example: []
+        b:
+          type: array
+          items:
+            type: string
+          description: '[price, whole-lot volume, lot volume] bid'
+          example: []
+        c:
+          type: array
+          items:
+            type: string
+          description: '[price, lot volume] last trade closed'
+          example: []
+        v:
+          type: array
+          items:
+            type: string
+          description: '[today, last 24h] volume'
+          example: []
+        p:
+          type: array
+          items:
+            type: string
+          description: '[today, last 24h] vwap'
+          example: []
+        t:
+          type: array
+          items:
+            type: integer
+          description: '[today, last 24h] number of trades'
+          example: []
+        l:
+          type: array
+          items:
+            type: string
+          description: '[today, last 24h] low'
+          example: []
+        h:
+          type: array
+          items:
+            type: string
+          description: '[today, last 24h] high'
+          example: []
+        o:
+          type: string
+          description: Today's opening price
+          example: string
+    OrderBook:
+      type: object
+      properties:
+        asks:
+          type: array
+          items:
+            type: array
+            items: {}
+            description: '[price, volume, timestamp]'
+          example: []
+        bids:
+          type: array
+          items:
+            type: array
+            items: {}
+          example: []
+    RecentSpreadsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: integer
+            example: {}
+    AssetInfo:
+      type: object
+      properties:
+        aclass:
+          type: string
+          example: string
+        altname:
+          type: string
+          example: string
+        decimals:
+          type: integer
+          example: 1
+        display_decimals:
+          type: integer
+          example: 1
+        collateral_value:
+          type: number
+          example: 0.01
+        status:
+          type: string
+          example: string
+    AssetInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/AssetInfo'
+            example: {}
+    SystemStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              status:
+                type: string
+                enum:
+                - online
+                - maintenance
+                - cancel_only
+                - post_only
+                example: online
+              timestamp:
+                type: string
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
+            example: {}
+    ServerTimeResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              unixtime:
+                type: integer
+                example: 1717000000
+              rfc1123:
+                type: string
+                example: Mon, 27 May 26 00:00:00 +0000
             example: {}
     AssetPair:
       type: object
@@ -850,7 +1034,7 @@ components:
         status:
           type: string
           example: string
-    OHLCResponse:
+    AssetPairsResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -858,15 +1042,9 @@ components:
           result:
             type: object
             additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: integer
-            description: Map of pair → candle array, plus `last` cursor.
+              $ref: '#/components/schemas/AssetPair'
             example: {}
-    RecentTradesResponse:
+    TickerResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -874,27 +1052,7 @@ components:
           result:
             type: object
             additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: string
-            example: {}
-    RecentSpreadsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: integer
+              $ref: '#/components/schemas/Ticker_2'
             example: {}
     BaseEnvelope_2:
       type: object
@@ -910,164 +1068,6 @@ components:
           example: string
       required:
       - error
-    AssetPairsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/AssetPair'
-            example: {}
-    SystemStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              status:
-                type: string
-                enum:
-                - online
-                - maintenance
-                - cancel_only
-                - post_only
-                example: online
-              timestamp:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
-            example: {}
-    AssetInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/AssetInfo'
-            example: {}
-    Ticker_2:
-      type: object
-      properties:
-        a:
-          type: array
-          items:
-            type: string
-          description: '[price, whole-lot volume, lot volume] ask'
-          example: []
-        b:
-          type: array
-          items:
-            type: string
-          description: '[price, whole-lot volume, lot volume] bid'
-          example: []
-        c:
-          type: array
-          items:
-            type: string
-          description: '[price, lot volume] last trade closed'
-          example: []
-        v:
-          type: array
-          items:
-            type: string
-          description: '[today, last 24h] volume'
-          example: []
-        p:
-          type: array
-          items:
-            type: string
-          description: '[today, last 24h] vwap'
-          example: []
-        t:
-          type: array
-          items:
-            type: integer
-          description: '[today, last 24h] number of trades'
-          example: []
-        l:
-          type: array
-          items:
-            type: string
-          description: '[today, last 24h] low'
-          example: []
-        h:
-          type: array
-          items:
-            type: string
-          description: '[today, last 24h] high'
-          example: []
-        o:
-          type: string
-          description: Today's opening price
-          example: string
-    OrderBook:
-      type: object
-      properties:
-        asks:
-          type: array
-          items:
-            type: array
-            items: {}
-            description: '[price, volume, timestamp]'
-          example: []
-        bids:
-          type: array
-          items:
-            type: array
-            items: {}
-          example: []
-    AssetInfo:
-      type: object
-      properties:
-        aclass:
-          type: string
-          example: string
-        altname:
-          type: string
-          example: string
-        decimals:
-          type: integer
-          example: 1
-        display_decimals:
-          type: integer
-          example: 1
-        collateral_value:
-          type: number
-          example: 0.01
-        status:
-          type: string
-          example: string
-    ServerTimeResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              unixtime:
-                type: integer
-                example: 1717000000
-              rfc1123:
-                type: string
-                example: Mon, 27 May 26 00:00:00 +0000
-            example: {}
-    OrderBookResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/OrderBook'
-            example: {}
   securitySchemes:
     futures_signature:
       type: apiKey
