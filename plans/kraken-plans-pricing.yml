@@ -1,3 +1,8 @@
+# Provenance stamped 2026-10-07 (roadmap#943): written by an API Evangelist sweep (dated 2026-05-30 by the file itself), not
+# harvested from the provider. `method: generated` so the economics campaign may replace it with a
+# dated, verbatim transcription; every figure below is unverified until it does.
+method: generated
+generated: '2026-05-30'
 specification: API Commons Plans
 specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
@@ -325,3 +330,83 @@ plans:
       - name: Embedded Earn
       - name: Webhooks for real-time events
       - name: OAuth integration
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  - subscription
+  - tiered
+  units:
+  - negotiated
+  - period
+  - transaction
+  plans:
+  - name: Kraken (Instant Buy / Recurring)
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - transaction
+    periods:
+    - per-use
+  - name: Kraken+
+    access: other
+    model: subscription
+    model_how: stated
+    units:
+    - other
+    - period
+    periods:
+    - month
+    - per-use
+  - name: Kraken Pro — Spot (Standard Fee Schedule)
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: Kraken Pro — Stablecoin / FX
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: Kraken Futures
+    access: other
+    model: tiered
+    model_how: stated
+    units:
+    - other
+    periods:
+    - month
+  - name: Kraken Earn
+    access: other
+    model: metered
+    model_how: stated
+    units:
+    - other
+    - transaction
+    periods:
+    - per-use
+    - year
+  - name: Kraken Institutional
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - per-use
+  - name: Kraken Embed (B2B Partner Platform)
+    access: enterprise
+    model: subscription
+    model_how: derived
+    units:
+    - negotiated
+    periods:
+    - per-use
