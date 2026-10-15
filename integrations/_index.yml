@@ -52,3 +52,70 @@
       home_member_state: IE
   status: not-a-workflow
   arazzo: null
+- slug: kraken-iso-10383-mic
+  label: ISO 10383 (MIC)
+  partner_name: ISO 10383 (MIC)
+  category: registered trading venues and market segments
+  type: register
+  channel: standard-directory
+  evidence: https://www.iso20022.org/sites/default/files/ISO10383_MIC/ISO10383_MIC.csv
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: ISO 10383 Market Identifier Codes (ISO 20022 registration authority)
+    spec_file: null
+    standard: ISO 10383
+    role: venue operator
+    matched_domain: kraken.com
+    matched_by: domain+verified:kraken.com
+    categories:
+    - CASP
+    - DCMS
+    - NSPD
+    - OTHR
+    operating_mics:
+    - KRDE
+    - KRME
+    - PESL
+    - PGSL
+    - PGTP
+    mics:
+    - mic: KRME
+      operating_mic: KRME
+      segment: OPRT
+      market: PAYWARD MENA HOLDINGS LTD.
+      category: NSPD
+      legal_name: ''
+      country: AE
+    - mic: PGTP
+      operating_mic: PGTP
+      segment: OPRT
+      market: PAYWARD GLOBAL TRADING (KRAKEN)
+      category: OTHR
+      legal_name: PAYWARD GLOBAL TRADING PTE LTD
+      country: SG
+    - mic: PGSL
+      operating_mic: PGSL
+      segment: OPRT
+      market: PAYWARD GLOBAL SOLUTIONS LIMITED (KRAKEN) - IE
+      category: CASP
+      legal_name: PAYWARD GLOBAL SOLUTIONS LIMITED
+      country: IE
+    - mic: PESL
+      operating_mic: PESL
+      segment: OPRT
+      market: PAYWARD EUROPE SOLUTIONS LIMITED (KRAKEN)
+      category: CASP
+      legal_name: PAYWARD EUROPE SOLUTIONS LIMITED
+      country: IE
+    - mic: KRDE
+      operating_mic: KRDE
+      segment: OPRT
+      market: KRAKEN DERIVATIVES EXCHANGE
+      category: DCMS
+      legal_name: KRAKEN DERIVATIVES EXCHANGE INC.
+      country: US
+    detected_by: sweep-capital-markets.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
