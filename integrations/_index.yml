@@ -119,3 +119,36 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: kraken-fincen-msb-registration
+  label: FinCEN (MSB registration)
+  partner_name: FinCEN (MSB registration)
+  category: Money services business
+  type: contract
+  channel: regulator-register
+  evidence: https://msb.fincen.gov/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    spec_file: null
+    standard: FinCEN MSB registration (US Bank Secrecy Act)
+    role: fincen-msb-registrant
+    registered_name: Payward Interactive, Inc.
+    dba_name: Kraken
+    register_id: Payward Interactive, Inc.
+    matched_domain: kraken.com
+    matched_by: domain+verified
+    identity: 'hand-verified: DBA Kraken, 106 E. Lincolnway Cheyenne WY (Payward''s registered office); Wikidata
+      gave krakencolombia.net; all/kraken is named ''Kraken'', Website www.kraken.com'
+    identity_source: hand-verified (LOCAL_VERIFIED)
+    msb_activities:
+    - 409 money transmitter
+    - 499 other
+    states_of_activity: 57
+    received_date: 08/11/2026
+    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
+      are context, never counted'
+    detected_by: sweep-regtech-aml.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
