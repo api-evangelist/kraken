@@ -267,6 +267,30 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
+    EarnStrategyScopedRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - strategy_id
+        properties:
+          strategy_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     EarnAllocationsResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -330,6 +354,71 @@ components:
                       example: {}
                 example: []
             example: {}
+    EarnSimpleResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: boolean
+            example: true
+    EarnStrategiesResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              items:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EarnStrategy'
+                example: []
+              next_cursor:
+                type: string
+                example: string
+            example: {}
+    EarnAllocateRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - amount
+        - strategy_id
+        properties:
+          amount:
+            type: string
+            example: '0.01'
+          strategy_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
+    EarnStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              pending:
+                type: boolean
+                example: true
+            example: {}
     EarnStrategiesRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -357,20 +446,6 @@ components:
           ascending:
             type: boolean
             example: true
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
     EarnStrategy:
       type: object
       properties:
@@ -441,81 +516,6 @@ components:
         can_deallocate:
           type: boolean
           example: true
-    EarnStrategiesResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              items:
-                type: array
-                items:
-                  $ref: '#/components/schemas/EarnStrategy'
-                example: []
-              next_cursor:
-                type: string
-                example: string
-            example: {}
-    EarnAllocateRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - amount
-        - strategy_id
-        properties:
-          amount:
-            type: string
-            example: '0.01'
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    EarnSimpleResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: boolean
-            example: true
-    EarnStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              pending:
-                type: boolean
-                example: true
-            example: {}
-    EarnStrategyScopedRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - strategy_id
-        properties:
-          strategy_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
   securitySchemes:
     kraken_signature:
       type: apiKey

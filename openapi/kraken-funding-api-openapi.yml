@@ -365,80 +365,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    DepositStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: array
-            items:
-              $ref: '#/components/schemas/FundingTxn'
-            example: []
-    AssetScopedRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - asset
-        properties:
-          asset:
-            type: string
-            example: XBT
-    WithdrawStatusRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          asset:
-            type: string
-            example: XBT
-          method:
-            type: string
-            example: string
-          start:
-            type: string
-            example: string
-          end:
-            type: string
-            example: string
-          cursor:
-            type: string
-            example: string
-          limit:
-            type: integer
-            example: 1
-    WithdrawResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              refid:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-            example: {}
-    WithdrawInfoRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - asset
-        - key
-        - amount
-        properties:
-          asset:
-            type: string
-            example: XBT
-          key:
-            type: string
-            description: Withdrawal key name configured in account.
-            example: Cold storage 1
-          amount:
-            type: string
-            example: '0.01'
     WalletTransferResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -451,57 +377,18 @@ components:
                 type: string
                 example: OQCLML-BW3P3-BUCMWZ
             example: {}
-    DepositMethodsResponse:
+    WithdrawResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
       - type: object
         properties:
           result:
-            type: array
-            items:
-              type: object
-              properties:
-                method:
-                  type: string
-                  example: string
-                limit:
-                  oneOf:
-                  - type: string
-                  - type: boolean
-                  example: string
-                fee:
-                  type: string
-                  example: '0.01'
-                address-setup-fee:
-                  type: string
-                  example: string
-                gen-address:
-                  type: boolean
-                  example: true
-                minimum:
-                  type: string
-                  example: string
-            example: []
-    DepositAddressesRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - asset
-        - method
-        properties:
-          asset:
-            type: string
-            example: XBT
-          method:
-            type: string
-            example: string
-          new:
-            type: boolean
-            example: true
-          amount:
-            type: string
-            example: '0.01'
+            type: object
+            properties:
+              refid:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+            example: {}
     BaseEnvelope:
       type: object
       properties:
@@ -516,6 +403,20 @@ components:
           example: string
       required:
       - error
+    WithdrawCancelRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - asset
+        - refid
+        properties:
+          asset:
+            type: string
+            example: XBT
+          refid:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
     DepositAddressesResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -542,33 +443,28 @@ components:
                   type: string
                   example: string
             example: []
-    WalletTransferRequest:
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
+    WithdrawCancelResponse:
       allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
+      - $ref: '#/components/schemas/BaseEnvelope'
       - type: object
-        required:
-        - asset
-        - from
-        - to
-        - amount
         properties:
-          asset:
-            type: string
-            example: XBT
-          from:
-            type: string
-            enum:
-            - Spot Wallet
-            default: Spot Wallet
-            example: Spot Wallet
-          to:
-            type: string
-            enum:
-            - Futures Wallet
-            example: Futures Wallet
-          amount:
-            type: string
-            example: '0.01'
+          result:
+            type: boolean
+            example: true
     FundingTxn:
       type: object
       properties:
@@ -605,34 +501,6 @@ components:
         status-prop:
           type: string
           example: string
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
-    WithdrawCancelRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - asset
-        - refid
-        properties:
-          asset:
-            type: string
-            example: XBT
-          refid:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
     DepositStatusRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -656,15 +524,50 @@ components:
           limit:
             type: integer
             example: 1
-    WithdrawCancelResponse:
+    DepositAddressesRequest:
       allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
+      - $ref: '#/components/schemas/NoncedRequest'
       - type: object
+        required:
+        - asset
+        - method
         properties:
-          result:
+          asset:
+            type: string
+            example: XBT
+          method:
+            type: string
+            example: string
+          new:
             type: boolean
             example: true
-    WithdrawStatusResponse:
+          amount:
+            type: string
+            example: '0.01'
+    WithdrawStatusRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          asset:
+            type: string
+            example: XBT
+          method:
+            type: string
+            example: string
+          start:
+            type: string
+            example: string
+          end:
+            type: string
+            example: string
+          cursor:
+            type: string
+            example: string
+          limit:
+            type: integer
+            example: 1
+    DepositStatusResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
       - type: object
@@ -719,6 +622,103 @@ components:
           max_fee:
             type: string
             example: string
+    AssetScopedRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - asset
+        properties:
+          asset:
+            type: string
+            example: XBT
+    WithdrawStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: array
+            items:
+              $ref: '#/components/schemas/FundingTxn'
+            example: []
+    WalletTransferRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - asset
+        - from
+        - to
+        - amount
+        properties:
+          asset:
+            type: string
+            example: XBT
+          from:
+            type: string
+            enum:
+            - Spot Wallet
+            default: Spot Wallet
+            example: Spot Wallet
+          to:
+            type: string
+            enum:
+            - Futures Wallet
+            example: Futures Wallet
+          amount:
+            type: string
+            example: '0.01'
+    DepositMethodsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: array
+            items:
+              type: object
+              properties:
+                method:
+                  type: string
+                  example: string
+                limit:
+                  oneOf:
+                  - type: string
+                  - type: boolean
+                  example: string
+                fee:
+                  type: string
+                  example: '0.01'
+                address-setup-fee:
+                  type: string
+                  example: string
+                gen-address:
+                  type: boolean
+                  example: true
+                minimum:
+                  type: string
+                  example: string
+            example: []
+    WithdrawInfoRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - asset
+        - key
+        - amount
+        properties:
+          asset:
+            type: string
+            example: XBT
+          key:
+            type: string
+            description: Withdrawal key name configured in account.
+            example: Cold storage 1
+          amount:
+            type: string
+            example: '0.01'
   securitySchemes:
     kraken_signature:
       type: apiKey

@@ -75,6 +75,20 @@ components:
           example: string
       required:
       - error
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
     WebSocketsTokenResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -90,20 +104,6 @@ components:
                 type: integer
                 example: 900
             example: {}
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
   securitySchemes:
     kraken_signature:
       type: apiKey

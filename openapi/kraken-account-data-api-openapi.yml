@@ -525,120 +525,6 @@ paths:
         dispatcher: FALLBACK
 components:
   schemas:
-    OpenPositionsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/Position'
-            example: {}
-    TradeBalanceRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          asset:
-            type: string
-            default: ZUSD
-            example: XBT
-    OpenPositionsRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          txid:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          docalcs:
-            type: boolean
-            default: false
-            example: true
-          consolidation:
-            type: string
-            enum:
-            - market
-            example: market
-    QueryOrdersResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/OrderInfo'
-            example: {}
-    TradeVolumeResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              currency:
-                type: string
-                example: string
-              volume:
-                type: string
-                example: '0.01'
-              fees:
-                type: object
-                additionalProperties:
-                  type: object
-                  properties:
-                    fee:
-                      type: string
-                    minfee:
-                      type: string
-                    maxfee:
-                      type: string
-                    nextfee:
-                      type: string
-                    nextvolume:
-                      type: string
-                    tiervolume:
-                      type: string
-                example: {}
-              fees_maker:
-                type: object
-                additionalProperties:
-                  type: object
-                example: {}
-            example: {}
-    BalanceExResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              type: object
-              properties:
-                balance:
-                  type: string
-                hold_trade:
-                  type: string
-                credit:
-                  type: string
-                credit_used:
-                  type: string
-            example: {}
-    BalanceResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              type: string
-              description: Asset balance (string, exact precision).
-            example: {}
     OrderInfo:
       type: object
       properties:
@@ -738,145 +624,6 @@ components:
           items:
             type: string
           example: []
-    BaseEnvelope:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
-    QueryTradesResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/TradeInfo'
-            example: {}
-    TradeVolumeRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          pair:
-            type: string
-            example: XBTUSD
-          fee-info:
-            type: boolean
-            example: true
-    ClosedOrdersRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          trades:
-            type: boolean
-            default: false
-            example: true
-          userref:
-            type: integer
-            example: 1
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          start:
-            type: integer
-            example: 1
-          end:
-            type: integer
-            example: 1
-          ofs:
-            type: integer
-            example: 1
-          closetime:
-            type: string
-            enum:
-            - open
-            - close
-            - both
-            default: both
-            example: open
-    QueryOrdersRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - txid
-        properties:
-          trades:
-            type: boolean
-            example: true
-          userref:
-            type: integer
-            example: 1
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          txid:
-            type: string
-            description: Comma-delimited list of txids (up to 50).
-            example: OQCLML-BW3P3-BUCMWZ
-    QueryLedgersRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Comma-delimited list of ledger ids (up to 20).
-            example: OQCLML-BW3P3-BUCMWZ
-          trades:
-            type: boolean
-            example: true
-    QueryLedgersResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/LedgerEntry'
-            example: {}
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
-    OpenOrdersResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              open:
-                type: object
-                additionalProperties:
-                  $ref: '#/components/schemas/OrderInfo'
-                example: {}
-            example: {}
     TradeBalanceResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -926,67 +673,20 @@ components:
                 description: Unexecuted value
                 example: string
             example: {}
-    LedgersRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          asset:
+    BaseEnvelope:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
             type: string
-            default: all
-            example: XBT
-          aclass:
-            type: string
-            default: currency
-            example: string
-          type:
-            type: string
-            enum:
-            - all
-            - deposit
-            - withdrawal
-            - trade
-            - margin
-            - rollover
-            - credit
-            - transfer
-            - settled
-            - staking
-            - dividend
-            - sale
-            - nft_rebate
-            - conversion
-            - allocation
-            - deallocation
-            - earn
-            default: all
-            example: all
-          start:
-            type: integer
-            example: 1
-          end:
-            type: integer
-            example: 1
-          ofs:
-            type: integer
-            example: 1
-    TradesHistoryResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              trades:
-                type: object
-                additionalProperties:
-                  $ref: '#/components/schemas/TradeInfo'
-                example: {}
-              count:
-                type: integer
-                example: 1
-            example: {}
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     Position:
       type: object
       properties:
@@ -1044,7 +744,104 @@ components:
         oflags:
           type: string
           example: string
-    OpenOrdersRequest:
+    QueryLedgersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/LedgerEntry'
+            example: {}
+    QueryOrdersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/OrderInfo'
+            example: {}
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
+    BalanceExResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              type: object
+              properties:
+                balance:
+                  type: string
+                hold_trade:
+                  type: string
+                credit:
+                  type: string
+                credit_used:
+                  type: string
+            example: {}
+    LedgersRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          asset:
+            type: string
+            default: all
+            example: XBT
+          aclass:
+            type: string
+            default: currency
+            example: string
+          type:
+            type: string
+            enum:
+            - all
+            - deposit
+            - withdrawal
+            - trade
+            - margin
+            - rollover
+            - credit
+            - transfer
+            - settled
+            - staking
+            - dividend
+            - sale
+            - nft_rebate
+            - conversion
+            - allocation
+            - deallocation
+            - earn
+            default: all
+            example: all
+          start:
+            type: integer
+            example: 1
+          end:
+            type: integer
+            example: 1
+          ofs:
+            type: integer
+            example: 1
+    ClosedOrdersRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
       - type: object
@@ -1059,39 +856,52 @@ components:
           cl_ord_id:
             type: string
             example: OQCLML-BW3P3-BUCMWZ
-    LedgersResponse:
+          start:
+            type: integer
+            example: 1
+          end:
+            type: integer
+            example: 1
+          ofs:
+            type: integer
+            example: 1
+          closetime:
+            type: string
+            enum:
+            - open
+            - close
+            - both
+            default: both
+            example: open
+    QueryOrdersRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - txid
+        properties:
+          trades:
+            type: boolean
+            example: true
+          userref:
+            type: integer
+            example: 1
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          txid:
+            type: string
+            description: Comma-delimited list of txids (up to 50).
+            example: OQCLML-BW3P3-BUCMWZ
+    QueryTradesResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
       - type: object
         properties:
           result:
             type: object
-            properties:
-              ledger:
-                type: object
-                additionalProperties:
-                  $ref: '#/components/schemas/LedgerEntry'
-                example: {}
-              count:
-                type: integer
-                example: 1
-            example: {}
-    ClosedOrdersResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              closed:
-                type: object
-                additionalProperties:
-                  $ref: '#/components/schemas/OrderInfo'
-                example: {}
-              count:
-                type: integer
-                example: 1
+            additionalProperties:
+              $ref: '#/components/schemas/TradeInfo'
             example: {}
     TradesHistoryRequest:
       allOf:
@@ -1120,6 +930,139 @@ components:
           ofs:
             type: integer
             example: 1
+    QueryLedgersRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Comma-delimited list of ledger ids (up to 20).
+            example: OQCLML-BW3P3-BUCMWZ
+          trades:
+            type: boolean
+            example: true
+    LedgerEntry:
+      type: object
+      properties:
+        refid:
+          type: string
+          example: OQCLML-BW3P3-BUCMWZ
+        time:
+          type: number
+          example: '2026-05-30T00:00:00Z'
+        type:
+          type: string
+          example: buy
+        subtype:
+          type: string
+          example: string
+        aclass:
+          type: string
+          example: string
+        asset:
+          type: string
+          example: XBT
+        amount:
+          type: string
+          example: '0.01'
+        fee:
+          type: string
+          example: '0.01'
+        balance:
+          type: string
+          example: '0.01'
+    OpenPositionsRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          txid:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          docalcs:
+            type: boolean
+            default: false
+            example: true
+          consolidation:
+            type: string
+            enum:
+            - market
+            example: market
+    BalanceResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              type: string
+              description: Asset balance (string, exact precision).
+            example: {}
+    ClosedOrdersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              closed:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/OrderInfo'
+                example: {}
+              count:
+                type: integer
+                example: 1
+            example: {}
+    TradeVolumeRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          pair:
+            type: string
+            example: XBTUSD
+          fee-info:
+            type: boolean
+            example: true
+    OpenOrdersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              open:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/OrderInfo'
+                example: {}
+            example: {}
+    OpenPositionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Position'
+            example: {}
+    TradeBalanceRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          asset:
+            type: string
+            default: ZUSD
+            example: XBT
     QueryTradesRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -1133,6 +1076,93 @@ components:
           trades:
             type: boolean
             example: true
+    LedgersResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              ledger:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/LedgerEntry'
+                example: {}
+              count:
+                type: integer
+                example: 1
+            example: {}
+    OpenOrdersRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          trades:
+            type: boolean
+            default: false
+            example: true
+          userref:
+            type: integer
+            example: 1
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    TradesHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              trades:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/TradeInfo'
+                example: {}
+              count:
+                type: integer
+                example: 1
+            example: {}
+    TradeVolumeResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              currency:
+                type: string
+                example: string
+              volume:
+                type: string
+                example: '0.01'
+              fees:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    fee:
+                      type: string
+                    minfee:
+                      type: string
+                    maxfee:
+                      type: string
+                    nextfee:
+                      type: string
+                    nextvolume:
+                      type: string
+                    tiervolume:
+                      type: string
+                example: {}
+              fees_maker:
+                type: object
+                additionalProperties:
+                  type: object
+                example: {}
+            example: {}
     TradeInfo:
       type: object
       properties:
@@ -1180,36 +1210,6 @@ components:
         posstatus:
           type: string
           example: string
-    LedgerEntry:
-      type: object
-      properties:
-        refid:
-          type: string
-          example: OQCLML-BW3P3-BUCMWZ
-        time:
-          type: number
-          example: '2026-05-30T00:00:00Z'
-        type:
-          type: string
-          example: buy
-        subtype:
-          type: string
-          example: string
-        aclass:
-          type: string
-          example: string
-        asset:
-          type: string
-          example: XBT
-        amount:
-          type: string
-          example: '0.01'
-        fee:
-          type: string
-          example: '0.01'
-        balance:
-          type: string
-          example: '0.01'
   securitySchemes:
     kraken_signature:
       type: apiKey
