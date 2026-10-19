@@ -1,0 +1,12 @@
+{
+ "url": "https://www.kraken.com/openapi.json",
+ "final": "https://www.kraken.com/openapi.json",
+ "status": 200,
+ "content_type": "application/json; charset=utf-8",
+ "bytes": 363445,
+ "sha256": "26138bcdfcfd42c834fb4676ee10a3755246f1e7f332ffec1193a5e36f3fd92b",
+ "fetched_at": "2026-10-19",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "byte-identical",
+ "note": "re-archived: the provider's current document replaced a stale archive (roadmap#793); the old files are in openapi/_superseded/2026-10-19-stale"
+}

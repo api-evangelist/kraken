@@ -1,17 +1,14 @@
 openapi: 3.2.0
 info:
   title: Kraken Market Data API
-  contact:
-    name: Kraken API Support
-    url: https://support.kraken.com/
-  license:
-    name: Kraken Terms of Service
-    url: https://www.kraken.com/legal
-  x-generated-from: documentation
-  x-last-validated: '2026-05-30'
+  x-refined-note:
+  - x-generated-from differs across the merged source definitions and was not carried
+  - x-last-validated differs across the merged source definitions and was not carried
   version: '1.0'
-  description: 'Operations tagged Market Data across 2 of this provider''s published API definitions: kraken-futures-rest-openapi.yml, kraken-spot-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Market Data across 3 of this provider''s published API definitions: kraken-openapi.json, kraken-futures-rest-openapi.yml, kraken-spot-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://api.kraken.com/0
+  description: Production Server
 - url: https://futures.kraken.com/derivatives/api/v3
   description: Kraken Futures production REST endpoint
 - url: https://demo-futures.kraken.com/derivatives/api/v3
@@ -24,8 +21,997 @@ servers:
   description: Kraken Spot REST colocation endpoint (London VIP)
 tags:
 - name: Market Data
-  description: Public market data (no authentication required)
 paths:
+  /public/Time:
+    get:
+      tags:
+      - Market Data
+      summary: Get Server Time
+      description: Get the server's time.
+      operationId: getServerTime
+      security: []
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/time'
+                example:
+                  error: []
+                  result:
+                    unixtime: 1688669448
+                    rfc1123: Thu, 06 Jul 23 18:50:48 +0000
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/SystemStatus:
+    get:
+      tags:
+      - Market Data
+      summary: Get System Status
+      description: 'Get the current system status or trading mode, along with any scheduled
+
+        maintenance or ongoing emergency advisories.
+
+
+        The `upcoming_maintenance` and `emergency` fields are additive — clients that do not read them are unaffected. Both are arrays; empty or absent when no advisory is active.
+
+
+        * `upcoming_maintenance` carries scheduled events that are within 72 hours. An event is removed once its maintenance window starts.
+
+        * `emergency` carries unresolved status page incidents. An incident is removed when it reaches `resolved`.
+
+
+        The top-level `status` field remains driven by the trading engine and is
+
+        independent of both arrays: an advisory describes *why* a state is happening
+
+        or coming — it does not dictate engine state.'
+      operationId: getSystemStatus
+      security: []
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    properties:
+                      status:
+                        type: string
+                        enum:
+                        - online
+                        - maintenance
+                        - cancel_only
+                        - post_only
+                        description: 'Current system status:
+
+                          * `online`  Kraken is operating normally. All order types may be submitted and trades can occur.
+
+                          * `maintenance`  The exchange is offline. No new orders or cancellations may be submitted.
+
+                          * `cancel_only`  Resting (open) orders can be cancelled but no new orders may be submitted. No trades will occur.
+
+                          * `post_only`  Only post-only limit orders can be submitted. Existing orders may still be cancelled. No trades will occur.
+
+                          '
+                      timestamp:
+                        type: string
+                        description: Current timestamp (RFC3339)
+                      upcoming_maintenance:
+                        description: 'Scheduled maintenance advisories within the next 72 hours,
+
+                          ordered by `expected_start_utc` ascending. Empty or absent
+
+                          when no scheduled event is active.
+
+                          '
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/scheduledMaintenanceEvent'
+                      emergency:
+                        description: 'Unresolved incident advisories. Empty or absent when no
+
+                          incident is active.
+
+                          '
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/emergencyEvent'
+                  error:
+                    $ref: '#/components/schemas/error'
+              examples:
+                nominal:
+                  summary: No advisory active
+                  value:
+                    error: []
+                    result:
+                      status: online
+                      timestamp: '2023-07-06T18:52:00Z'
+                      upcoming_maintenance: []
+                      emergency: []
+                scheduledMaintenanceApproaching:
+                  summary: Scheduled maintenance approaching
+                  value:
+                    error: []
+                    result:
+                      status: online
+                      timestamp: '2026-05-11T08:30:00Z'
+                      upcoming_maintenance:
+                      - event_id: 21
+                        title: Scheduled Maintenance - Website
+                        expected_start_utc: '2026-05-11T09:00:00Z'
+                        expected_end_utc: '2026-05-11T10:00:00Z'
+                        time_to_start_s: 1740
+                        phase: approaching_30m
+                        affected_services:
+                        - spot_trading
+                        order_submission: allowed
+                        recommended_action: reduce_activity
+                        cancel_before_utc: '2026-05-11T08:55:00Z'
+                        source_url: https://status.kraken.com/incidents/b7k2r9wqmn41
+                      emergency: []
+                emergencyInProgress:
+                  summary: Emergency in progress
+                  value:
+                    error: []
+                    result:
+                      status: cancel_only
+                      timestamp: '2026-05-08T14:28:00Z'
+                      upcoming_maintenance: []
+                      emergency:
+                      - event_id: 4821
+                        title: Elevated API error rates
+                        incident_status: identified
+                        impact: critical
+                        affected_services:
+                        - spot_ws
+                        - spot_rest
+                        - spot_fix
+                        started_at_utc: '2026-05-08T14:23:11Z'
+                        next_steps:
+                        - applies_to:
+                          - spot_trading
+                          type: expected_restart
+                          expected_at_utc: '2026-05-08T14:30:00Z'
+                        source_url: https://stspg.io/c378t4f7rh0n
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/MaintenanceSchedule:
+    get:
+      tags:
+      - Market Data
+      summary: Get Maintenance Schedule
+      description: 'Get all scheduled maintenance events in the next 7-day window, ordered by
+
+        `expected_start_utc` ascending.
+
+
+        This is the planning view. It differs from the `upcoming_maintenance` array
+
+        on Get System Status,
+
+        which covers only the next 72 hours.
+
+
+        Each entry carries the same fields as an `upcoming_maintenance` entry,
+
+        including the derived `phase` and the `order_submission` /
+
+        `recommended_action` guidance for that phase.
+
+
+        Emergency incidents are not scheduled and therefore never appear here — read
+
+        the `emergency` array on Get System Status instead.'
+      operationId: getMaintenanceSchedule
+      security: []
+      responses:
+        '200':
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      events:
+                        description: 'Scheduled maintenance events in the next 7 days, ordered by
+
+                          `expected_start_utc` ascending. Empty when nothing is scheduled.
+
+                          '
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/scheduledMaintenanceEvent'
+                  error:
+                    $ref: '#/components/schemas/error'
+              examples:
+                nominal:
+                  summary: Two events scheduled
+                  value:
+                    error: []
+                    result:
+                      events:
+                      - event_id: 21
+                        title: Scheduled Maintenance - Website
+                        expected_start_utc: '2026-05-11T09:00:00Z'
+                        expected_end_utc: '2026-05-11T10:00:00Z'
+                        time_to_start_s: 1740
+                        phase: approaching_30m
+                        affected_services:
+                        - spot_trading
+                        order_submission: allowed
+                        recommended_action: reduce_activity
+                        cancel_before_utc: '2026-05-11T08:55:00Z'
+                        source_url: https://status.kraken.com/incidents/b7k2r9wqmn41
+                      - event_id: 34
+                        title: REST API infrastructure upgrade
+                        expected_start_utc: '2026-05-14T02:00:00Z'
+                        expected_end_utc: '2026-05-14T02:30:00Z'
+                        time_to_start_s: 236940
+                        phase: announced
+                        affected_services:
+                        - spot_rest
+                        - spot_ws
+                        order_submission: allowed
+                        recommended_action: continue
+                        cancel_before_utc: '2026-05-14T01:55:00Z'
+                        source_url: https://status.kraken.com/incidents/d3f8h1xpqv62
+                empty:
+                  summary: Nothing scheduled
+                  value:
+                    error: []
+                    result:
+                      events: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/Assets:
+    get:
+      tags:
+      - Market Data
+      summary: Get Asset Info
+      description: Get information about the assets that are available for deposit, withdrawal, trading and earn.
+      operationId: getAssetInfo
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/asset'
+      - $ref: '#/components/parameters/aclass'
+      - $ref: '#/components/parameters/assetVersion'
+      responses:
+        '200':
+          description: Asset info retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/info-2'
+                example:
+                  error: []
+                  result:
+                    XXBT:
+                      aclass: currency
+                      altname: XBT
+                      decimals: 10
+                      display_decimals: 5
+                      collateral_value: 1
+                      status: enabled
+                    ZEUR:
+                      aclass: currency
+                      altname: EUR
+                      decimals: 4
+                      display_decimals: 2
+                      collateral_value: 1
+                      status: enabled
+                    ZUSD:
+                      aclass: currency
+                      altname: USD
+                      decimals: 4
+                      display_decimals: 2
+                      collateral_value: 1
+                      status: enabled
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/AssetPairs:
+    get:
+      tags:
+      - Market Data
+      summary: Get Tradable Asset Pairs
+      description: Get tradable asset pairs
+      operationId: getTradableAssetPairs
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/assetVersion'
+      - in: query
+        name: pair
+        description: Asset pairs to get data for
+        schema:
+          type: string
+        example: BTC/USD,ETH/BTC
+      - in: query
+        name: aclass_base
+        schema:
+          type: string
+          enum:
+          - currency
+          - tokenized_asset
+          default: currency
+        description: "Filters the asset class to retrieve (optional)\n\n  * `currency` = spot currency pairs.\n  * `tokenized_asset` = tokenized asset pairs, i.e. xStocks.\n"
+      - in: query
+        name: info
+        schema:
+          type: string
+          enum:
+          - info
+          - leverage
+          - fees
+          - margin
+          default: info
+        description: "Info to retrieve (optional)\n\n  * `info` = all info\n  * `leverage` = leverage info\n  * `fees` = fees schedule\n  * `margin` = margin info\n"
+      - in: query
+        name: country_code
+        description: Filter for response to only include pairs available in the provided country/region (ISO 3166-1 alpha-2 code).
+        schema:
+          type: string
+        example: GB
+      - in: query
+        name: execution_venue
+        schema:
+          type: string
+          enum:
+          - international
+          - bitnomial_exchange
+          default: international
+        description: "Comma-separated list of execution venues to filter by (optional)\n\n  * `international` = International exchange\n  * `bitnomial_exchange` = Bitnomial exchange\n"
+      responses:
+        '200':
+          description: Tradable asset pairs retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    description: Pair names and their info
+                    type: object
+                    additionalProperties:
+                      $ref: '#/components/schemas/pairs'
+                  error:
+                    $ref: '#/components/schemas/error'
+                example:
+                  error: []
+                  result:
+                    XETHXXBT:
+                      altname: ETHXBT
+                      wsname: ETH/XBT
+                      aclass_base: currency
+                      base: XETH
+                      aclass_quote: currency
+                      quote: XXBT
+                      lot: unit
+                      cost_decimals: 6
+                      pair_decimals: 5
+                      lot_decimals: 8
+                      lot_multiplier: 1
+                      leverage_buy:
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      leverage_sell:
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      fees: []
+                      fees_maker: []
+                      fee_volume_currency: ZUSD
+                      margin_call: 80
+                      margin_stop: 40
+                      ordermin: '0.01'
+                      costmin: '0.00002'
+                      tick_size: '0.00001'
+                      status: online
+                      long_position_limit: 1100
+                      short_position_limit: 400
+                    XXBTZUSD:
+                      altname: XBTUSD
+                      wsname: XBT/USD
+                      aclass_base: currency
+                      base: XXBT
+                      aclass_quote: currency
+                      quote: ZUSD
+                      lot: unit
+                      cost_decimals: 5
+                      pair_decimals: 1
+                      lot_decimals: 8
+                      lot_multiplier: 1
+                      leverage_buy:
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      leverage_sell:
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      fees: []
+                      fees_maker: []
+                      fee_volume_currency: ZUSD
+                      margin_call: 80
+                      margin_stop: 40
+                      ordermin: '0.0001'
+                      costmin: '0.5'
+                      tick_size: '0.1'
+                      status: online
+                      long_position_limit: 250
+                      short_position_limit: 200
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/Ticker:
+    get:
+      summary: Get Ticker Information
+      description: 'Get ticker information for all or requested markets. To clarify usage, note that
+
+        * Today''s prices start at midnight UTC
+
+        * Leaving the pair parameter blank will return tickers for all tradeable assets on Kraken'
+      tags:
+      - Market Data
+      operationId: getTickerInformation
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/wildcard_pair'
+      - $ref: '#/components/parameters/assetVersion'
+      - name: asset_class
+        in: query
+        description: This parameter is required on requests for tokenized pairs, i.e. xStocks. If `asset_class` is provided without the `pair` parameter, all pairs for that asset class will be returned.
+        required: false
+        schema:
+          type: string
+          enum:
+          - tokenized_asset
+          - forex
+          default: forex
+      responses:
+        '200':
+          description: Ticker info retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ticker-2'
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/OHLC:
+    get:
+      summary: Get OHLC Data
+      description: 'Retrieve OHLC market data.
+
+        The last entry in the OHLC array is for the current, not-yet-committed timeframe, and will always be present, regardless of the value of `since`.
+
+        Returns up to 720 of the most recent entries (older data cannot be retrieved, regardless of the value of `since`).'
+      tags:
+      - Market Data
+      operationId: getOHLCData
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/pair'
+      - $ref: '#/components/parameters/assetVersion'
+      - name: interval
+        description: Time frame interval in minutes
+        in: query
+        schema:
+          type: integer
+          default: 1
+          enum:
+          - 1
+          - 5
+          - 15
+          - 30
+          - 60
+          - 240
+          - 1440
+          - 10080
+          - 21600
+        example: 60
+      - name: since
+        in: query
+        description: Return OHLC entries since the given timestamp (intended for incremental updates)
+        schema:
+          type: integer
+        example: 1688671200
+      - $ref: '#/components/parameters/asset_class'
+      responses:
+        '200':
+          description: OHLC data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ohlc'
+                example:
+                  error: []
+                  result:
+                    XXBTZUSD:
+                    - - 1688671200
+                      - '30306.1'
+                      - '30306.2'
+                      - '30305.7'
+                      - '30305.7'
+                      - '30306.1'
+                      - '3.39243896'
+                      - 23
+                    - - 1688671260
+                      - '30304.5'
+                      - '30304.5'
+                      - '30300.0'
+                      - '30300.0'
+                      - '30300.0'
+                      - '4.42996871'
+                      - 18
+                    - - 1688671320
+                      - '30300.3'
+                      - '30300.4'
+                      - '30291.4'
+                      - '30291.4'
+                      - '30294.7'
+                      - '2.13024789'
+                      - 25
+                    - - 1688671380
+                      - '30291.8'
+                      - '30295.1'
+                      - '30291.8'
+                      - '30295.0'
+                      - '30293.8'
+                      - '1.01836275'
+                      - 9
+                    last: 1688672160
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/Depth:
+    get:
+      summary: Get Order Book
+      description: Returns level 2 (L2) order book, which describes the individual price levels in the book with aggregated order quantities at each level.
+      tags:
+      - Market Data
+      operationId: getOrderBook
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/pair'
+      - $ref: '#/components/parameters/assetVersion'
+      - name: count
+        description: Maximum number of asks/bids
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 500
+          default: 100
+        example: 2
+      - $ref: '#/components/parameters/asset_class'
+      responses:
+        '200':
+          description: Order book entries retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/depth'
+                example:
+                  error: []
+                  result:
+                    XXBTZUSD:
+                      asks:
+                      - - '30384.10000'
+                        - '2.059'
+                        - 1688671659
+                      - - '30387.90000'
+                        - '1.500'
+                        - 1688671380
+                      - - '30393.70000'
+                        - '9.871'
+                        - 1688671261
+                      bids:
+                      - - '30297.00000'
+                        - '1.115'
+                        - 1688671636
+                      - - '30296.70000'
+                        - '2.002'
+                        - 1688671674
+                      - - '30289.80000'
+                        - '5.001'
+                        - 1688671673
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/Level3:
+    post:
+      summary: Query L3 Order Book
+      description: 'Retrieve Level3 order book data, which provides individual order information at each price level.
+
+        This includes order IDs and timestamps for each order in the book.
+
+
+        The Level3 endpoint requires authentication.
+
+
+        **API Key Permissions Required:** `Orders and trades - Query open orders & trades`'
+      tags:
+      - Market Data
+      operationId: getLevel3OrderBook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nonce:
+                  $ref: '#/components/schemas/nonce'
+                pair:
+                  type: string
+                  description: Asset pair to get order book for
+                  example: YFI/EUR
+                depth:
+                  type: integer
+                  description: Number of price levels to return per side (bids/asks). Use 0 to return the full book.
+                  enum:
+                  - 0
+                  - 10
+                  - 25
+                  - 100
+                  - 250
+                  - 1000
+                  default: 100
+                  example: 10
+              required:
+              - nonce
+              - pair
+      responses:
+        '200':
+          description: Level 3 order book data retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      pair:
+                        type: string
+                        description: Asset pair
+                      bids:
+                        type: array
+                        description: Bid orders
+                        items:
+                          type: object
+                          properties:
+                            price:
+                              type: string
+                              description: Bid price
+                            qty:
+                              type: string
+                              description: Bid quantity
+                            order_id:
+                              type: string
+                              description: Order ID
+                            timestamp:
+                              type: integer
+                              description: Order timestamp (nanoseconds)
+                      asks:
+                        type: array
+                        description: Ask orders
+                        items:
+                          type: object
+                          properties:
+                            price:
+                              type: string
+                              description: Ask price
+                            qty:
+                              type: string
+                              description: Ask quantity
+                            order_id:
+                              type: string
+                              description: Order ID
+                            timestamp:
+                              type: integer
+                              description: Order timestamp (nanoseconds)
+                  error:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/error'
+              example:
+                error: []
+                result:
+                  pair: YFI/EUR
+                  bids:
+                  - price: '3062.00000'
+                    qty: '0.29665800'
+                    order_id: O5KJU4-IEQTM-NDMS6W
+                    timestamp: 1765622008594292000
+                  - price: '3062.00000'
+                    qty: '0.13917400'
+                    order_id: OERRY6-MXYER-6EQKNY
+                    timestamp: 1765622011396903000
+                  asks:
+                  - price: '3066.00000'
+                    qty: '0.00278335'
+                    order_id: ORAWGV-N5L4J-LBA3WH
+                    timestamp: 1765622008499456000
+                  - price: '3067.00000'
+                    qty: '0.13902210'
+                    order_id: OZWNZS-QE3G6-ZPKZUT
+                    timestamp: 1765622021013826600
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/GroupedBook:
+    get:
+      summary: Get Grouped Order Book
+      description: 'The GroupedBook endpoint aggregates the volume in the order book over a specified tick range.
+
+        It provides a summary of liquidity deep into the book, useful for user interface display.
+
+
+        Bids and asks between grouped price levels are accumulated to the nearest passive level (asks rounded up, bids down).'
+      tags:
+      - Market Data
+      operationId: getGroupedOrderBook
+      security: []
+      parameters:
+      - in: query
+        name: pair
+        required: true
+        schema:
+          type: string
+        description: Asset pair to get order book for
+        example: BTC/USD
+      - in: query
+        name: depth
+        schema:
+          type: integer
+          enum:
+          - 10
+          - 25
+          - 100
+          - 250
+          - 1000
+          default: 10
+        description: The number of price levels to return per side (bids/asks).
+        example: 10
+      - in: query
+        name: grouping
+        schema:
+          type:
+          - integer
+          - 'null'
+          format: int32
+          enum:
+          - 1
+          - 5
+          - 10
+          - 25
+          - 50
+          - 100
+          - 250
+          - 500
+          - 1000
+          default: 1
+        description: Specifies how many tick levels should be within each price level. Bids and asks between grouped price levels are accumulated to the nearest passive level (asks rounded up, bids down).
+        example: 1000
+      responses:
+        '200':
+          description: Grouped order book data retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      pair:
+                        type: string
+                        description: Asset pair
+                      grouping:
+                        type: integer
+                        description: The grouping value used
+                      bids:
+                        type: array
+                        description: Aggregated bid levels
+                        items:
+                          type: object
+                          properties:
+                            price:
+                              type: string
+                              description: Grouped price level
+                            qty:
+                              type: string
+                              description: Aggregated quantity at this price level
+                      asks:
+                        type: array
+                        description: Aggregated ask levels
+                        items:
+                          type: object
+                          properties:
+                            price:
+                              type: string
+                              description: Grouped price level
+                            qty:
+                              type: string
+                              description: Aggregated quantity at this price level
+                  error:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/error'
+              example:
+                error: []
+                result:
+                  pair: BTC/USD
+                  grouping: 1000
+                  bids:
+                  - price: '90400.00000'
+                    qty: '19.83057746'
+                  - price: '90300.00000'
+                    qty: '45.35073006'
+                  - price: '90200.00000'
+                    qty: '35.33199856'
+                  - price: '90100.00000'
+                    qty: '32.40807838'
+                  - price: '90000.00000'
+                    qty: '46.00445468'
+                  - price: '89900.00000'
+                    qty: '22.71486458'
+                  - price: '89800.00000'
+                    qty: '11.55482018'
+                  - price: '89700.00000'
+                    qty: '13.77715743'
+                  - price: '89600.00000'
+                    qty: '27.72185770'
+                  - price: '89500.00000'
+                    qty: '14.09383330'
+                  asks:
+                  - price: '90500.00000'
+                    qty: '38.96185061'
+                  - price: '90600.00000'
+                    qty: '55.96402032'
+                  - price: '90700.00000'
+                    qty: '34.64783055'
+                  - price: '90800.00000'
+                    qty: '25.26797469'
+                  - price: '90900.00000'
+                    qty: '20.48922196'
+                  - price: '91000.00000'
+                    qty: '14.87773628'
+                  - price: '91100.00000'
+                    qty: '18.99740224'
+                  - price: '91200.00000'
+                    qty: '19.00592802'
+                  - price: '91300.00000'
+                    qty: '4.05573682'
+                  - price: '91400.00000'
+                    qty: '1.60667017'
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/Trades:
+    get:
+      summary: Get Recent Trades
+      description: Returns the last 1000 trades by default
+      tags:
+      - Market Data
+      operationId: getRecentTrades
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/pair'
+      - $ref: '#/components/parameters/assetVersion'
+      - name: since
+        in: query
+        description: Return trade data since given timestamp
+        schema:
+          type: string
+        example: '1616663618'
+      - name: count
+        in: query
+        description: Return specific number of trades, up to 1000
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 1000
+          default: 1000
+        example: 2
+      - $ref: '#/components/parameters/asset_class'
+      responses:
+        '200':
+          description: Trade data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/trades'
+                example:
+                  error: []
+                  result:
+                    XXBTZUSD:
+                    - - '30243.40000'
+                      - '0.34507674'
+                      - 1688669597.8277369
+                      - b
+                      - m
+                      - ''
+                      - 61044952
+                    - - '30243.30000'
+                      - '0.00376960'
+                      - 1688669598.2804112
+                      - s
+                      - l
+                      - ''
+                      - 61044953
+                    - - '30243.30000'
+                      - '0.01235716'
+                      - 1688669602.698379
+                      - s
+                      - m
+                      - ''
+                      - 61044956
+                    last: '1688671969993150842'
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /public/Spread:
+    get:
+      summary: Get Recent Spreads
+      description: Returns the last ~200 top-of-book spreads for a given pair
+      tags:
+      - Market Data
+      operationId: getRecentSpreads
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/pair'
+      - $ref: '#/components/parameters/assetVersion'
+      - name: since
+        in: query
+        description: Returns spread data since given timestamp. Optional, intended for incremental updates within available dataset (does not contain all historical spreads).
+        schema:
+          type: integer
+        example: 1678219570
+      - $ref: '#/components/parameters/asset_class'
+      responses:
+        '200':
+          description: Spread data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/spread-2'
+                example:
+                  error: []
+                  result:
+                    XXBTZUSD:
+                    - - 1688671834
+                      - '30292.10000'
+                      - '30297.50000'
+                    - - 1688671834
+                      - '30292.10000'
+                      - '30296.70000'
+                    - - 1688671834
+                      - '30292.70000'
+                      - '30296.70000'
+                    last: 1688672106
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
   /instruments:
     get:
       operationId: getInstruments
@@ -250,7 +1236,7 @@ paths:
       description: Kraken Futures colocation endpoint (London VIP)
   /0/public/Time:
     get:
-      operationId: getServerTime
+      operationId: get0PublicTime
       summary: Kraken Get Server Time
       description: Returns the server's current Unix and human-readable time. Use to synchronize client clocks.
       tags:
@@ -272,6 +1258,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getServerTime
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -279,7 +1267,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/SystemStatus:
     get:
-      operationId: getSystemStatus
+      operationId: get0PublicSystemStatus
       summary: Kraken Get System Status
       description: Returns the current system status (online, maintenance, cancel_only, post_only) and the last status change timestamp.
       tags:
@@ -301,6 +1289,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getSystemStatus
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -308,7 +1298,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/Assets:
     get:
-      operationId: getAssetInfo
+      operationId: get0PublicAssets
       summary: Kraken Get Asset Info
       description: Returns information about supported assets including precision, display decimals, collateral value, and status.
       tags:
@@ -345,6 +1335,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getAssetInfo
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -352,7 +1344,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/AssetPairs:
     get:
-      operationId: getTradableAssetPairs
+      operationId: get0PublicAssetPairs
       summary: Kraken Get Tradable Asset Pairs
       description: Returns metadata for every tradable currency pair (base, quote, fee schedule, lot decimals, ordermin).
       tags:
@@ -394,6 +1386,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getTradableAssetPairs
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -401,7 +1395,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/Ticker:
     get:
-      operationId: getTickerInformation
+      operationId: get0PublicTicker
       summary: Kraken Get Ticker Information
       description: Returns ticker data (ask, bid, last trade, 24h volume, vwap, high, low, opening price) for one or more pairs.
       tags:
@@ -432,6 +1426,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getTickerInformation
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -439,7 +1435,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/OHLC:
     get:
-      operationId: getOHLCData
+      operationId: get0PublicOHLC
       summary: Kraken Get OHLC Data
       description: Returns OHLC (open/high/low/close/volume/count) candles for a pair at a chosen interval, optionally bounded by a since cursor.
       tags:
@@ -484,6 +1480,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getOHLCData
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -491,7 +1489,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/Depth:
     get:
-      operationId: getOrderBook
+      operationId: get0PublicDepth
       summary: Kraken Get Order Book
       description: Returns the order book (bids and asks) for a pair to a requested depth.
       tags:
@@ -530,6 +1528,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getOrderBook
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -537,7 +1537,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/Trades:
     get:
-      operationId: getRecentTrades
+      operationId: get0PublicTrades
       summary: Kraken Get Recent Trades
       description: Returns recent trades for a pair, optionally since a cursor.
       tags:
@@ -580,6 +1580,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getRecentTrades
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -587,7 +1589,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/public/Spread:
     get:
-      operationId: getRecentSpreads
+      operationId: get0PublicSpread
       summary: Kraken Get Recent Spreads
       description: Returns recent bid/ask spread snapshots for a pair, optionally since a cursor.
       tags:
@@ -622,13 +1624,715 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: getRecentSpreads
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
     - url: https://colo-london.vip-api.kraken.com
       description: Kraken Spot REST colocation endpoint (London VIP)
 components:
+  parameters:
+    asset:
+      in: query
+      name: asset
+      schema:
+        type: string
+      description: Comma delimited list of assets to get info on (optional, default all available assets)
+      example: XBT,ETH
+    aclass:
+      in: query
+      name: aclass
+      schema:
+        type: string
+        enum:
+        - currency
+        - tokenized_asset
+        default: currency
+      description: "Filters the asset class to retrieve (optional)\n  * `currency` = spot currency pairs.\n  * `tokenized_asset` = xStocks.\n"
+    assetVersion:
+      in: query
+      name: assetVersion
+      required: false
+      schema:
+        type: integer
+        enum:
+        - 1
+      description: 'Controls whether response keys and asset identifier fields use Kraken''s internal names or display names.
+
+
+        * Omitted (default): internal names are used. Asset keys use legacy `X`/`Z`-prefixed format (`XXBT`, `ZUSD`). Pair keys use the internal format (`XXBTZUSD`). Asset identifier fields (`base`, `quote`, `fee_volume_currency`) also use internal names.
+
+        * `assetVersion=1`: display names are used. Asset keys become their canonical display names (`BTC`, `USD`). Pair keys become the slash-separated display format (`BTC/USD`). On `/public/AssetPairs`, the `base`, `quote`, and `fee_volume_currency` fields also switch to display names.
+
+
+        Only `assetVersion=1` is currently supported. The `altname` and `wsname` fields are not affected by this parameter.
+
+        '
+    wildcard_pair:
+      in: query
+      name: pair
+      description: 'Asset pair to get data for (optional, default: all tradeable exchange pairs)'
+      required: false
+      schema:
+        type: string
+      example: XBTUSD
+    asset_class:
+      name: asset_class
+      in: query
+      description: This parameter is required on requests for non-crypto pairs, i.e. use `tokenized_asset` for xStocks.
+      required: false
+      schema:
+        type: string
+        enum:
+        - tokenized_asset
+    pair:
+      in: query
+      name: pair
+      description: Asset pair to get data for
+      required: true
+      schema:
+        type: string
+      example: XBTUSD
   schemas:
+    trades:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: pair
+            $ref: '#/components/schemas/trade'
+          properties:
+            last:
+              type: string
+              description: ID to be used as since when polling for new trade data
+        error:
+          $ref: '#/components/schemas/error'
+    nonce:
+      description: Nonce used in construction of `API-Sign` header
+      type: integer
+      format: int64
+    tickData:
+      title: TickData
+      description: 'Array of tick data arrays
+
+        `[int <time>, string <open>, string <high>, string <low>, string <close>, string <vwap>, string <volume>, int <count>]`
+
+        '
+      type: array
+      items:
+        type: array
+        minItems: 8
+        maxItems: 8
+        items:
+          oneOf:
+          - type: string
+            title: string
+          - type: integer
+            title: integer
+        example:
+        - 1548115200
+        - '3533.4'
+        - '3543.7'
+        - '3530.7'
+        - '3539.4'
+        - '3539.8'
+        - '83.09287787'
+        - 232
+    time:
+      description: Success response
+      type: object
+      properties:
+        result:
+          title: ServerTime
+          type: object
+          properties:
+            unixtime:
+              description: Unix timestamp
+              type: integer
+            rfc1123:
+              description: RFC 1123 time format
+              type: string
+        error:
+          $ref: '#/components/schemas/error'
+    spread:
+      title: SpreadData
+      description: 'Array of spread entries
+
+        `[int <time>, string <bid>, string <ask>]`
+
+        '
+      type: array
+      items:
+        type: array
+        items:
+          oneOf:
+          - type: string
+            title: string
+          - type: integer
+            title: integer
+          example:
+          - 1548120550
+          - '3538.70000'
+          - '3541.50000'
+    ticker-2:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: pair
+            $ref: '#/components/schemas/ticker'
+        error:
+          $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          XXBTZUSD:
+            a:
+            - '30300.10000'
+            - '1'
+            - '1.000'
+            b:
+            - '30300.00000'
+            - '1'
+            - '1.000'
+            c:
+            - '30303.20000'
+            - '0.00067643'
+            v:
+            - '4083.67001100'
+            - '4412.73601799'
+            p:
+            - '30706.77771'
+            - '30689.13205'
+            t:
+            - 34619
+            - 38907
+            l:
+            - '29868.30000'
+            - '29868.30000'
+            h:
+            - '31631.00000'
+            - '31631.00000'
+            o: '30502.80000'
+    ohlc:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: pair
+            $ref: '#/components/schemas/tickData'
+          properties:
+            last:
+              type: integer
+              description: ID to be used as since when polling for new, committed OHLC data
+        error:
+          $ref: '#/components/schemas/error'
+    nextStep:
+      description: 'Forecast operational action during an emergency, published by Kraken
+
+        operations. Absent when no reliable forecast exists.
+
+        '
+      type: object
+      properties:
+        applies_to:
+          description: Kraken surfaces this step applies to.
+          type: array
+          items:
+            $ref: '#/components/schemas/affectedService'
+        type:
+          description: 'Nature of the forecast action:
+
+            * `expected_restart`  service restart
+
+            * `expected_cancel_only`  transition to cancel-only
+
+            * `expected_post_only`  transition to post-only
+
+            * `expected_online`  return to normal operation
+
+            '
+          type: string
+          enum:
+          - expected_restart
+          - expected_cancel_only
+          - expected_post_only
+          - expected_online
+        expected_at_utc:
+          description: Forecast time of the action.
+          type: string
+          format: date-time
+    info-2:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: asset
+            $ref: '#/components/schemas/info'
+        error:
+          $ref: '#/components/schemas/error'
+    affectedService:
+      description: 'Kraken surface affected by a maintenance or emergency advisory. Derived from
+
+        the status page components attached to the event.
+
+        '
+      type: string
+      enum:
+      - spot_ws
+      - spot_rest
+      - spot_fix
+      - spot_trading
+      - futures_ws
+      - futures_rest
+      - futures_fix
+      - futures_trading
+      - all
+    pairs:
+      title: AssetPair
+      description: Trading Asset Pair
+      type: object
+      x-additionalPropertiesName: pair
+      properties:
+        altname:
+          description: Alternate pair name
+          type: string
+        wsname:
+          description: WebSocket pair name (if available)
+          type: string
+        aclass_base:
+          description: Asset class of base component
+          type: string
+        base:
+          description: Asset ID of base component
+          type: string
+        aclass_quote:
+          description: Asset class of quote component
+          type: string
+        quote:
+          description: Asset ID of quote component
+          type: string
+        execution_venue:
+          description: Execution venue where the order book for this pair is listed
+          type: string
+          enum:
+          - international
+          - bitnomial_exchange
+        lot:
+          description: Volume lot size
+          type: string
+          deprecated: true
+        pair_decimals:
+          description: Number of decimal places for prices in this pair
+          type: integer
+        cost_decimals:
+          description: Number of decimal places for cost of trades in pair (quote asset terms)
+          type: integer
+        lot_decimals:
+          description: Number of decimal places for volume (base asset terms)
+          type: integer
+        lot_multiplier:
+          description: Amount to multiply lot volume by to get currency volume
+          type: integer
+        leverage_buy:
+          description: Array of leverage amounts available when buying
+          type: array
+          items:
+            type: integer
+        leverage_sell:
+          description: Array of leverage amounts available when selling
+          type: array
+          items:
+            type: integer
+        fees:
+          description: '**DEPRECATED** as of 8 September 2026. Always returns an empty array (`[]`).
+
+
+            Previously the taker fee schedule, as an array of `[<volume>, <percent fee>]` tuples. The field remains in the response for backwards compatibility but no longer carries any fee data.
+
+            '
+          deprecated: true
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+          example: []
+        fees_maker:
+          description: '**DEPRECATED** as of 8 September 2026. Always returns an empty array (`[]`).
+
+
+            Previously the maker fee schedule, as an array of `[<volume>, <percent fee>]` tuples, for pairs on a maker/taker schedule. The field remains in the response for backwards compatibility but no longer carries any fee data.
+
+            '
+          deprecated: true
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+          example: []
+        fee_volume_currency:
+          description: Volume discount currency
+          type: string
+        margin_call:
+          description: Margin call level
+          type: integer
+        margin_stop:
+          description: Stop-out/liquidation margin level
+          type: integer
+        ordermin:
+          description: Minimum order size (in terms of base currency)
+          type: string
+        costmin:
+          description: Minimum order cost (in terms of quote currency)
+          type: string
+        tick_size:
+          description: Minimum increment between valid price levels
+          type: string
+        status:
+          description: 'Status of asset. Possible values: `online`, `cancel_only`, `post_only`, `limit_only`, `reduce_only`.'
+          type: string
+        long_position_limit:
+          description: Maximum long margin position size (in terms of base currency)
+          type: integer
+        short_position_limit:
+          description: Maximum short margin position size (in terms of base currency)
+          type: integer
+    emergencyEvent:
+      description: 'Unplanned incident advisory, relayed from the Kraken status page.
+
+
+        The object explains why a state is happening or coming — the engine''s own
+
+        state is carried by the top-level `status` field. Emergencies carry no
+
+        `order_submission` or `recommended_action`: derive guidance from
+
+        `incident_status`, `next_steps` and `status`.
+
+        '
+      type: object
+      properties:
+        event_id:
+          description: Identifier for the incident, stable for its lifetime.
+          type: integer
+        title:
+          description: Human-readable incident title, as published on the status page.
+          type: string
+        incident_status:
+          description: 'Incident lifecycle state, relayed 1:1 from the status page:
+
+            * `investigating`  cause not yet known
+
+            * `identified`  cause known, remediation under way
+
+            * `monitoring`  remediation applied, under observation
+
+            '
+          type: string
+          enum:
+          - investigating
+          - identified
+          - monitoring
+        impact:
+          description: Severity as published on the status page.
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        affected_services:
+          description: Kraken surfaces covered by this incident.
+          type: array
+          items:
+            $ref: '#/components/schemas/affectedService'
+        started_at_utc:
+          description: When the incident was opened.
+          type: string
+          format: date-time
+        next_steps:
+          description: 'Forecast operational actions, ordered by `expected_at_utc` ascending.
+
+            Empty when no forecast has been published.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/nextStep'
+        source_url:
+          description: Permalink to the incident on the Kraken status page.
+          type: string
+    info:
+      title: AssetInfo
+      description: Asset Info
+      type: object
+      properties:
+        aclass:
+          description: Asset Class
+          type: string
+        altname:
+          description: Alternate name
+          type: string
+        decimals:
+          description: Number of decimal places for record keeping amounts of this asset
+          type: integer
+        display_decimals:
+          description: Number of decimal places shown for display purposes in frontends
+          type: integer
+        collateral_value:
+          description: Valuation as margin collateral (if applicable)
+          type: number
+        status:
+          description: 'Status of asset. Possible values: `enabled`, `deposit_only`, `withdrawal_only`, `funding_temporarily_disabled`.'
+          type: string
+        margin_rate:
+          description: Interest rate charged when borrowing this asset for margin trading.
+          type: number
+    error:
+      type: array
+      items:
+        description: Kraken API error
+        type: string
+        example: EGeneral:Invalid arguments
+    spread-2:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: pair
+            $ref: '#/components/schemas/spread'
+          properties:
+            last:
+              type: integer
+              description: ID to be used as since when polling for new spread data
+        error:
+          $ref: '#/components/schemas/error'
+    trade:
+      title: TickData
+      description: 'Array of trade entries
+
+        `[<price>, <volume>, <time>, <buy/sell>, <market/limit>, <miscellaneous>, <trade_id>]`
+
+        '
+      type: array
+      items:
+        type: array
+        items:
+          oneOf:
+          - type: string
+            title: string
+          - type: number
+            title: number
+          example:
+          - '1205.00000'
+          - '2.28253070'
+          - 1668714225.5189962
+          - b
+          - l
+          - ''
+          - 41557503
+    orderBookEntry:
+      title: OrderBook
+      description: Asset Pair Order Book Entries
+      type: object
+      properties:
+        asks:
+          description: Ask side array of entries `[<price>, <volume>, <timestamp>]`
+          type: array
+          items:
+            type: array
+            minItems: 3
+            maxItems: 3
+            items:
+              oneOf:
+              - type: string
+                title: string
+              - type: integer
+                title: integer
+            example:
+            - '3539.90000'
+            - '0.801'
+            - 1548119951
+        bids:
+          description: Bid side array of entries `[<price>, <volume>, <timestamp>]`
+          type: array
+          items:
+            type: array
+            minItems: 3
+            maxItems: 3
+            items:
+              oneOf:
+              - type: string
+                title: string
+              - type: integer
+                title: integer
+            example:
+            - '3538.70000'
+            - '0.798'
+            - 1548119924
+    scheduledMaintenanceEvent:
+      description: Scheduled maintenance event.
+      type: object
+      properties:
+        event_id:
+          description: Identifier for the event, stable across phase transitions.
+          type: integer
+        title:
+          description: Human-readable event title, as published on the status page.
+          type: string
+        expected_start_utc:
+          description: Start of the maintenance window.
+          type: string
+          format: date-time
+        expected_end_utc:
+          description: Expected end of the maintenance window.
+          type: string
+          format: date-time
+        time_to_start_s:
+          description: 'Seconds until `expected_start_utc`, evaluated when the response is served.
+
+            Responses are cacheable, so clients needing a live countdown should derive
+
+            it from `expected_start_utc` rather than re-reading this field.
+
+            '
+          type: integer
+        phase:
+          description: 'Approach phase, derived from `expected_start_utc - now()`:
+
+            * `announced`  event first published
+
+            * `reminder_24h`  24 hours out
+
+            * `approaching_30m`  30 minutes out
+
+            * `imminent_5m`  5 minutes out
+
+            * `final_warning_30s`  30 seconds out
+
+            '
+          type: string
+          enum:
+          - announced
+          - reminder_24h
+          - approaching_30m
+          - imminent_5m
+          - final_warning_30s
+        affected_services:
+          description: Kraken surfaces covered by this event.
+          type: array
+          items:
+            $ref: '#/components/schemas/affectedService'
+        order_submission:
+          description: 'Whether order submission is advisable in the current phase. Guidance
+
+            only — the engine''s own state is carried by the top-level `status` field.
+
+
+            `allowed` in `announced`, `reminder_24h` and `approaching_30m`;
+
+            `discouraged` in `imminent_5m`; `blocked` in `final_warning_30s`.
+
+            '
+          type: string
+          enum:
+          - allowed
+          - discouraged
+          - blocked
+        recommended_action:
+          description: 'Suggested client behaviour for the current phase.
+
+
+            `continue` in `announced` and `reminder_24h`; `reduce_activity` in
+
+            `approaching_30m`; `cancel_open_orders` in `imminent_5m`;
+
+            `stop_new_orders` in `final_warning_30s`.
+
+            '
+          type: string
+          enum:
+          - continue
+          - reduce_activity
+          - cancel_open_orders
+          - stop_new_orders
+        cancel_before_utc:
+          description: 'Deadline by which open orders should be cancelled: `expected_start_utc`
+
+            minus 5 minutes while the event is scheduled; absent otherwise.
+
+            '
+          type: string
+          format: date-time
+        source_url:
+          description: Permalink to the event on the Kraken status page.
+          type: string
+    depth:
+      type: object
+      properties:
+        result:
+          type: object
+          additionalProperties:
+            x-additionalPropertiesName: pair
+            $ref: '#/components/schemas/orderBookEntry'
+        error:
+          $ref: '#/components/schemas/error'
+    ticker:
+      title: AssetTickerInfo
+      description: Asset Ticker Info
+      type: object
+      properties:
+        a:
+          description: Ask `[<price>, <whole lot volume>, <lot volume>]`
+          type: array
+          items:
+            type: string
+        b:
+          description: Bid `[<price>, <whole lot volume>, <lot volume>]`
+          type: array
+          items:
+            type: string
+        c:
+          description: Last trade closed `[<price>, <lot volume>]`
+          type: array
+          items:
+            type: string
+        v:
+          description: Volume `[<today>, <last 24 hours>]`
+          type: array
+          items:
+            type: string
+        p:
+          description: Volume weighted average price `[<today>, <last 24 hours>]`
+          type: array
+          items:
+            type: string
+        t:
+          description: Number of trades `[<today>, <last 24 hours>]`
+          type: array
+          items:
+            type: integer
+        l:
+          description: Low `[<today>, <last 24 hours>]`
+          type: array
+          items:
+            type: string
+        h:
+          description: High `[<today>, <last 24 hours>]`
+          type: array
+          items:
+            type: string
+        o:
+          description: Today's opening price
+          type: string
     BaseEnvelope:
       type: object
       properties:
@@ -645,6 +2349,16 @@ components:
         error:
           type: string
           example: string
+    InstrumentsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope'
+      - type: object
+        properties:
+          instruments:
+            type: array
+            items:
+              $ref: '#/components/schemas/Instrument'
+            example: []
     Instrument:
       type: object
       properties:
@@ -687,16 +2401,6 @@ components:
         maxRelativeFundingRate:
           type: number
           example: 0.01
-    InstrumentsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope'
-      - type: object
-        properties:
-          instruments:
-            type: array
-            items:
-              $ref: '#/components/schemas/Instrument'
-            example: []
     TickersResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope'
@@ -781,103 +2485,6 @@ components:
               - type: integer
             description: Map of pair → candle array, plus `last` cursor.
             example: {}
-    AssetPairsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/AssetPair'
-            example: {}
-    BaseEnvelope_2:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
-    AssetInfo:
-      type: object
-      properties:
-        aclass:
-          type: string
-          example: string
-        altname:
-          type: string
-          example: string
-        decimals:
-          type: integer
-          example: 1
-        display_decimals:
-          type: integer
-          example: 1
-        collateral_value:
-          type: number
-          example: 0.01
-        status:
-          type: string
-          example: string
-    RecentSpreadsResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              oneOf:
-              - type: array
-                items:
-                  type: array
-                  items: {}
-              - type: integer
-            example: {}
-    OrderBook:
-      type: object
-      properties:
-        asks:
-          type: array
-          items:
-            type: array
-            items: {}
-            description: '[price, volume, timestamp]'
-          example: []
-        bids:
-          type: array
-          items:
-            type: array
-            items: {}
-          example: []
-    SystemStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              status:
-                type: string
-                enum:
-                - online
-                - maintenance
-                - cancel_only
-                - post_only
-                example: online
-              timestamp:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
-            example: {}
     ServerTimeResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
@@ -908,7 +2515,23 @@ components:
                   items: {}
               - type: string
             example: {}
-    TickerResponse:
+    OrderBook:
+      type: object
+      properties:
+        asks:
+          type: array
+          items:
+            type: array
+            items: {}
+            description: '[price, volume, timestamp]'
+          example: []
+        bids:
+          type: array
+          items:
+            type: array
+            items: {}
+          example: []
+    AssetInfoResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -916,8 +2539,22 @@ components:
           result:
             type: object
             additionalProperties:
-              $ref: '#/components/schemas/Ticker_2'
+              $ref: '#/components/schemas/AssetInfo'
             example: {}
+    BaseEnvelope_2:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
     OrderBookResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
@@ -927,6 +2564,37 @@ components:
             type: object
             additionalProperties:
               $ref: '#/components/schemas/OrderBook'
+            example: {}
+    AssetPairsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/AssetPair'
+            example: {}
+    SystemStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              status:
+                type: string
+                enum:
+                - online
+                - maintenance
+                - cancel_only
+                - post_only
+                example: online
+              timestamp:
+                type: string
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
             example: {}
     AssetPair:
       type: object
@@ -1003,6 +2671,52 @@ components:
         status:
           type: string
           example: string
+    AssetInfo:
+      type: object
+      properties:
+        aclass:
+          type: string
+          example: string
+        altname:
+          type: string
+          example: string
+        decimals:
+          type: integer
+          example: 1
+        display_decimals:
+          type: integer
+          example: 1
+        collateral_value:
+          type: number
+          example: 0.01
+        status:
+          type: string
+          example: string
+    RecentSpreadsResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              oneOf:
+              - type: array
+                items:
+                  type: array
+                  items: {}
+              - type: integer
+            example: {}
+    TickerResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/Ticker_2'
+            example: {}
     Ticker_2:
       type: object
       properties:
@@ -1058,17 +2772,27 @@ components:
           type: string
           description: Today's opening price
           example: string
-    AssetInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            additionalProperties:
-              $ref: '#/components/schemas/AssetInfo'
-            example: {}
   securitySchemes:
+    API-Key:
+      type: apiKey
+      description: The "API-Key" header should contain your API key.
+      name: API-Key
+      in: header
+    API-Sign:
+      type: apiKey
+      description: Authenticated requests should be signed with the "API-Sign" header, using a signature generated with your private key, nonce, encoded payload, and URI path.
+      name: API-Sign
+      in: header
+    API-Nonce:
+      type: apiKey
+      description: The "API-Nonce" header should contain an always-increasing 64-bit integer, most commonly a Unix timestamp in milliseconds. Each request must use a nonce greater than the nonce of the previous request signed with the same API key.
+      name: API-Nonce
+      in: header
+    API-OTP:
+      type: apiKey
+      description: The "API-OTP" header should contain your two-factor authentication one-time password. Required only if 2FA is configured for the API key.
+      name: API-OTP
+      in: header
     futures_signature:
       type: apiKey
       in: header
@@ -1080,5 +2804,19 @@ components:
       name: API-Key
       description: 'Kraken signs private REST requests with two headers: `API-Key` (your public API key) and `API-Sign` (HMAC-SHA512 of the URI path plus SHA256(nonce + POST body), keyed by the base64-decoded secret). All private endpoints must include an incrementing `nonce` in the POST body.'
 x-refined-from:
+- kraken-openapi.json
 - kraken-futures-rest-openapi.yml
 - kraken-spot-rest-openapi.yml
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - Market Data
+  - Transparency
+- name: Authenticated Endpoints
+  tags:
+  - Account Data
+  - Trading
+  - funding-beta
+  - Funding
+  - Subaccounts
+  - Earn

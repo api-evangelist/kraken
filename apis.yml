@@ -576,6 +576,26 @@ apis:
     url: https://docs.kraken.com/api/docs/category/futures-api/
   - type: Authentication
     url: https://docs.kraken.com/api/docs/guides/futures-api-auth
+- aid: kraken:kraken-funding-beta-api
+  name: Kraken Funding Beta API
+  description: The funding-beta API from Kraken — 12 operation(s) for funding-beta.
+  humanURL: https://docs.kraken.com/api/docs/websocket-v2/ping
+  baseURL: wss://ws.kraken.com/v2
+  tags:
+  - funding-beta
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-funding-beta-api-openapi.yml
+- aid: kraken:kraken-transparency-api
+  name: Kraken Transparency API
+  description: The Transparency API from Kraken — 2 operation(s) for transparency.
+  humanURL: https://docs.kraken.com/api/docs/websocket-v2/ping
+  baseURL: wss://ws.kraken.com/v2
+  tags:
+  - Transparency
+  properties:
+  - type: OpenAPI
+    url: openapi/kraken-transparency-api-openapi.yml
 common:
 - type: AgenticAccess
   url: agentic-access/kraken-agentic-access.yml

@@ -1,17 +1,14 @@
 openapi: 3.2.0
 info:
   title: Kraken Trading API
-  contact:
-    name: Kraken API Support
-    url: https://support.kraken.com/
-  license:
-    name: Kraken Terms of Service
-    url: https://www.kraken.com/legal
-  x-generated-from: documentation
-  x-last-validated: '2026-05-30'
+  x-refined-note:
+  - x-generated-from differs across the merged source definitions and was not carried
+  - x-last-validated differs across the merged source definitions and was not carried
   version: '1.0'
-  description: 'Operations tagged Trading across 2 of this provider''s published API definitions: kraken-futures-rest-openapi.yml, kraken-spot-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
+  description: 'Operations tagged Trading across 3 of this provider''s published API definitions: kraken-openapi.json, kraken-futures-rest-openapi.yml, kraken-spot-rest-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
+- url: https://api.kraken.com/0
+  description: Production Server
 - url: https://futures.kraken.com/derivatives/api/v3
   description: Kraken Futures production REST endpoint
 - url: https://demo-futures.kraken.com/derivatives/api/v3
@@ -24,8 +21,391 @@ servers:
   description: Kraken Spot REST colocation endpoint (London VIP)
 tags:
 - name: Trading
-  description: Order placement, edit, and cancellation
 paths:
+  /private/AddOrder:
+    post:
+      summary: Add Order
+      description: 'Place a new order.
+
+
+        **Note**: See the AssetPairs endpoint for details on the available trading pairs, their price and quantity precisions, order minimums, available leverage, etc.
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders`'
+      tags:
+      - Trading
+      operationId: addOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/add'
+      responses:
+        '200':
+          description: Order added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/add-2'
+              examples:
+                Limit with conditional stop-loss:
+                  value:
+                    error: []
+                    result:
+                      descr:
+                        order: buy 2.12340000 XBTUSD @ limit 25000.1 with 2:1 leverage
+                        close: close position @ stop loss 22000.0 -> limit 21000.0
+                      txid:
+                      - OUF4EM-FRGI2-MQMWZD
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/AmendOrder:
+    post:
+      summary: Amend Order
+      description: 'The amend request enables clients to modify the order parameters in-place without the need to cancel the existing order and create a new one.
+
+
+        * The order identifiers assigned by Kraken and/or client will stay the same.
+
+        * Queue priority in the order book will be maintained where possible.
+
+        * If an amend request will reduce the order quantity below the existing filled quantity, the remaining quantity will be cancelled.
+
+
+        For more detail, see amend transaction guide.
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` or `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: amendOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/amend'
+      responses:
+        '200':
+          description: 'A successful amend request will return the unique Kraken amend identifier.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/amend-2'
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/CancelOrder:
+    post:
+      summary: Cancel Order
+      description: 'Cancel a particular open order (or set of open orders) by `txid`, `userref` or `cl_ord_id`
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` or `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: cancelOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cancel'
+      responses:
+        '200':
+          description: Open order cancelled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cancel-2'
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/CancelAll:
+    post:
+      summary: Cancel All Orders
+      description: 'Cancel all open orders
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` or `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: cancelAllOrders
+      requestBody:
+        $ref: '#/components/requestBodies/nonceOnly'
+      responses:
+        '200':
+          description: Open orders cancelled.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cancel-2'
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/CancelAllOrdersAfter:
+    post:
+      summary: Cancel All Orders After X
+      tags:
+      - Trading
+      operationId: cancelAllOrdersAfter
+      description: 'CancelAllOrdersAfter provides a "Dead Man''s Switch" mechanism to protect the client from network malfunction, extreme latency or unexpected matching engine downtime. The client can send a request with a timeout (in seconds), that will start a countdown timer which will cancel *all* client orders when the timer expires. The client has to keep sending new requests to push back the trigger time, or deactivate the mechanism by specifying a timeout of 0. If the timer expires, all orders are cancelled and then the timer remains disabled until the client provides a new (non-zero) timeout.
+
+
+        The recommended use is to make a call every 15 to 30 seconds, providing a timeout of 60 seconds. This allows the client to keep the orders in place in case of a brief disconnection or transient delay, while keeping them safe in case of a network breakdown. It is also recommended to disable the timer ahead of regularly scheduled trading engine maintenance (if the timer is enabled, all orders will be cancelled when the trading engine comes back from downtime - planned or otherwise).
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` or `Orders and trades - Cancel & close orders`'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+              - nonce
+              - timeout
+              properties:
+                nonce:
+                  $ref: '#/components/schemas/nonce'
+                timeout:
+                  type: integer
+                  description: Duration (in seconds) to set/extend the timer, it should be less than 86400 seconds.
+              example:
+                nonce: 1695828490
+                timeout: 120
+      responses:
+        '200':
+          description: Dead man's switch timer reset or disabled.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      currentTime:
+                        description: Timestamp (RFC3339 format) at which the request was received
+                        type: string
+                      triggerTime:
+                        description: Timestamp (RFC3339 format) after which all orders will be cancelled, unless the timer is extended or disabled
+                        type: string
+                  error:
+                    $ref: '#/components/schemas/error'
+                example:
+                  error: []
+                  result:
+                    currentTime: '2023-03-24T17:41:56Z'
+                    triggerTime: '2023-03-24T17:42:56Z'
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/GetWebSocketsToken:
+    post:
+      summary: Get Websockets Token
+      description: 'An authentication token must be requested via this REST API endpoint in order to connect to and authenticate with our Websockets API. The token should be used within 15 minutes of creation, but it does not expire once a successful Websockets connection and private subscription has been made and is maintained.
+
+
+        **API Key Permissions Required:** `WebSocket interface - On`'
+      tags:
+      - Trading
+      operationId: getWebsocketsToken
+      requestBody:
+        $ref: '#/components/requestBodies/nonceOnly'
+      responses:
+        '200':
+          description: Websockets token retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: object
+                    properties:
+                      token:
+                        description: Websockets token
+                        type: string
+                      expires:
+                        description: Time (in seconds) after which the token expires
+                        type: integer
+                  error:
+                    $ref: '#/components/schemas/error'
+                example:
+                  error: []
+                  result:
+                    token: 1Dwc4lzSwNWOAwkMdqhssNNFhs1ed606d1WcF3XfEMw
+                    expires: 900
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/AddOrderBatch:
+    post:
+      summary: Add Order Batch
+      description: 'Sends a collection of orders (minimum of 2 and maximum 15):
+
+        * Validation is performed on the whole batch prior to submission to the engine. If an order fails validation, the whole batch will be rejected.
+
+        * On submission to the engine, if an order fails pre-match checks (i.e. funding), then the individual order will be rejected and remainder of the batch will be processed.
+
+        * All orders in batch are limited to a single pair.
+
+
+        **Note**: See the AssetPairs endpoint for details on the available trading pairs, their price and quantity precisions, order minimums, available leverage, etc.
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` and `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: addOrderBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/batchadd'
+      responses:
+        '200':
+          description: The order of returned `orders` in the response array is the same as the order of the order list sent in request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/batchadd-2'
+              examples:
+                Limits, one with conditional stop-loss:
+                  value:
+                    error: []
+                    result:
+                      orders:
+                      - txid: O5OR23-ADFAD-Y2G61C
+                        descr:
+                          order: buy 0.80300000 XBTUSD @ limit 28300.0
+                          close: close position @ stop loss 27000.0 -> limit 26000.0
+                      - txid: 9K6KFS-5H3PL-XBRC7A
+                        descr:
+                          order: sell 0.10500000 XBTUSD @ limit 36000.0
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/CancelOrderBatch:
+    post:
+      summary: Cancel Order Batch
+      description: 'Cancel multiple open orders by `txid`, `userref` or `cl_ord_id`(maximum 50 total unique IDs/references)
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` or `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: cancelOrderBatch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/batchcancel'
+      responses:
+        '200':
+          description: Open order cancelled.
+          content:
+            application/json:
+              example:
+                error: []
+                result:
+                  count: 2
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
+  /private/EditOrder:
+    post:
+      summary: Edit Order
+      description: 'Sends a request to edit the order parameters of a live order. When an order has been successfully modified, the original order will be cancelled and a new order will be
+
+        created with the adjusted parameters a new `txid` will be returned in the response.
+
+
+        **Note:** The new AmendOrder endpoint resolves the caveats listed below and has additional performance gains.
+
+
+        Caveats for `EditOrder`:
+
+        * Triggered stop loss or take profit orders are not supported.
+
+        * Orders with conditional close terms attached are not supported.
+
+        * Orders where the executed volume is greater than the newly supplied volume will be rejected.
+
+        * `cl_ord_id` is not supported.
+
+        * Existing executions are associated with the original order and not copied to the amended order.
+
+        * Queue position will not be maintained.
+
+
+        **API Key Permissions Required:** `Orders and trades - Create & modify orders` and `Orders and trades - Cancel & close orders`'
+      tags:
+      - Trading
+      operationId: editOrder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/edit'
+      responses:
+        '200':
+          description: Order edited.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/edit-2'
+              examples:
+                Limit with conditional stop-loss:
+                  value:
+                    error: []
+                    result:
+                      status: ok
+                      txid: OFVXHJ-KPQ3B-VS7ELA
+                      originaltxid: OHYO67-6LP66-HMQ437
+                      volume: '0.00030000'
+                      price: '19500.0'
+                      price2: '32500.0'
+                      orders_cancelled: 1
+                      descr:
+                        order: buy 0.00030000 XXBTZGBP @ limit 19500.0
+      security:
+      - API-Key: []
+        API-Sign: []
+    servers:
+    - url: https://api.kraken.com/0
+      description: Production Server
   /sendorder:
     post:
       operationId: sendOrder
@@ -342,7 +722,7 @@ paths:
       description: Kraken Futures colocation endpoint (London VIP)
   /0/private/AddOrder:
     post:
-      operationId: addOrder
+      operationId: post0PrivateAddOrder
       summary: Kraken Add Order
       description: Places a new order. Supports market, limit, stop-loss, take-profit, stop-loss-limit, take-profit-limit, settle-position, trailing-stop, and iceberg order types.
       tags:
@@ -401,6 +781,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: addOrder
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -408,7 +790,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/AddOrderBatch:
     post:
-      operationId: addOrderBatch
+      operationId: post0PrivateAddOrderBatch
       summary: Kraken Add Order Batch
       description: Places a batch of up to 15 orders for a single pair in one signed request.
       tags:
@@ -449,6 +831,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: addOrderBatch
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -456,7 +840,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/EditOrder:
     post:
-      operationId: editOrder
+      operationId: post0PrivateEditOrder
       summary: Kraken Edit Order
       description: Cancels and replaces an existing order with new parameters (volume, price, or price2).
       tags:
@@ -504,6 +888,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: editOrder
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -511,7 +897,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/AmendOrder:
     post:
-      operationId: amendOrder
+      operationId: post0PrivateAmendOrder
       summary: Kraken Amend Order
       description: Modifies a resting order in place (volume, limit/trigger prices, post-only) without changing its order ID.
       tags:
@@ -556,6 +942,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: amendOrder
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -563,7 +951,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/CancelOrder:
     post:
-      operationId: cancelOrder
+      operationId: post0PrivateCancelOrder
       summary: Kraken Cancel Order
       description: Cancels a specific open order by transaction ID or user-reference.
       tags:
@@ -602,6 +990,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: cancelOrder
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -609,7 +999,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/CancelAll:
     post:
-      operationId: cancelAllOrders
+      operationId: post0PrivateCancelAll
       summary: Kraken Cancel All Orders
       description: Cancels every open order for the API key.
       tags:
@@ -646,6 +1036,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: cancelAllOrders
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -653,7 +1045,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/CancelAllOrdersAfter:
     post:
-      operationId: cancelAllOrdersAfter
+      operationId: post0PrivateCancelAllOrdersAfter
       summary: Kraken Cancel All Orders After (Dead Man's Switch)
       description: Arms a dead-man's-switch — all open orders will be cancelled after the specified timeout (seconds) unless the call is re-issued.
       tags:
@@ -691,6 +1083,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: cancelAllOrdersAfter
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -698,7 +1092,7 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
   /0/private/CancelOrderBatch:
     post:
-      operationId: cancelOrderBatch
+      operationId: post0PrivateCancelOrderBatch
       summary: Kraken Cancel Order Batch
       description: Cancels up to 50 orders in a single signed call.
       tags:
@@ -736,6 +1130,8 @@ paths:
       x-microcks-operation:
         delay: 0
         dispatcher: FALLBACK
+      x-operation-id-source: normalized
+      x-operation-id-original: cancelOrderBatch
     servers:
     - url: https://api.kraken.com
       description: Kraken Spot REST production endpoint
@@ -743,6 +1139,794 @@ paths:
       description: Kraken Spot REST colocation endpoint (London VIP)
 components:
   schemas:
+    batchadd-2:
+      type: object
+      properties:
+        result:
+          title: Result
+          type: object
+          properties:
+            orders:
+              title: Orders
+              type: array
+              items:
+                type: object
+                properties:
+                  descr:
+                    description: Order description info
+                    type: object
+                    properties:
+                      order:
+                        type: string
+                  error:
+                    description: Error description from individual order processing
+                    type: string
+                  txid:
+                    description: 'Transaction ID for order
+
+                      <br><sup><sub>(if order was added successfully)</sup></sub>
+
+                      '
+                    type: string
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          orders:
+          - txid: 65LRD3-AHGRA-YAH8E5
+            descr:
+              order: buy 1.02010000 XBTUSD @ limit 29000.0
+          - txid: OK8HFF-5J2PL-XLR17S
+            descr:
+              order: sell 0.14000000 XBTUSD @ limit 40000.0
+    edit-2:
+      type: object
+      properties:
+        result:
+          title: OrderEdited
+          type: object
+          properties:
+            descr:
+              description: Order description info
+              type: object
+              properties:
+                order:
+                  description: Order description
+                  type: string
+            txid:
+              description: 'New Transaction ID
+
+                <br><sup><sub>(if order was added successfully)</sup></sub>
+
+                '
+              type: string
+            newuserref:
+              description: 'Original userref if passed with the request
+
+                '
+              type: string
+            olduserref:
+              description: 'Original userref if passed with the request
+
+                '
+              type: string
+            orders_cancelled:
+              description: 'Number of orders cancelled (either 0 or 1)
+
+                '
+              type: integer
+            originaltxid:
+              description: 'Original transaction ID
+
+                '
+              type: string
+            status:
+              description: 'Status of the order: Ok or Err
+
+                '
+              type: string
+            volume:
+              description: 'Updated volume
+
+                '
+              type: string
+            price:
+              description: 'Updated price
+
+                '
+              type: string
+            price2:
+              description: 'Updated price2
+
+                '
+              type: string
+            error_message:
+              description: 'Error message if unsuccessful
+
+                '
+              type: string
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          descr:
+            order: buy 1.25000000 XBTUSD @ limit 27500.0
+          txid: OU22CG-KLAF2-FWUDD7
+    add-2:
+      type: object
+      properties:
+        result:
+          title: OrderAdded
+          type: object
+          properties:
+            descr:
+              description: Order description info
+              type: object
+              properties:
+                order:
+                  description: Order description
+                  type: string
+                close:
+                  description: Conditional close order description, if applicable
+                  type: string
+            txid:
+              description: 'Transaction IDs for order
+
+                <br><sup><sub>(if order was added successfully)</sup></sub>
+
+                '
+              type: array
+              items:
+                type: string
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          descr:
+            order: buy 1.45 XBTUSD @ limit 27500.0
+          txid:
+          - OU22CG-KLAF2-FWUDD7
+    error:
+      type: array
+      items:
+        description: Kraken API error
+        type: string
+        example: EGeneral:Invalid arguments
+    edit:
+      title: Edit Standard Order Request Body
+      required:
+      - nonce
+      - pair
+      - txid
+      type: object
+      properties:
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        userref:
+          description: "User reference id\n\n`userref` is an optional user-specified integer id associated with edit request. \n >  Note: userref from parent order will not be retained on the new order after edit.\n"
+          type: integer
+          format: int32
+        txid:
+          description: Original Order ID or User Reference Id (userref) which is user-specified integer id used with the original order. If userref is not unique and was used with multiple order, edit request is denied with an error.
+          oneOf:
+          - type: string
+            title: string
+          - type: integer
+            title: integer
+        volume:
+          description: 'Order quantity in terms of the base asset.
+
+            '
+          type: string
+        displayvol:
+          description: 'For `iceberg` orders only, it defines the quantity to show in the book while the rest of order quantity remains hidden. Minimum value is 1 / 15 of `volume`.
+
+            '
+          type: string
+        pair:
+          description: Asset pair `id` or `altname`
+          type: string
+        asset_class:
+          description: This parameter is required on requests for non-crypto pairs, i.e. use `tokenized_asset` for xStocks.
+          type: string
+          enum:
+          - tokenized_asset
+        price:
+          description: 'Price:
+
+            * Limit price for `limit` and `iceberg` orders
+
+            * Trigger price for `stop-loss`, `stop-loss-limit`, `take-profit`, `take-profit-limit`, `trailing-stop` and `trailing-stop-limit` orders
+
+
+            Notes:
+
+            * Relative Prices: Either `price` or `price2` can be preceded by `+`, `-`, or `#` to specify the order price as an offset relative to the last traded price. `+` adds the amount to, and `-` subtracts the amount from the last traded price. `#` will either add or subtract the amount to the last traded price, depending on the direction and order type used. Prices can also be suffixed with a `%` to signify the relative amount as a percentage, rather than an absolute price difference.
+
+            * Trailing Stops: Must use a relative price for this field, namely the `+` prefix, from which the direction will be automatic based on if the original order is a buy or sell (no need to use `-` or `#`). The `%` suffix also works for these order types to use a relative percentage price.
+
+            '
+          type: string
+        price2:
+          description: 'Secondary Price:
+
+            * Limit price for `stop-loss-limit`, `take-profit-limit` and `trailing-stop-limit` orders
+
+            Note:
+
+            * Trailing Stops: Must use a relative price for this field, namely one of the `+` or `-` prefixes. This will provide the offset from the trigger price to the limit price, i.e. +0 would set the limit price equal to the trigger price. The `%` suffix also works for this field to use a relative percentage limit price.
+
+            '
+          type: string
+        oflags:
+          description: 'Comma delimited list of order flags. Only these flags can be changed: - post post-only order (available when ordertype = limit). All the flags from the parent order are retained except post-only. post-only needs to be explicitly mentioned on edit request.
+
+            '
+        deadline:
+          type: string
+          description: "RFC3339 timestamp (e.g. 2021-04-01T00:18:45Z) after which the matching engine should reject the new order request, in presence of latency or order queueing. min now() + 2 seconds, max now() + 60 seconds.  \n"
+        cancel_response:
+          description: 'Used to interpret if client wants to receive pending replace, before the order is completely replaced
+
+            '
+          type: boolean
+        validate:
+          type: boolean
+          description: Validate inputs only. Do not submit order.
+          default: false
+      example:
+        nonce: 1695828490
+        pair: XBTUSD
+        txid: OHYO67-6LP66-HMQ437
+        volume: '1.25'
+        price: '27500'
+        price2: '26500'
+    add:
+      example:
+        nonce: 163245617
+        ordertype: limit
+        type: buy
+        volume: '1.25'
+        pair: XBTUSD
+        price: '27500'
+        cl_ord_id: 6d1b345e-2821-40e2-ad83-4ecb18a06876
+      title: Add Standard Order Request Body
+      required:
+      - nonce
+      - pair
+      - type
+      - ordertype
+      - volume
+      type: object
+      properties:
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        userref:
+          description: 'This is an optional non-unique, numeric identifier which can associated with a number of orders by the client. This field is mutually exclusive with <code>cl_ord_id</code> parameter.
+
+
+            `userref` is an optional user-specified integer id that can be associated with any number of orders. Many clients choose a `userref` corresponding to a unique integer id generated by their systems (e.g. a timestamp). However, because we don''t enforce uniqueness on our side, it can also be used to easily group orders by pair, side, strategy, etc. This allows clients to more readily cancel or query information about orders in a particular group, with fewer API calls by using `userref` instead of our `txid`, where supported.
+
+            '
+          type: integer
+          format: int32
+        cl_ord_id:
+          description: "Adds an alphanumeric client order identifier which uniquely identifies an open order for each client. This field is mutually exclusive with <code>userref</code> parameter.\n\nThe <code>cl_ord_id</code> parameter can be one of the following formats:\n  * &bull; Long UUID: <code>6d1b345e-2821-40e2-ad83-4ecb18a06876</code> 32 hex characters separated with 4 dashes.\n  * &bull; Short UUID: <code>da8e4ad59b78481c93e589746b0cf91f</code> 32 hex characters with no dashes.\n  * &bull; Free text: <code>arb-20240509-00010</code> Free format ascii text up to 18 characters.\n"
+          type: string
+        ordertype:
+          $ref: '#/components/schemas/ordertype'
+        type:
+          description: Order direction (buy/sell)
+          type: string
+          enum:
+          - buy
+          - sell
+        volume:
+          description: 'Order quantity in terms of the base asset
+
+            > Note: Volume can be specified as `0` for closing margin orders to automatically fill the requisite quantity.
+
+            '
+          type: string
+          example: '1.25'
+        displayvol:
+          description: 'For `iceberg` orders only, it defines the quantity to show in the book while the rest of order quantity remains hidden. Minimum value is 1 / 15 of `volume`.
+
+            '
+          type: string
+        pair:
+          description: Asset pair `id` or `altname`
+          type: string
+          example: XBTUSD
+        asset_class:
+          description: This parameter is required on requests for non-crypto pairs, i.e. use `tokenized_asset` for xStocks.
+          type: string
+          enum:
+          - tokenized_asset
+        price:
+          description: 'Price:
+
+            * &bull; Limit price for `limit` and `iceberg` orders
+
+            * &bull; Trigger price for `stop-loss`, `stop-loss-limit`, `take-profit`, `take-profit-limit`, `trailing-stop` and `trailing-stop-limit` orders
+
+
+            Notes:
+
+            * &bull; Relative Prices: Either `price` or `price2` can be preceded by `+`, `-`, or `#` to specify the order price as an offset relative to the last traded price. `+` adds the amount to, and `-` subtracts the amount from the last traded price. `#` will either add or subtract the amount to the last traded price, depending on the direction and order type used. Prices can also be suffixed with a `%` to signify the relative amount as a percentage, rather than an absolute price difference.
+
+            * &bull; Trailing Stops: Must use a relative price for this field, namely the `+` prefix, from which the direction will be automatic based on if the original order is a buy or sell (no need to use `-` or `#`). The `%` suffix also works for these order types to use a relative percentage price.
+
+            '
+          type: string
+          example: '40000.0'
+        price2:
+          description: 'Secondary Price:
+
+            * &bull; Limit price for `stop-loss-limit`, `take-profit-limit` and `trailing-stop-limit` orders
+
+
+            Note:
+
+            * &bull; Trailing Stops: Must use a relative price for this field, namely one of the `+` or `-` prefixes. This will provide the offset from the trigger price to the limit price, i.e. +0 would set the limit price equal to the trigger price. The `%` suffix also works for this field to use a relative percentage limit price.
+
+            '
+          type: string
+        trigger:
+          description: 'Price signal used to trigger `stop-loss`, `stop-loss-limit`, `take-profit`, `take-profit-limit`, `trailing-stop` and `trailing-stop-limit` orders
+
+
+            Notes:
+
+            * &bull; This `trigger` type will also be used for any associated conditional close orders.
+
+            * &bull; To keep triggers serviceable, the last price will be used as fallback reference price during connectivity issues with external index feeds.
+
+            '
+          type: string
+          enum:
+          - index
+          - last
+          default: last
+        leverage:
+          description: 'Amount of leverage desired (default: none)'
+          type: string
+          example: 5
+        reduce_only:
+          description: If `true`, order will only reduce a currently open position, not increase it or open a new position.
+          type: boolean
+          default: false
+          example: true
+        stptype:
+          description: 'Self Trade Prevention (STP) is a protection feature to prevent users from inadvertently or deliberately trading against themselves. To prevent a self-match, one of the following STP modes can be used to define which order(s) will be expired:
+
+            * &bull; `cancel-newest`: arriving order will be canceled
+
+            * &bull; `cancel-oldest`: resting order will be canceled
+
+            * &bull; `cancel-both`: both arriving and resting orders will be canceled
+
+            '
+          type: string
+          enum:
+          - cancel-newest
+          - cancel-oldest
+          - cancel-both
+          default: cancel-newest
+        oflags:
+          $ref: '#/components/schemas/oflags'
+        timeinforce:
+          description: 'Time-in-force of the order to specify how long it should remain in the order book before being cancelled. GTC (Good-''til-cancelled) is default if the parameter is omitted. IOC (immediate-or-cancel) will immediately execute the amount possible and cancel any remaining balance rather than resting in the book. GTD (good-''til-date), if specified, must coincide with a desired `expiretm`. FOK (fill-or-kill) will execute the full order immediately or cancel it entirely.
+
+            '
+          type: string
+          enum:
+          - GTC
+          - IOC
+          - GTD
+          - FOK
+          default: GTC
+        starttm:
+          description: "Scheduled start time, can be specified as an absolute timestamp or as a number of seconds in the future:\n  * &bull; `0` now (default)\n  * &bull; `<n>` = unix timestamp of start time\n  * &bull; `+<n>` = schedule start time `<n>` seconds from now\n    * Note that URL encoding of the `+` character changes it to a space, so please use `%2b` followed by the number of seconds instead of `+`\n"
+          type: string
+        expiretm:
+          description: "Expiry time on GTD orders can be set up to one month in future, it is specified as an absolute timestamp or as a number of seconds from now:\n  * &bull; `0` no expiration (default)\n  * &bull; `<n>` = unix timestamp of expiration time\n  * &bull; `+<n>` = expire `<n>` seconds from now, minimum 5 seconds\n    * Note that URL encoding of the `+` character changes it to a space, so please use `%2b` followed by the number of seconds instead of `+`\n"
+          type: string
+        close[ordertype]:
+          description: "Conditional close order type \n> Note: [Conditional close orders](https://support.kraken.com/hc/en-us/articles/360038640052-Conditional-Close) are triggered by execution of the primary order in the same quantity and opposite direction, but once triggered are __independent orders__ that may reduce or increase net position\n"
+          type: string
+          enum:
+          - limit
+          - iceberg
+          - stop-loss
+          - take-profit
+          - stop-loss-limit
+          - take-profit-limit
+          - trailing-stop
+          - trailing-stop-limit
+        close[price]:
+          description: 'Conditional close order `price`
+
+            '
+          type: string
+          example: '50000.0'
+        close[price2]:
+          description: 'Conditional close order `price2`
+
+            '
+          type: string
+        deadline:
+          type: string
+          description: 'RFC3339 timestamp (e.g. 2021-04-01T00:18:45Z) after which the matching engine should reject the new order request, in presence of latency or order queueing: min now() + 2 seconds, max now() + 60 seconds.
+
+            '
+        validate:
+          type: boolean
+          description: If set to `true` the order will be validated only, it will not trade in the matching engine.
+          default: false
+        broker:
+          description: Broker IIBAN (Partner's Kraken IIBAN)
+          type:
+          - string
+          - 'null'
+    amend-2:
+      type: object
+      properties:
+        result:
+          title: OrderAmended
+          type: object
+          properties:
+            amend_id:
+              description: 'The unique Kraken identifier generated for this amend transaction.
+
+                '
+              type: string
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          amend_id: TEZA4R-DSDGT-IJBOJK
+    cancel:
+      title: Cancel Open Order Request Body
+      required:
+      - nonce
+      type: object
+      properties:
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        txid:
+          description: Kraken order identifier (txid) or user reference (userref)
+          oneOf:
+          - type: string
+            title: string
+          - type: integer
+            title: integer
+        cl_ord_id:
+          description: An alphanumeric client order identifier which uniquely identifies an open order for each client.
+          type: string
+      example:
+        nonce: 1695828490
+        pair: XBTUSD
+        txid: OHYO67-6LP66-HMQ437
+    ordertype:
+      description: 'The execution model of the order.
+
+        '
+      type: string
+      enum:
+      - market
+      - limit
+      - iceberg
+      - stop-loss
+      - take-profit
+      - stop-loss-limit
+      - take-profit-limit
+      - trailing-stop
+      - trailing-stop-limit
+      - settle-position
+      example: limit
+    batchadd:
+      title: Add Standard Order Request Body
+      required:
+      - nonce
+      - orders
+      - pair
+      type: object
+      properties:
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        orders:
+          type: array
+          items:
+            required:
+            - ordertype
+            - type
+            - volume
+            type: object
+            properties:
+              userref:
+                description: 'User reference id
+
+                  `userref` is an optional user-specified integer id that can be associated with any number of orders. Many clients choose a `userref` corresponding to a unique integer id generated by their systems (e.g. a timestamp). However, because we don''t enforce uniqueness on our side, it can also be used to easily group orders by pair, side, strategy, etc. This allows clients to more readily cancel or query information about orders in a particular group, with fewer API calls by using `userref` instead of our `txid`, where supported.
+
+                  '
+                type: integer
+                format: int32
+              cl_ord_id:
+                description: "Adds an alphanumeric client order identifier which uniquely identifies an open order for each client. This field is mutually exclusive with <code>userref</code> parameter.\n\nThe <code>cl_ord_id</code> parameter can be one of the following formats:\n  * Long UUID: <code>6d1b345e-2821-40e2-ad83-4ecb18a06876</code> 32 hex characters separated with 4 dashes.\n  * Short UUID: <code>da8e4ad59b78481c93e589746b0cf91f</code> 32 hex characters with no dashes.\n  * Free text: <code>arb-20240509-00010</code> Free format ascii text up to 18 characters.\n"
+                type: string
+              ordertype:
+                description: 'Order type
+
+                  '
+                type: string
+                enum:
+                - market
+                - limit
+                - iceberg
+                - stop-loss
+                - take-profit
+                - stop-loss-limit
+                - take-profit-limit
+                - trailing-stop
+                - trailing-stop-limit
+                - settle-position
+              type:
+                description: Order direction (buy/sell)
+                type: string
+                enum:
+                - buy
+                - sell
+              volume:
+                description: 'Order quantity in terms of the base asset
+
+                  > Note: Volume can be specified as `0` for closing margin orders to automatically fill the requisite quantity.
+
+                  '
+                type: string
+              displayvol:
+                description: 'For `iceberg` orders only, it defines the quantity to show in the book while the rest of order quantity remains hidden. Minimum value is 1 / 15 of `volume`.
+
+                  '
+                type: string
+              price:
+                description: 'Price:
+
+                  * Limit price for `limit` and `iceberg` orders
+
+                  * Trigger price for `stop-loss`, `stop-loss-limit`, `take-profit`, and `take-profit-limit` orders
+
+
+                  Notes:
+
+                  * Relative Prices: Either `price` or `price2` can be preceded by `+`, `-`, or `#` to specify the order price as an offset relative to the last traded price. `+` adds the amount to, and `-` subtracts the amount from the last traded price. `#` will either add or subtract the amount to the last traded price, depending on the direction and order type used. Prices can also be suffixed with a `%` to signify the relative amount as a percentage, rather than an absolute price difference.
+
+                  '
+                type: string
+              price2:
+                description: 'Secondary Price:
+
+                  * Limit price for `stop-loss-limit` and `take-profit-limit`
+
+                  '
+                type: string
+              trigger:
+                description: 'Price signal used to trigger `stop-loss`, `stop-loss-limit`, `take-profit`, and `take-profit-limit` orders
+
+                  Notes:
+
+                  * To keep triggers serviceable, the last price will be used as fallback reference price during connectivity issues with external index feeds.
+
+                  '
+                type: string
+                enum:
+                - index
+                - last
+                default: last
+              leverage:
+                description: 'Amount of leverage desired (default: none)
+
+                  '
+                type: string
+              reduce_only:
+                description: If `true`, order will only reduce a currently open position, not increase it or open a new position.
+                type: boolean
+                default: false
+              stptype:
+                description: 'Self trade prevention behaviour definition:
+
+                  * `cancel-newest` - if self trade is triggered, arriving order will be canceled
+
+                  * `cancel-oldest` - if self trade is triggered, resting order will be canceled
+
+                  * `cancel-both` - if self trade is triggered, both arriving and resting orders will be canceled
+
+                  '
+                type: string
+                enum:
+                - cancel-newest
+                - cancel-oldest
+                - cancel-both
+                default: cancel-newest
+              oflags:
+                $ref: '#/components/schemas/oflags'
+              timeinforce:
+                description: 'Time-in-force of the order to specify how long it should remain in the order book before being cancelled. GTC (Good-''til-cancelled) is default if the parameter is omitted. IOC (immediate-or-cancel) will immediately execute the amount possible and cancel any remaining balance rather than resting in the book. GTD (good-''til-date), if specified, must coincide with a desired `expiretm`.
+
+                  '
+                type: string
+                enum:
+                - GTC
+                - IOC
+                - GTD
+                default: GTC
+              starttm:
+                description: "Scheduled start time, can be specified as an absolute timestamp or as a number of seconds in the future:\n * `0` now (default)\n * `+<n>` schedule start time <n> seconds from now\n * `<n>` = unix timestamp of start time\n"
+                type: string
+              expiretm:
+                description: "Expiry time on GTD orders can be set up to one month in future, it is specified as an absolute timestamp or as a number of seconds from now:\n * `0` no expiration (default)\n * `+<n>` = expire <n> seconds from now, minimum 5 seconds\n * `<n>` = unix timestamp of expiration time\n"
+                type: string
+        pair:
+          description: Asset pair `id` or `altname`
+          type: string
+        asset_class:
+          description: This parameter is required on requests for non-crypto pairs, i.e. use `tokenized_asset` for xStocks.
+          type: string
+          enum:
+          - tokenized_asset
+        deadline:
+          type: string
+          description: "RFC3339 timestamp (e.g. 2021-04-01T00:18:45Z) after which the matching engine should reject the new order request, in presence of latency or order queueing. min now() + 2 seconds, max now() + 60 seconds. \n"
+        validate:
+          type: boolean
+          description: Validate inputs only. Do not submit order.
+          default: false
+        broker:
+          description: Broker IIBAN (Partner's Kraken IIBAN)
+          type:
+          - string
+          - 'null'
+      example:
+        nonce: 1695828490
+        orders:
+        - close:
+            ordertype: stop-loss-limit
+            price: '37000'
+            price2: '36000'
+          ordertype: limit
+          price: '40000'
+          price2: string
+          timeinforce: GTC
+          type: buy
+          cl_ord_id: 6d1b345e-2821-40e2-ad83-4ecb18a06876
+          volume: '1.2'
+        - ordertype: limit
+          price: '42000'
+          starttm: string
+          timeinforce: GTC
+          type: sell
+          cl_ord_id: da8e4ad59b78481c93e589746b0cf91
+          volume: '1.2'
+        pair: BTC/USD
+        validate: false
+        deadline: '2023-09-24T14:15:22Z'
+    nonce:
+      description: Nonce used in construction of `API-Sign` header
+      type: integer
+      format: int64
+    oflags:
+      description: "Comma delimited list of order flags\n\n  * &bull; `post` post-only order (available when ordertype = limit)\n  * &bull; `fcib` prefer fee in base currency (default if selling)\n  * &bull; `fciq` prefer fee in quote currency (default if buying, mutually exclusive with `fcib`)\n  * &bull; `nompp` (DEPRECATED) — disabling Market Price Protection for market orders is no longer supported. If supplied, the flag is accepted but ignored.\n  * &bull; `viqc`  order volume expressed in quote currency. This option is supported only for buy market orders. Also not available on margin orders.\n"
+      type: string
+      example: post
+    cancel-2:
+      type: object
+      properties:
+        result:
+          title: OrderCancelled
+          type: object
+          properties:
+            count:
+              description: Number of orders cancelled
+              type: integer
+              format: int32
+            pending:
+              description: If true, orders are pending cancellation
+              type: boolean
+        error:
+          type: array
+          items:
+            $ref: '#/components/schemas/error'
+      example:
+        error: []
+        result:
+          count: 1
+    amend:
+      title: Amend Order Request Body
+      required:
+      - nonce
+      type: object
+      properties:
+        txid:
+          description: The Kraken identifier for the order to be amended. Either `txid` or `cl_ord_id` is required.
+          type: string
+        cl_ord_id:
+          description: The client identifier for the order to be amended. Either `txid` or `cl_ord_id` is required.
+          type: string
+        order_qty:
+          description: The new order quantity in terms of the base asset.
+          type: string
+        display_qty:
+          description: For `iceberg` orders only, it defines the new quantity to show in the book while the rest of order quantity remains hidden. Minimum value is 1 / 15 of remaining order quantity.
+          type: string
+        limit_price:
+          description: "The new limit price restriction on the order (for order types that support limit price only).\n\nThe relative pricing can be set by using the `+`, `-` prefixes and/or `%` suffix. \n* &bull; `+` adds the amount from the reference price, i.e. market rises 50 USD `\"+50\"`.\n* &bull; `-` subtracts the amount from the reference price, i.e. market drops 100 USD `\"-100\"`.\n"
+          type: string
+        trigger_price:
+          description: "The new trigger price to activate the order (for triggered order types only). \n\nThe relative pricing can be set by using the `+`, `-` prefixes and/or `%` suffix. \n* &bull; `+` adds the amount from the reference price, i.e. market rises 50 USD `\"+50\"`.\n* &bull; `-` subtracts the amount from the reference price, i.e. market drops 100 USD `\"-100\"`.\n"
+          type: string
+        pair:
+          description: The `pair` is required on amends for non-crypto pairs, i.e. provide the pair symbol for xStocks.
+          type: string
+        post_only:
+          description: 'An optional flag for `limit_price` amends. If `true`, the limit price change will be rejected if the order cannot be posted passively in the book.
+
+            '
+          type: boolean
+          default: false
+        deadline:
+          type: string
+          description: RFC3339 timestamp (e.g. 2021-04-01T00:18:45Z) after which the matching engine should reject the new order request, in presence of latency or order queueing. min now() + 2 seconds, max now() + 60 seconds.
+        nonce:
+          $ref: '#/components/schemas/nonce'
+      example:
+        nonce: 1695828490
+        cl_ord_id: 6d1b345e-2821-40e2-ad83-4ecb18a06876
+        order_qty: '1.25'
+    batchcancel:
+      title: Batch Cancel Open Orders Request Body
+      required:
+      - nonce
+      type: object
+      properties:
+        nonce:
+          $ref: '#/components/schemas/nonce'
+        orders:
+          type: array
+          items:
+            type: object
+            properties:
+              txid:
+                description: Open order transaction IDs (txid) or user references (userref), up to a maximum of 50 total unique IDs/references.
+                oneOf:
+                - type: string
+                  title: string
+                - type: integer
+                  title: integer
+        cl_ord_ids:
+          type: array
+          items:
+            type: object
+            properties:
+              cl_ord_id:
+                description: An alphanumeric client order identifier which uniquely identifies an open order for each client. Up to a maximum of 50 total unique IDs/references.
+                type: string
+      example:
+        nonce: 1695828490
+        orders:
+        - OP5V2Y-RYKVL-ET3V3B
+        - OP5V2Y-7YKVL-ET3V3B
     BaseEnvelope:
       type: object
       properties:
@@ -838,6 +2022,33 @@ components:
         trailingStopDeviationUnit:
           type: string
           example: string
+    CancelOrderBatchResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              count:
+                type: integer
+                example: 1
+            example: {}
+    CancelOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              count:
+                type: integer
+                example: 1
+              pending:
+                type: boolean
+                example: true
+            example: {}
     CancelAllResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
@@ -850,7 +2061,21 @@ components:
                 type: integer
                 example: 1
             example: {}
-    AmendOrderResponse:
+    NoncedRequest:
+      type: object
+      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
+      required:
+      - nonce
+      properties:
+        nonce:
+          type: integer
+          format: int64
+          example: 1717000000000
+        otp:
+          type: string
+          description: Two-factor password / OTP if the key is OTP-protected.
+          example: '123456'
+    AddOrderResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -858,35 +2083,23 @@ components:
           result:
             type: object
             properties:
-              amend_id:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-            example: {}
-    AddOrderBatchResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              orders:
+              descr:
+                type: object
+                properties:
+                  order:
+                    type: string
+                    example: string
+                  close:
+                    type: string
+                    example: string
+                example: {}
+              txid:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    descr:
-                      type: object
-                      example: {}
-                    txid:
-                      type: string
-                      example: OQCLML-BW3P3-BUCMWZ
-                    error:
-                      type: string
-                      example: string
-                example: []
+                  type: string
+                example: OQCLML-BW3P3-BUCMWZ
             example: {}
-    CancelOrderBatchResponse:
+    EditOrderResponse:
       allOf:
       - $ref: '#/components/schemas/BaseEnvelope_2'
       - type: object
@@ -894,9 +2107,58 @@ components:
           result:
             type: object
             properties:
-              count:
+              status:
+                type: string
+                example: string
+              txid:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+              originaltxid:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+              volume:
+                type: string
+                example: '0.01'
+              price:
+                type: string
+                example: '0.01'
+              orders_cancelled:
                 type: integer
                 example: 1
+              descr:
+                type: object
+                example: {}
+            example: {}
+    BaseEnvelope_2:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+          description: Array of error strings; empty on success.
+          example: []
+        result:
+          description: Endpoint-specific result object.
+          example: string
+      required:
+      - error
+    CancelAllAfterResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              currentTime:
+                type: string
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
+              triggerTime:
+                type: string
+                format: date-time
+                example: '2026-05-30T00:00:00Z'
             example: {}
     AddOrderBatchRequest:
       allOf:
@@ -949,116 +2211,6 @@ components:
                   type: string
                   example: string
             example: []
-    BaseEnvelope_2:
-      type: object
-      properties:
-        error:
-          type: array
-          items:
-            type: string
-          description: Array of error strings; empty on success.
-          example: []
-        result:
-          description: Endpoint-specific result object.
-          example: string
-      required:
-      - error
-    AmendOrderRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        properties:
-          txid:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-          order_qty:
-            type: string
-            example: string
-          display_qty:
-            type: string
-            example: string
-          limit_price:
-            type: string
-            example: '0.01'
-          trigger_price:
-            type: string
-            example: '0.01'
-          post_only:
-            type: boolean
-            example: true
-          deadline:
-            type: string
-            example: string
-    AddOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              descr:
-                type: object
-                properties:
-                  order:
-                    type: string
-                    example: string
-                  close:
-                    type: string
-                    example: string
-                example: {}
-              txid:
-                type: array
-                items:
-                  type: string
-                example: OQCLML-BW3P3-BUCMWZ
-            example: {}
-    NoncedRequest:
-      type: object
-      description: All private requests include an incrementing nonce. Optionally an OTP for two-factor-protected keys.
-      required:
-      - nonce
-      properties:
-        nonce:
-          type: integer
-          format: int64
-          example: 1717000000000
-        otp:
-          type: string
-          description: Two-factor password / OTP if the key is OTP-protected.
-          example: '123456'
-    CancelOrderRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - txid
-        properties:
-          txid:
-            type: string
-            description: txid
-            cl_ord_id: null
-            or userref.: null
-            example: OQCLML-BW3P3-BUCMWZ
-          cl_ord_id:
-            type: string
-            example: OQCLML-BW3P3-BUCMWZ
-    CancelOrderBatchRequest:
-      allOf:
-      - $ref: '#/components/schemas/NoncedRequest'
-      - type: object
-        required:
-        - orders
-        properties:
-          orders:
-            type: array
-            maxItems: 50
-            items:
-              type: string
-            example: []
     EditOrderRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -1100,80 +2252,100 @@ components:
           userref:
             type: integer
             example: 1
-    EditOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              status:
-                type: string
-                example: string
-              txid:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-              originaltxid:
-                type: string
-                example: OQCLML-BW3P3-BUCMWZ
-              volume:
-                type: string
-                example: '0.01'
-              price:
-                type: string
-                example: '0.01'
-              orders_cancelled:
-                type: integer
-                example: 1
-              descr:
-                type: object
-                example: {}
-            example: {}
-    CancelOrderResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              count:
-                type: integer
-                example: 1
-              pending:
-                type: boolean
-                example: true
-            example: {}
-    CancelAllAfterResponse:
-      allOf:
-      - $ref: '#/components/schemas/BaseEnvelope_2'
-      - type: object
-        properties:
-          result:
-            type: object
-            properties:
-              currentTime:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
-              triggerTime:
-                type: string
-                format: date-time
-                example: '2026-05-30T00:00:00Z'
-            example: {}
-    CancelAllAfterRequest:
+    CancelOrderRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
       - type: object
         required:
-        - timeout
+        - txid
         properties:
-          timeout:
-            type: integer
-            description: Seconds (0 to disable
-            max 86400).: null
-            example: 60
+          txid:
+            type: string
+            description: txid
+            cl_ord_id: null
+            or userref.: null
+            example: OQCLML-BW3P3-BUCMWZ
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+    CancelOrderBatchRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - orders
+        properties:
+          orders:
+            type: array
+            maxItems: 50
+            items:
+              type: string
+            example: []
+    AddOrderBatchResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              orders:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    descr:
+                      type: object
+                      example: {}
+                    txid:
+                      type: string
+                      example: OQCLML-BW3P3-BUCMWZ
+                    error:
+                      type: string
+                      example: string
+                example: []
+            example: {}
+    AmendOrderResponse:
+      allOf:
+      - $ref: '#/components/schemas/BaseEnvelope_2'
+      - type: object
+        properties:
+          result:
+            type: object
+            properties:
+              amend_id:
+                type: string
+                example: OQCLML-BW3P3-BUCMWZ
+            example: {}
+    AmendOrderRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        properties:
+          txid:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          cl_ord_id:
+            type: string
+            example: OQCLML-BW3P3-BUCMWZ
+          order_qty:
+            type: string
+            example: string
+          display_qty:
+            type: string
+            example: string
+          limit_price:
+            type: string
+            example: '0.01'
+          trigger_price:
+            type: string
+            example: '0.01'
+          post_only:
+            type: boolean
+            example: true
+          deadline:
+            type: string
+            example: string
     AddOrderRequest:
       allOf:
       - $ref: '#/components/schemas/NoncedRequest'
@@ -1281,7 +2453,53 @@ components:
           validate:
             type: boolean
             example: true
+    CancelAllAfterRequest:
+      allOf:
+      - $ref: '#/components/schemas/NoncedRequest'
+      - type: object
+        required:
+        - timeout
+        properties:
+          timeout:
+            type: integer
+            description: Seconds (0 to disable
+            max 86400).: null
+            example: 60
+  requestBodies:
+    nonceOnly:
+      required: true
+      content:
+        application/json:
+          schema:
+            required:
+            - nonce
+            type: object
+            properties:
+              nonce:
+                $ref: '#/components/schemas/nonce'
+            example:
+              nonce: 1695828436
   securitySchemes:
+    API-Key:
+      type: apiKey
+      description: The "API-Key" header should contain your API key.
+      name: API-Key
+      in: header
+    API-Sign:
+      type: apiKey
+      description: Authenticated requests should be signed with the "API-Sign" header, using a signature generated with your private key, nonce, encoded payload, and URI path.
+      name: API-Sign
+      in: header
+    API-Nonce:
+      type: apiKey
+      description: The "API-Nonce" header should contain an always-increasing 64-bit integer, most commonly a Unix timestamp in milliseconds. Each request must use a nonce greater than the nonce of the previous request signed with the same API key.
+      name: API-Nonce
+      in: header
+    API-OTP:
+      type: apiKey
+      description: The "API-OTP" header should contain your two-factor authentication one-time password. Required only if 2FA is configured for the API key.
+      name: API-OTP
+      in: header
     futures_signature:
       type: apiKey
       in: header
@@ -1293,5 +2511,19 @@ components:
       name: API-Key
       description: 'Kraken signs private REST requests with two headers: `API-Key` (your public API key) and `API-Sign` (HMAC-SHA512 of the URI path plus SHA256(nonce + POST body), keyed by the base64-decoded secret). All private endpoints must include an incrementing `nonce` in the POST body.'
 x-refined-from:
+- kraken-openapi.json
 - kraken-futures-rest-openapi.yml
 - kraken-spot-rest-openapi.yml
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - Market Data
+  - Transparency
+- name: Authenticated Endpoints
+  tags:
+  - Account Data
+  - Trading
+  - funding-beta
+  - Funding
+  - Subaccounts
+  - Earn
