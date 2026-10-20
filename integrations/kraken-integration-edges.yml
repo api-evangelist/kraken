@@ -54,6 +54,39 @@ edges:
       home_member_state: IE
   detected_by: sweep-crypto.py
   first_seen: '2026-10-14'
+- partner_name: FinCEN (MSB registration)
+  partner: null
+  partner_match: register
+  type: contract
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://msb.fincen.gov/
+  category: Money services business
+  contract_reference:
+    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    spec_file: null
+    standard: FinCEN MSB registration (US Bank Secrecy Act)
+    role: fincen-msb-registrant
+    registered_name: Payward Interactive, Inc.
+    dba_name: Kraken
+    register_id: Payward Interactive, Inc.
+    matched_domain: kraken.com
+    matched_by: domain+verified
+    identity: 'hand-verified: DBA Kraken, 106 E. Lincolnway Cheyenne WY (Payward''s registered office); Wikidata
+      gave krakencolombia.net; all/kraken is named ''Kraken'', Website www.kraken.com'
+    identity_source: hand-verified (LOCAL_VERIFIED)
+    msb_activities:
+    - 409 money transmitter
+    - 499 other
+    states_of_activity: 57
+    received_date: 08/11/2026
+    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
+      are context, never counted'
+    detected_by: sweep-regtech-aml.py
+    detected: '2026-10-15'
+  detected_by: sweep-regtech-aml.py
+  first_seen: '2026-10-15'
 - partner_name: ISO 10383 (MIC)
   partner: null
   type: register
@@ -118,42 +151,39 @@ edges:
       legal_name: KRAKEN DERIVATIVES EXCHANGE INC.
       country: US
     detected_by: sweep-capital-markets.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   detected_by: sweep-capital-markets.py
-  first_seen: '2026-10-15'
-- partner_name: FinCEN (MSB registration)
+  first_seen: '2026-10-19'
+- partner_name: SkillsMP (skillsmp.com)
   partner: null
   partner_match: register
-  type: contract
-  channel: regulator-register
-  relationship: standard-participant
+  type: register
   direction: partner-built
-  evidence: https://msb.fincen.gov/
-  category: Money services business
+  category: Agent Skills register
+  evidence: https://skillsmp.com/creators/krakenfx
+  channel: standard-directory
+  relationship: compatible
+  shape: agent-skills
+  evidence_kind: register-listing
+  degree: listed
+  report_only: true
+  agent_skills_register:
+    repos:
+    - krakenfx
+    repo_verified: false
+    signal_note: the provider's own-org repos the register lists; skill / install counts never read
   contract_reference:
-    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    register: SkillsMP (skillsmp.com) (public sitemap / list)
     spec_file: null
-    standard: FinCEN MSB registration (US Bank Secrecy Act)
-    role: fincen-msb-registrant
-    registered_name: Payward Interactive, Inc.
-    dba_name: Kraken
-    register_id: Payward Interactive, Inc.
-    matched_domain: kraken.com
-    matched_by: domain+verified
-    identity: 'hand-verified: DBA Kraken, 106 E. Lincolnway Cheyenne WY (Payward''s registered office); Wikidata
-      gave krakencolombia.net; all/kraken is named ''Kraken'', Website www.kraken.com'
-    identity_source: hand-verified (LOCAL_VERIFIED)
-    msb_activities:
-    - 409 money transmitter
-    - 499 other
-    states_of_activity: 57
-    received_date: 08/11/2026
-    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
-      are context, never counted'
-    detected_by: sweep-regtech-aml.py
-    detected: '2026-10-15'
-  detected_by: sweep-regtech-aml.py
-  first_seen: '2026-10-15'
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: krakenfx
+    matched_by: org-profile-domain:kraken.com
+    sample_skills: []
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  detected_by: sweep-agent-skills.py
+  first_seen: '2026-10-20'
 generated: '2026-10-13'
 method: searched
 checked:
@@ -164,6 +194,12 @@ checked:
 - https://www.access-dvs-register.service.gov.uk/register/download-register
 - https://www.esma.europa.eu/sites/default/files/2024-12/CASPS.csv
 - https://www.iso20022.org/sites/default/files/ISO10383_MIC/ISO10383_MIC.csv
+- https://api.github.com
+- https://claude-plugins.dev/sitemap.xml
+- https://github.com/VoltAgent/awesome-agent-skills
+- https://officialskills.sh/sitemap.xml
+- https://skillsmp.com/sitemap.xml
+- https://www.skills.sh/sitemap.xml
 source:
 - https://msb.fincen.gov/
 - https://www.access-dvs-register.service.gov.uk/register/download-register

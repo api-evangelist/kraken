@@ -52,6 +52,39 @@
       home_member_state: IE
   status: not-a-workflow
   arazzo: null
+- slug: kraken-fincen-msb-registration
+  label: FinCEN (MSB registration)
+  partner_name: FinCEN (MSB registration)
+  category: Money services business
+  type: contract
+  channel: regulator-register
+  evidence: https://msb.fincen.gov/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    spec_file: null
+    standard: FinCEN MSB registration (US Bank Secrecy Act)
+    role: fincen-msb-registrant
+    registered_name: Payward Interactive, Inc.
+    dba_name: Kraken
+    register_id: Payward Interactive, Inc.
+    matched_domain: kraken.com
+    matched_by: domain+verified
+    identity: 'hand-verified: DBA Kraken, 106 E. Lincolnway Cheyenne WY (Payward''s registered office); Wikidata
+      gave krakencolombia.net; all/kraken is named ''Kraken'', Website www.kraken.com'
+    identity_source: hand-verified (LOCAL_VERIFIED)
+    msb_activities:
+    - 409 money transmitter
+    - 499 other
+    states_of_activity: 57
+    received_date: 08/11/2026
+    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
+      are context, never counted'
+    detected_by: sweep-regtech-aml.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
 - slug: kraken-iso-10383-mic
   label: ISO 10383 (MIC)
   partner_name: ISO 10383 (MIC)
@@ -116,39 +149,27 @@
       legal_name: KRAKEN DERIVATIVES EXCHANGE INC.
       country: US
     detected_by: sweep-capital-markets.py
-    detected: '2026-10-15'
+    detected: '2026-10-19'
   status: not-a-workflow
   arazzo: null
-- slug: kraken-fincen-msb-registration
-  label: FinCEN (MSB registration)
-  partner_name: FinCEN (MSB registration)
-  category: Money services business
-  type: contract
-  channel: regulator-register
-  evidence: https://msb.fincen.gov/
+- slug: kraken-skillsmp-skillsmp-com
+  label: SkillsMP (skillsmp.com)
+  partner_name: SkillsMP (skillsmp.com)
+  category: Agent Skills register
+  type: register
+  channel: standard-directory
+  evidence: https://skillsmp.com/creators/krakenfx
   source: edge
-  relationship: standard-participant
+  relationship: compatible
   contract_reference:
-    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    register: SkillsMP (skillsmp.com) (public sitemap / list)
     spec_file: null
-    standard: FinCEN MSB registration (US Bank Secrecy Act)
-    role: fincen-msb-registrant
-    registered_name: Payward Interactive, Inc.
-    dba_name: Kraken
-    register_id: Payward Interactive, Inc.
-    matched_domain: kraken.com
-    matched_by: domain+verified
-    identity: 'hand-verified: DBA Kraken, 106 E. Lincolnway Cheyenne WY (Payward''s registered office); Wikidata
-      gave krakencolombia.net; all/kraken is named ''Kraken'', Website www.kraken.com'
-    identity_source: hand-verified (LOCAL_VERIFIED)
-    msb_activities:
-    - 409 money transmitter
-    - 499 other
-    states_of_activity: 57
-    received_date: 08/11/2026
-    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
-      are context, never counted'
-    detected_by: sweep-regtech-aml.py
-    detected: '2026-10-15'
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: krakenfx
+    matched_by: org-profile-domain:kraken.com
+    sample_skills: []
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
