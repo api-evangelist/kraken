@@ -353,3 +353,9 @@ x-tagGroups:
   - Funding
   - Subaccounts
   - Earn
+x-provenance:
+  method: harvested
+  publisher: Kraken
+  source: https://www.kraken.com/openapi.json
+  note: split by refine-openapis from the provider's own published document, verified by fetch (openapi/_original/*.fetch.json);
+    stamped by stamp-openapi-provenance.py (roadmap#793)
