@@ -54,7 +54,7 @@ workflows:
     description: >-
       Read account balances to confirm funds are available. Private Spot
       endpoints are signed and accept application/x-www-form-urlencoded bodies.
-    operationId: getAccountBalance
+    operationId: post0PrivateBalance
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:
@@ -86,7 +86,7 @@ workflows:
     description: >-
       Submit the withdrawal. The result reference id is used to track the
       transfer.
-    operationId: withdrawFunds
+    operationId: post0PrivateWithdraw
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:

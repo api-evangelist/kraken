@@ -62,7 +62,7 @@ workflows:
     description: >-
       Confirm the exchange is operational before trading. A status other than
       online (maintenance, cancel_only, post_only) is a signal to abort.
-    operationId: getSystemStatus
+    operationId: get0PublicSystemStatus
     successCriteria:
     - condition: $statusCode == 200
     outputs:
@@ -71,7 +71,7 @@ workflows:
     description: >-
       Read the live ticker for the pair so the caller can price the order against
       the current best bid and ask.
-    operationId: getTickerInformation
+    operationId: get0PublicTicker
     parameters:
     - name: pair
       in: query
@@ -85,7 +85,7 @@ workflows:
       Submit the order. Private Spot endpoints are signed and accept
       application/x-www-form-urlencoded bodies; the nonce must increase on every
       call.
-    operationId: addOrder
+    operationId: post0PrivateAddOrder
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:

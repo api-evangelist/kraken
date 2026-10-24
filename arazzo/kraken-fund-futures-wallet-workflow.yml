@@ -52,7 +52,7 @@ workflows:
       Read spot balances to confirm the asset is available before transferring.
       Private Spot endpoints are signed and accept application/x-www-form-urlencoded
       bodies.
-    operationId: getAccountBalance
+    operationId: post0PrivateBalance
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:
@@ -65,7 +65,7 @@ workflows:
   - stepId: transfer
     description: >-
       Transfer the asset from the Spot wallet to the Futures wallet.
-    operationId: walletTransfer
+    operationId: post0PrivateWalletTransfer
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:

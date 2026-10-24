@@ -53,7 +53,7 @@ workflows:
       List all open orders so the caller can confirm the target order is still
       resting before amending it. Private Spot endpoints are signed and accept
       application/x-www-form-urlencoded bodies.
-    operationId: getOpenOrders
+    operationId: post0PrivateOpenOrders
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:
@@ -68,7 +68,7 @@ workflows:
     description: >-
       Amend the resting order in place. AmendOrder accepts a JSON body and keeps
       the original order id; only the supplied fields are changed.
-    operationId: amendOrder
+    operationId: post0PrivateAmendOrder
     requestBody:
       contentType: application/json
       payload:

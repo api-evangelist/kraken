@@ -77,7 +77,7 @@ workflows:
     description: >-
       Cancel the order by transaction id. The result count reflects how many
       orders were cancelled.
-    operationId: cancelOrder
+    operationId: post0PrivateCancelOrder
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:
@@ -106,7 +106,7 @@ workflows:
     description: >-
       Place the replacement order with the new terms once the original has been
       confirmed cancelled.
-    operationId: addOrder
+    operationId: post0PrivateAddOrder
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:

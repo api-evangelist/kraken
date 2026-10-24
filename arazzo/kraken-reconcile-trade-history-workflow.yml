@@ -84,7 +84,7 @@ workflows:
     description: >-
       Read ledger entries over the same window so trades can be matched to the
       cash and fee movements they generated.
-    operationId: getLedgersInfo
+    operationId: post0PrivateLedgers
     requestBody:
       contentType: application/x-www-form-urlencoded
       payload:
